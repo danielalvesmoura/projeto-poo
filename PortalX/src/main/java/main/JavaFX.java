@@ -28,15 +28,15 @@ public class JavaFX extends Application {
         this.stage = primaryStage;
         stage.setTitle("Portal X");
 
-        Parent root = FXMLLoader.load(getClass().getResource("/asdf/secaoDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/secaoDashboard.fxml"));
 
         Scene scene = new Scene(root);  // ✅ CORRETO
 
-        URL css = getClass().getResource("/asdf/style.css");
+        URL css = getClass().getResource("/fxml/style.css");
         if(css!=null) scene.getStylesheets().add(css.toExternalForm());
         else System.out.println("nao funfou");
 
-        scene.getStylesheets().add(getClass().getResource("/asdf/style.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("/fxml/style.css").toExternalForm());
         stage.setScene(scene);
 
         stage.setFullScreen(true);
