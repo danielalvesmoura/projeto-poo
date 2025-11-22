@@ -1,5 +1,7 @@
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import javax.persistence.*;
 
 import java.time.LocalDate;
@@ -14,13 +16,21 @@ public class Evento {
     private long id;
 
     @Column(length = 100)
-    private String nome;
-    private String descricao;
-    private String endereco;
-
-    @Temporal(TemporalType.DATE)
-    private LocalDate dataInicio;
     private LocalDate dataFim;
+    private LocalDate dataInicio;
+    private String endereco;
+    private String descricao;
+    private String nome;
+
+    public Evento(String nome, String descricao, String endereco, LocalDate dataInicio, LocalDate dataFim) {
+        setDataFim(dataFim);
+        setDataInicio(dataInicio);
+        setEndereco(endereco);
+        setDescricao(descricao);
+        setNome(nome);
+    }
+
+    public Evento() {};
 
     public long getId() {
         return id;

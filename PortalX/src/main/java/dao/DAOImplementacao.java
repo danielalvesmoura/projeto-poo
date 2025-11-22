@@ -32,14 +32,12 @@ public abstract  class DAOImplementacao<T, ID> implements DAOGenerico<T, ID> {
         return null;
     }
 
-//    @Override
-//    public List<T> buscarTodos() {
-//        EntityManager em = emf.createEntityManager();
-//
-//        List<T> lista = em.createQuery("SELECT t FROM :tipo t", T.class).setParameter("tipo",T).getResultList();
-//
-//        em.close();
-//
-//        return lista;
-//    }
+
+
+    @Override
+    public List<T> buscarTodos(Class<T> entityClass) {
+        EntityManager em = emf.createEntityManager();
+        String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e";
+        return em.createQuery(jpql, entityClass).getResultList();
+    }
 }

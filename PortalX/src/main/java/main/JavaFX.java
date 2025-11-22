@@ -30,7 +30,7 @@ public class JavaFX extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/secaoDashboard.fxml"));
 
-        Scene scene = new Scene(root);  // ✅ CORRETO
+        Scene scene = new Scene(root);
 
         URL css = getClass().getResource("/fxml/style.css");
         if(css!=null) scene.getStylesheets().add(css.toExternalForm());

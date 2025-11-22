@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.tabelaController">
    <children>
       <Pane prefHeight="1080.0" prefWidth="398.0" style="-fx-background-color: #23203d;">
          <children>
@@ -18,10 +18,14 @@
                   <Font size="43.0" />
                </font></Button>
          </children></Pane>
-      <TableView layoutX="420.0" layoutY="168.0" prefHeight="892.0" prefWidth="1474.0">
+      <TableView fx:id="tabelaEventos" layoutX="420.0" layoutY="168.0" prefHeight="892.0" prefWidth="1474.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="colNome" prefWidth="213.0" text="Nome" />
+            <TableColumn fx:id="colDescricao" prefWidth="632.0" text="Descrição" />
+            <TableColumn fx:id="colEndereco" prefWidth="354.0" text="Endereço" />
+            <TableColumn fx:id="colDataInicio" prefWidth="103.0" text="Data do Início" />
+            <TableColumn fx:id="colDataFim" prefWidth="96.0" text="Data do Fim" />
         </columns>
       </TableView>
    </children>
