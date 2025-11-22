@@ -1,6 +1,7 @@
 package main.controller;
 
 import dao.EventoDAO;
+import dao.ParticipanteDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import javafx.scene.control.*;
 import model.Evento;
+import model.Participante;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -36,22 +38,33 @@ public class tabelaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        EventoDAO eventoDAO = new EventoDAO();
-
-        List<Evento> eventos = eventoDAO.buscarTodos(Evento.class);
-
-        for(Evento e : eventos) {
-            observableList.add(e);
-        }
-
-
-        colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        colDescricao.setCellValueFactory(new PropertyValueFactory<>("Descricao"));
-        colEndereco.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
-        colDataInicio.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
-        colDataFim.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        atualizaTabela();
         tabelaEventos.setItems(observableList);
+    }
+
+    public static String tabelaAtiva = "Evento";
+
+    public void atualizaTabela() {
+        if(tabelaAtiva == "Evento") {
+            EventoDAO eventoDAO = new EventoDAO();
+
+            List<Evento> eventos = eventoDAO.buscarTodos(Evento.class);
+
+            for(Evento e : eventos) {
+                observableList.add(e);
+            }
+
+            colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
+            colNome.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+            colDescricao.setCellValueFactory(new PropertyValueFactory<>("Descricao"));
+            colEndereco.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
+            colDataInicio.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
+            colDataFim.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        } else if (tabelaAtiva == "Participante") {
+            ParticipanteDAO participanteDAO = new ParticipanteDAO();
+
+            List<Participante> participantes = e
+        }
     }
 
 
