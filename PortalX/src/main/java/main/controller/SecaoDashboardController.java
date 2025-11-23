@@ -19,7 +19,7 @@ public class SecaoDashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        abreTabelaFeedback();
+        abreTabelaEventos();
     }
 
     public void abreTabelaFeedback() {
@@ -32,6 +32,8 @@ public class SecaoDashboardController implements Initializable {
             tabelaLoader.setController(tabelaFeedbackController);
 
             Parent tabela = tabelaLoader.load();
+
+            tabela.setLayoutY(-100);
 
             tabelaPane.getChildren().add(tabela);
 
@@ -50,6 +52,8 @@ public class SecaoDashboardController implements Initializable {
             tabelaLoader.setController(tabelaEventoController);
 
             Parent tabela = tabelaLoader.load();
+
+            tabela.setLayoutY(-100);
 
             tabelaPane.getChildren().add(tabela);
 
