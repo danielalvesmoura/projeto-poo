@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class JavaFX extends Application {
 
     private Stage stage;
@@ -22,6 +25,8 @@ public class JavaFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        //Logger.getLogger("").setLevel(Level.OFF);
+
         this.stage = primaryStage;
         stage.setTitle("Portal X");
 

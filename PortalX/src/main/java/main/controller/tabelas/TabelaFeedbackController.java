@@ -4,10 +4,13 @@ import dao.FeedbackDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import model.*;
 
 import java.net.URL;
@@ -15,6 +18,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TabelaFeedbackController implements Initializable {
+
+    @FXML
+    public Pane modalPane;
 
     @FXML
     public TableView<Feedback> tableView;
@@ -36,7 +42,28 @@ public class TabelaFeedbackController implements Initializable {
         tableView.setItems(observableList);
     }
 
+    public void botaoAdicionar() {
+        try {
+            FXMLLoader modalAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/modalAdicionar.fxml"));
 
+            ModalAdicionarEventoController modalAdicionarEventoController = new ModalAdicionarEventoController();
+            modalAdicionarLoader.setController(modalAdicionarEventoController);
+
+            Parent modalAdicionar = modalAdicionarLoader.load();
+
+            modalAdicionar.setLayoutX(-531);
+            modalAdicionar.setLayoutY(-230);
+
+            modalPane.getChildren().add(modalAdicionar);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void confirmar() {
+        atualizaTabela();
+    }
 
     public void atualizaTabela() {
 

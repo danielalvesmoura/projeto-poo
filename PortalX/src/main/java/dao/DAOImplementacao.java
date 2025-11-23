@@ -23,13 +23,28 @@ public abstract  class DAOImplementacao<T, ID> implements DAOGenerico<T, ID> {
     }
 
     @Override
+    public T remover(T objeto) {
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        T entidade = (T) em.merge(objeto);
+        em.remove(entidade);
+        em.getTransaction().commit();
+        em.close();
+
+        return objeto;
+    }
+
+    @Override
     public T alterar(T objeto) {
         return null;
     }
 
     @Override
-    public T buscarPorId(ID T) {
-        return null;
+    public T buscarPorId(Class<T> entityClass,ID T) {
+        EntityManager em = emf.createEntityManager();
+        String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e where id = " + T;
+        return em.createQuery(jpql, entityClass).getSingleResult();
     }
 
 

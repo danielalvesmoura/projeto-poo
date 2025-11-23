@@ -13,4 +13,9 @@ public class EventoServico {
         Evento evento = new Evento(nome, descricao, endereco, dataInicio, dataFim);
         eventoDAO.inserir(evento);
     }
+
+    public void remover(Evento evento) {
+
+        eventoDAO.remover(evento);
+    }
 }
