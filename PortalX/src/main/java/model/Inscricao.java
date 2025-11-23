@@ -2,7 +2,10 @@ package model;
 
 import javax.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+
+import model.Enum.StatusInscricao;
+import model.Enum.TipoIngresso;
 
 @Entity
 @Table(name = "inscricao")
@@ -13,21 +16,21 @@ public class Inscricao {
     private long id;
 
     @Column(length = 100)
-    private Enum status;
-    private Enum tipoIngresso;
 
-    @Temporal(TemporalType.DATE)
-    private Date dataCriacao;
+    @Enumerated(EnumType.STRING)
+    private StatusInscricao status;
+    private TipoIngresso tipoIngresso;
+    private LocalDate dataCriacao;
 
     public long getId() {
         return id;
     }
 
-    public Date getDataCriacao() {
+    public LocalDate getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Date dataCriacao) {
+    public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
@@ -35,15 +38,15 @@ public class Inscricao {
         return status;
     }
 
-    public void setStatus(Enum status) {
+    public void setStatus(StatusInscricao status) {
         this.status = status;
     }
 
-    public Enum getTipoIngresso() {
+    public TipoIngresso getTipoIngresso() {
         return tipoIngresso;
     }
 
-    public void setTipoIngresso(Enum tipoIngresso) {
+    public void setTipoIngresso(TipoIngresso TipoIngresso) {
         this.tipoIngresso = tipoIngresso;
     }
 }

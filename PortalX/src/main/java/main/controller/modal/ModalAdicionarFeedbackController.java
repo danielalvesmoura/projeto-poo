@@ -1,4 +1,4 @@
-package main.controller.tabelas;
+package main.controller.modal;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -6,10 +6,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-
+import main.controller.tabelas.TabelaEventoController;
 import servico.EventoServico;
 
-public class ModalAdicionarEventoController {
+public class ModalAdicionarFeedbackController {
+
+    TabelaEventoController tabelaEventoController;
+
+    public void defineTabelaEventoController(TabelaEventoController tabelaEventoController) {
+        this.tabelaEventoController = tabelaEventoController;
+    }
+
     @FXML
     private Pane paneModalAdicionar;
 
@@ -43,5 +50,7 @@ public class ModalAdicionarEventoController {
 
         mensagem.setStyle("-fx-text-fill: green;");
         mensagem.setText("Evento cadastrado com sucesso!");
+
+        tabelaEventoController.atualizaTabela();
     }
 }

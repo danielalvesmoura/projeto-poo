@@ -14,4 +14,8 @@ public class FeedbackServico {
         Feedback feedback = new Feedback(nota, comentario, dataEnvio);
         feedbackDAO.inserir(feedback);
     }
+
+    public void remover(Feedback feedback) {
+        feedbackDAO.remover(feedback);
+    }
 }

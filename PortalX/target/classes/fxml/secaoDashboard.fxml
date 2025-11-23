@@ -13,11 +13,36 @@
                   <Font name="Arial" size="51.0" />
                </font>
             </Label>
-            <Button layoutX="36.0" layoutY="234.0" mnemonicParsing="false" onAction="#abreTabelaEventos" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Eventos" textFill="#a8a8a8">
+            <Button layoutX="36.0" layoutY="210.0" mnemonicParsing="false" onAction="#abreTabelaEventos" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Eventos" textFill="#a8a8a8">
                <font>
                   <Font size="43.0" />
                </font></Button>
-            <Button layoutX="36.0" layoutY="371.0" mnemonicParsing="false" onAction="#abreTabelaFeedback" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Feedback" textFill="#a8a8a8">
+            <Button layoutX="36.0" layoutY="394.0" mnemonicParsing="false" onAction="#abreTabelaPalestrante" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Palestrantes" textFill="#a8a8a8">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Button>
+            <Button layoutX="36.0" layoutY="302.0" mnemonicParsing="false" onAction="#abreTabelaInscricao" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Inscrições" textFill="#a8a8a8">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Button>
+            <Button layoutX="36.0" layoutY="578.0" mnemonicParsing="false" onAction="#abreTabelaSala" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Sala" textFill="#a8a8a8">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Button>
+            <Button layoutX="36.0" layoutY="762.0" mnemonicParsing="false" onAction="#abreTabelaFeedback" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Feedback" textFill="#a8a8a8">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Button>
+            <Button layoutX="36.0" layoutY="486.0" mnemonicParsing="false" onAction="#abreTabelaParticipante" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Participantes" textFill="#a8a8a8">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Button>
+            <Button layoutX="36.0" layoutY="670.0" mnemonicParsing="false" onAction="#abreTabelaSessao" prefHeight="92.0" prefWidth="326.0" styleClass="sideBarEventos" text="Sessão" textFill="#a8a8a8">
                <font>
                   <Font size="43.0" />
                </font>

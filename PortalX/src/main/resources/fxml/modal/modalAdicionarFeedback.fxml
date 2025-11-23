@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<Pane fx:id="paneModalAdicionar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1522.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000071" height="1080.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1522.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="431.0" layoutX="578.0" layoutY="325.0" stroke="BLACK" strokeType="INSIDE" width="366.0" />
+      <Label layoutX="598.0" layoutY="386.0" prefHeight="17.0" prefWidth="68.0" text="Nota" />
+      <Label layoutX="598.0" layoutY="457.0" prefHeight="17.0" prefWidth="68.0" text="Comentário" />
+      <TextArea fx:id="campoComentario" layoutX="597.0" layoutY="474.0" prefHeight="221.0" prefWidth="307.0" />
+      <Label layoutX="681.0" layoutY="336.0" text="Adicionar novo item">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="727.0" layoutY="720.0" mnemonicParsing="false" onAction="#confirmar" text="Confirmar" />
+      <Button layoutX="898.0" layoutY="336.0" mnemonicParsing="false" onAction="#fecharModal" prefHeight="31.0" prefWidth="33.0" text="X">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Label fx:id="mensagem" layoutX="684.0" layoutY="703.0" prefHeight="17.0" prefWidth="243.0" textAlignment="CENTER" />
+      <ChoiceBox fx:id="choiceNota" layoutX="597.0" layoutY="403.0" prefWidth="150.0" />
+   </children>
+</Pane>

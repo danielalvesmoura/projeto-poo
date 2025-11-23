@@ -15,7 +15,6 @@ public class EventoServico {
     }
 
     public void remover(Evento evento) {
-
         eventoDAO.remover(evento);
     }
 }
