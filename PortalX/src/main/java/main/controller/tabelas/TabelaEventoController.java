@@ -52,6 +52,18 @@ public class TabelaEventoController implements Initializable {
         col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
         col6.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+
+        col2.setText("Nome");
+        col3.setText("Descrição");
+        col4.setText("Endereço");
+        col5.setText("Data do Início");
+        col6.setText("Data do Fim");
+
+        col2.setPrefWidth(300);
+        col3.setPrefWidth(500);
+        col4.setPrefWidth(300);
+        col5.setPrefWidth(100);
+        col6.setPrefWidth(100);
     }
 
 
