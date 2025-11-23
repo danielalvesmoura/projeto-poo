@@ -38,6 +38,7 @@ public class TabelaEventoController implements Initializable {
     public TableColumn<Evento,LocalDate> col5;
     public TableColumn<Evento,LocalDate> col6;
     public TableColumn<Evento,Void> col7;
+    public TableColumn<Evento,Void> col8;
 
     @FXML
     public Pane modalPane;
@@ -89,7 +90,7 @@ public class TabelaEventoController implements Initializable {
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
         col6.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
 
-        col7.setCellFactory(col -> new TableCell<Evento, Void>() {
+        col7.setCellFactory(col -> new TableCell<Evento, Void>() {  // BOTÃO DE REMOVER ITEM
 
             private final Button botaoRemover = new Button("Remover");
 
@@ -113,6 +114,28 @@ public class TabelaEventoController implements Initializable {
             }
         });
 
+        col7.setCellFactory(col -> new TableCell<Evento, Void>() { // BOTÃO PARA ABRIR EVENTO
+
+            private final Button botaoRemover = new Button("Abrir");
+
+            {
+                botaoRemover.setOnAction(event -> {
+
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(botaoRemover);
+                }
+            }
+        });
+
         col2.setText("Nome");
         col3.setText("Descrição");
         col4.setText("Endereço");
@@ -120,11 +143,16 @@ public class TabelaEventoController implements Initializable {
         col6.setText("Data do Fim");
 
         col2.setPrefWidth(300);
-        col3.setPrefWidth(500);
+        col3.setPrefWidth(400);
         col4.setPrefWidth(300);
         col5.setPrefWidth(100);
         col6.setPrefWidth(100);
     }
+
+    // ABRIR EVENTO
+
+
+
 
 
     // MODAL ADICIONAR
