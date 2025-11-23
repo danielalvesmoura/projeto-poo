@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane fx:id="root" prefHeight="262.0" prefWidth="283.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.SubjanelaController">
+   <content>
+      <Pane prefHeight="200.0" prefWidth="200.0">
+         <children>
+             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="262.0" layoutX="-2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.3, 0, 2);" width="283.0" />
+             <Label fx:id="subjanelaMensagem" layoutX="22.0" layoutY="53.0" prefHeight="62.0" prefWidth="240.0" text="Label" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+             <Button layoutX="105.0" layoutY="174.0" mnemonicParsing="false" onAction="#fechar" text="Confirmar" />
+         </children>
+      </Pane>
+   </content>
+</DialogPane>

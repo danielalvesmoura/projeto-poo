@@ -24,6 +24,8 @@ public class TabelaFeedbackController implements Initializable {
     public TableColumn<Feedback,String> col2;
     public TableColumn<Feedback,String> col3;
     public TableColumn<Feedback,String> col4;
+    public TableColumn<Feedback,String> col5;
+    public TableColumn<Feedback,String> col6;
 
     ObservableList<Feedback> observableList = FXCollections.observableArrayList();
 
@@ -50,6 +52,18 @@ public class TabelaFeedbackController implements Initializable {
         col2.setCellValueFactory(new PropertyValueFactory<>("Nota"));
         col3.setCellValueFactory(new PropertyValueFactory<>("Comentario"));
         col4.setCellValueFactory(new PropertyValueFactory<>("DataEnvio"));
+
+        col2.setText("Nota");
+        col3.setText("Comentário");
+        col4.setText("Data de Envio");
+        col5.setText("");
+        col6.setText("");
+
+        col2.setPrefWidth(50);
+        col3.setPrefWidth(1200);
+        col4.setPrefWidth(100);
+        col5.setPrefWidth(0);
+        col6.setPrefWidth(0);
     }
 
 }

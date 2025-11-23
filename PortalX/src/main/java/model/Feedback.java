@@ -18,6 +18,14 @@ public class Feedback {
     private String comentario;
     private LocalDate dataEnvio;
 
+    public Feedback(int nota, String comentario, LocalDate dataEnvio) {
+        setComentario(comentario);
+        setNota(nota);
+        setDataEnvio(dataEnvio);
+    }
+
+    public Feedback() {};
+
     public long getId() {
         return id;
     }
