@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,9 +16,7 @@ public class Feedback {
     @Column(length = 100)
     private int nota;
     private String comentario;
-
-    @Temporal(TemporalType.DATE)
-    private Date dataEnvio;
+    private LocalDate dataEnvio;
 
     public long getId() {
         return id;
@@ -39,11 +38,11 @@ public class Feedback {
         this.comentario = comentario;
     }
 
-    public Date getDataEnvio() {
+    public LocalDate getDataEnvio() {
         return dataEnvio;
     }
 
-    public void setDataEnvio(Date dataEnvio) {
+    public void setDataEnvio(LocalDate dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
 }
