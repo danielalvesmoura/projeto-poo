@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/barraLateralInicio.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.SecaoDashboardController">
+   <children>
+      <Pane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black;">
+         <children>
+            <Label layoutX="91.0" layoutY="36.0" prefHeight="80.0" prefWidth="238.0" style="-fx-alignment: center;" styleClass="texto" text="Portal X" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Arial Bold" size="51.0" />
+               </font>
+            </Label>
+            <Button graphicTextGap="0.0" layoutX="27.0" layoutY="185.0" mnemonicParsing="false" onAction="#abreTabelaEventos" prefHeight="58.0" prefWidth="326.0" styleClass="sideBarEventos" text="          Eventos" textFill="#7800ff">
+               <font>
+                  <Font size="29.0" />
+               </font></Button>
+            <ImageView fitHeight="65.0" fitWidth="58.0" layoutX="44.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/fxml/imagens/logoRoxa.png" />
+               </image></ImageView>
+            <ImageView fitHeight="40.0" fitWidth="33.0" layoutX="57.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/fxml/imagens/iconeCalendarioRoxo.png" />
+               </image></ImageView>
+            <Separator fx:id="separador" layoutX="374.0" orientation="VERTICAL" prefHeight="1080.0" prefWidth="0.5" />
+         </children></Pane>
+      <Pane fx:id="tabelaPane" layoutX="398.0" prefHeight="130.0" prefWidth="145.0" />
+       <!--<TableView fx:id="tableView" layoutX="420.0" layoutY="168.0" prefHeight="892.0" prefWidth="1474.0">
+         <columns>
+           <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+           <TableColumn fx:id="colNome" prefWidth="213.0" text="Nome" />
+             <TableColumn fx:id="colDescricao" prefWidth="632.0" text="Descrição" />
+             <TableColumn fx:id="colEndereco" prefWidth="354.0" text="Endereço" />
+             <TableColumn fx:id="colDataInicio" prefWidth="103.0" text="Data do Início" />
+             <TableColumn fx:id="colDataFim" prefWidth="96.0" text="Data do Fim" />
+         </columns>
+       </TableView>-->
+    </children>
+ </AnchorPane>
