@@ -1,8 +1,8 @@
 
 
 .texto {
-    src: url("/fonts/Roboto-Thin.ttf");
-    -fx-font-family: "Roboto Thin";
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
 }
 
 .sideBarEventos {

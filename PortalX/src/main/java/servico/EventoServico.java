@@ -17,4 +17,14 @@ public class EventoServico {
     public void remover(Evento evento) {
         eventoDAO.remover(evento);
     }
+
+    public void alterar(Evento evento, String nome, String descricao, String endereco, LocalDate dataInicio, LocalDate dataFim) {
+        evento.setNome(nome);
+        evento.setDescricao(descricao);
+        evento.setEndereco(endereco);
+        evento.setDataInicio(dataInicio);
+        evento.setDataFim(dataFim);
+
+        eventoDAO.alterar(evento);
+    }
 }

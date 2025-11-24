@@ -132,16 +132,21 @@ public class TabelaEventoController implements Initializable {
 
             {
                 botaoAbrir.setOnAction(event -> {
+                    Evento evento = getTableView().getItems().get(getIndex());
+
+
                     try {
                         FXMLLoader janelaEventoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEventoBase.fxml"));
 
-                        //JanelaEventoController janelaEventoController = new JanelaEventoController();
+                        JanelaEventoController janelaEventoController = new JanelaEventoController();
                         //janelaEventoController.defineController(janelaEventoController);
-                        //janelaEventoLoader.setController(janelaEventoController);
+                        janelaEventoLoader.setController(janelaEventoController);
 
                         Parent janela = janelaEventoLoader.load();
 
                         //janela.setLayoutY(-100);
+
+                        janelaEventoController.eventoAberto = evento;
 
                         paneJanelaEvento.getChildren().add(janela);
 

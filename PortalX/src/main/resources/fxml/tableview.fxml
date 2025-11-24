@@ -2,29 +2,33 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <!--
         fx:controller="main.controller.tabelas.TabelaEventoController"
 -->
 
-<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1522.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1522.0" stylesheets="/fxml/tableview.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TableView fx:id="tableView" layoutX="67.0" layoutY="275.0" prefHeight="746.0" prefWidth="1427.0">
+        <TableView fx:id="tableView" layoutX="59.0" layoutY="320.0" prefHeight="746.0" prefWidth="1427.0" styleClass="tableView">
             <columns>
-                <TableColumn fx:id="colId" prefWidth="32.0" text="ID" />
-                <TableColumn fx:id="col2" prefWidth="281.0" text="Nome" />
-                <TableColumn fx:id="col3" prefWidth="470.0" text="Descrição" />
-                <TableColumn fx:id="col4" prefWidth="315.0" text="Endereço" />
-                <TableColumn fx:id="col5" minWidth="0.0" prefWidth="100.0" text="Data do Início" />
-                <TableColumn fx:id="col6" prefWidth="168.0" text="Data do Fim" />
-            <TableColumn fx:id="col7" prefWidth="33.0" />
-            <TableColumn fx:id="col8" prefWidth="118.0" />
+                <TableColumn fx:id="colId" prefWidth="32.0" styleClass="coluna" text="ID" />
+                <TableColumn fx:id="col2" prefWidth="281.0" styleClass="coluna" text="Nome" />
+                <TableColumn fx:id="col3" prefWidth="470.0" styleClass="coluna" text="Descrição" />
+                <TableColumn fx:id="col4" prefWidth="315.0" styleClass="coluna" text="Endereço" />
+                <TableColumn fx:id="col5" minWidth="0.0" prefWidth="100.0" styleClass="coluna" text="Data do Início" />
+                <TableColumn fx:id="col6" prefWidth="168.0" styleClass="coluna" text="Data do Fim" />
+            <TableColumn fx:id="col7" prefWidth="33.0" styleClass="coluna" />
+            <TableColumn fx:id="col8" prefWidth="118.0" styleClass="coluna" />
             </columns>
         </TableView>
-      <Button layoutX="1335.0" layoutY="213.0" mnemonicParsing="false" onAction="#botaoAdicionar" text="+ Adicionar novo item" />
-      <Pane fx:id="modalPane" prefHeight="234.0" prefWidth="256.0">
-         <children>
-            <Pane fx:id="paneJanelaEvento" layoutY="99.0" prefHeight="98.0" prefWidth="82.0" />
-         </children></Pane>
+      <Button layoutX="1180.0" layoutY="213.0" mnemonicParsing="false" onAction="#botaoAdicionar" styleClass="botaoAdicionar" text="+ Adicionar novo item" />
+      <Pane fx:id="modalPane" prefHeight="98.0" prefWidth="256.0" />
+      <Pane fx:id="paneJanelaEvento" layoutY="98.0" prefHeight="98.0" prefWidth="82.0" />
+      <Label layoutX="68.0" layoutY="174.0" prefHeight="48.0" prefWidth="630.0" styleClass="titulo" text="Todos os eventos">
+         <font>
+            <Font size="70.0" />
+         </font>
+      </Label>
     </children>
 </Pane>

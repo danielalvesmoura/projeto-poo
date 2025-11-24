@@ -2,19 +2,11 @@ package main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class JavaFX extends Application {
 
@@ -34,11 +26,11 @@ public class JavaFX extends Application {
 
         Scene scene = new Scene(root);
 
-        URL css = getClass().getResource("/fxml/style.css");
+        URL css = getClass().getResource("/fxml/barraLateralInicio.css");
         if(css!=null) scene.getStylesheets().add(css.toExternalForm());
         else System.out.println("nao funfou");
 
-        //scene.getStylesheets().add(getClass().getResource("/fxml/style.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("/fxml/barraLateralInicio.css").toExternalForm());
         stage.setScene(scene);
 
         stage.setFullScreen(true);
