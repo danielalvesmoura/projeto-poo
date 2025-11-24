@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1002.0" prefWidth="1522.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#23203d" height="81.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1522.0" />
+      <Button layoutX="29.0" layoutY="17.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="389.0" text="Button" />
+      <Button layoutX="433.0" layoutY="17.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="389.0" text="Button" />
+      <Button layoutX="836.0" layoutY="17.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="389.0" text="Button" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="1266.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+   </children>
+</Pane>
