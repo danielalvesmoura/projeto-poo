@@ -13,6 +13,7 @@ import java.util.List;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import main.controller.janelaEvento.JanelaEventoController;
 import model.*;
 import servico.EventoServico;
 
@@ -43,6 +44,10 @@ public class TabelaEventoController implements Initializable {
     @FXML
     public Pane modalPane;
 
+    // PANE DE CONTERÁ JANELA DO EVENTO
+    @FXML
+    public Pane paneJanelaEvento;
+
     ObservableList<Evento> observableList = FXCollections.observableArrayList();
 
     @Override
@@ -61,8 +66,8 @@ public class TabelaEventoController implements Initializable {
 
             Parent modalAdicionar = modalAdicionarLoader.load();
 
-            modalAdicionar.setLayoutX(-531);
-            modalAdicionar.setLayoutY(-230);
+            //modalAdicionar.setLayoutX(-531);
+            modalAdicionar.setLayoutY(100);
 
             modalPane.getChildren().add(modalAdicionar);
 
@@ -71,9 +76,10 @@ public class TabelaEventoController implements Initializable {
         }
     }
 
+
+
     EventoDAO eventoDAO = new EventoDAO();
     EventoServico eventoServico = new EventoServico();
-
     public void atualizaTabela() {
         observableList.clear();
 
@@ -90,7 +96,10 @@ public class TabelaEventoController implements Initializable {
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
         col6.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
 
-        col7.setCellFactory(col -> new TableCell<Evento, Void>() {  // BOTÃO DE REMOVER ITEM
+
+        // BOTÃO DE REMOVER ITEM
+
+        col7.setCellFactory(col -> new TableCell<Evento, Void>() {
 
             private final Button botaoRemover = new Button("Remover");
 
@@ -114,13 +123,31 @@ public class TabelaEventoController implements Initializable {
             }
         });
 
-        col7.setCellFactory(col -> new TableCell<Evento, Void>() { // BOTÃO PARA ABRIR EVENTO
 
-            private final Button botaoRemover = new Button("Abrir");
+        // BOTÃO PARA ABRIR EVENTO
+
+        col8.setCellFactory(col -> new TableCell<Evento, Void>() {
+
+            private final Button botaoAbrir = new Button("Abrir");
 
             {
-                botaoRemover.setOnAction(event -> {
+                botaoAbrir.setOnAction(event -> {
+                    try {
+                        FXMLLoader janelaEventoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEventoBase.fxml"));
 
+                        //JanelaEventoController janelaEventoController = new JanelaEventoController();
+                        //janelaEventoController.defineController(janelaEventoController);
+                        //janelaEventoLoader.setController(janelaEventoController);
+
+                        Parent janela = janelaEventoLoader.load();
+
+                        //janela.setLayoutY(-100);
+
+                        paneJanelaEvento.getChildren().add(janela);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
             }
 
@@ -131,7 +158,7 @@ public class TabelaEventoController implements Initializable {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(botaoRemover);
+                    setGraphic(botaoAbrir);
                 }
             }
         });
@@ -147,10 +174,9 @@ public class TabelaEventoController implements Initializable {
         col4.setPrefWidth(300);
         col5.setPrefWidth(100);
         col6.setPrefWidth(100);
+        col7.setPrefWidth(70); // BOTÃO REMOVER
+        col8.setPrefWidth(50); // BOTÃO ABRIR
     }
-
-    // ABRIR EVENTO
-
 
 
 

@@ -7,20 +7,24 @@
         fx:controller="main.controller.tabelas.TabelaEventoController"
 -->
 
-<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="847.0" prefWidth="1403.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1522.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TableView fx:id="tableView" layoutY="101.0" prefHeight="746.0" prefWidth="1403.0">
+        <TableView fx:id="tableView" layoutX="67.0" layoutY="275.0" prefHeight="746.0" prefWidth="1427.0">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="32.0" text="ID" />
-                <TableColumn fx:id="col2" prefWidth="435.0" text="Nome" />
-                <TableColumn fx:id="col3" prefWidth="377.0" text="Descrição" />
-                <TableColumn fx:id="col4" prefWidth="378.0" text="Endereço" />
-                <TableColumn fx:id="col5" minWidth="0.0" prefWidth="94.0" text="Data do Início" />
-                <TableColumn fx:id="col6" prefWidth="51.0" text="Data do Fim" />
-            <TableColumn fx:id="col7" prefWidth="75.0" />
+                <TableColumn fx:id="col2" prefWidth="281.0" text="Nome" />
+                <TableColumn fx:id="col3" prefWidth="470.0" text="Descrição" />
+                <TableColumn fx:id="col4" prefWidth="315.0" text="Endereço" />
+                <TableColumn fx:id="col5" minWidth="0.0" prefWidth="100.0" text="Data do Início" />
+                <TableColumn fx:id="col6" prefWidth="168.0" text="Data do Fim" />
+            <TableColumn fx:id="col7" prefWidth="33.0" />
+            <TableColumn fx:id="col8" prefWidth="118.0" />
             </columns>
         </TableView>
-      <Button layoutX="1232.0" layoutY="57.0" mnemonicParsing="false" onAction="#botaoAdicionar" text="+ Adicionar novo item" />
-      <Pane fx:id="modalPane" layoutX="465.0" layoutY="70.0" prefHeight="687.0" prefWidth="303.0" />
+      <Button layoutX="1335.0" layoutY="213.0" mnemonicParsing="false" onAction="#botaoAdicionar" text="+ Adicionar novo item" />
+      <Pane fx:id="modalPane" prefHeight="234.0" prefWidth="256.0">
+         <children>
+            <Pane fx:id="paneJanelaEvento" layoutY="99.0" prefHeight="98.0" prefWidth="82.0" />
+         </children></Pane>
     </children>
 </Pane>
