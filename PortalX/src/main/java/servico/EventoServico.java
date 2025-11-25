@@ -19,6 +19,7 @@ public class EventoServico {
     }
 
     public void alterar(Evento evento, String nome, String descricao, String endereco, LocalDate dataInicio, LocalDate dataFim) {
+
         evento.setNome(nome);
         evento.setDescricao(descricao);
         evento.setEndereco(endereco);

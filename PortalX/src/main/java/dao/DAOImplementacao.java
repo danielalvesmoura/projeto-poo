@@ -37,7 +37,14 @@ public abstract  class DAOImplementacao<T, ID> implements DAOGenerico<T, ID> {
 
     @Override
     public T alterar(T objeto) {
-        return null;
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        em.merge(objeto);
+        em.getTransaction().commit();
+        em.close();
+
+        return objeto;
     }
 
     @Override

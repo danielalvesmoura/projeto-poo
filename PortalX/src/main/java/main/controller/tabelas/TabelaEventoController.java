@@ -46,7 +46,10 @@ public class TabelaEventoController implements Initializable {
 
     // PANE DE CONTERÁ JANELA DO EVENTO
     @FXML
-    public Pane paneJanelaEvento;
+    public Pane paneTelaInteira;
+
+    @FXML
+    public Pane paneTelaInteiraAdicionar;
 
     ObservableList<Evento> observableList = FXCollections.observableArrayList();
 
@@ -60,16 +63,20 @@ public class TabelaEventoController implements Initializable {
 
     public void botaoAdicionar() {
         try {
-            FXMLLoader modalAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/modal/modalAdicionarEvento.fxml"));
+            FXMLLoader janelaAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEvento.fxml"));
 
-            modalAdicionarLoader.setController(tabelaEventoController);
+            JanelaEventoController janelaEventoController = new JanelaEventoController();
+            janelaEventoController.janelaEventoController = janelaEventoController;
+            janelaEventoController.tabelaEventoController = tabelaEventoController;
 
-            Parent modalAdicionar = modalAdicionarLoader.load();
+            janelaAdicionarLoader.setController(janelaEventoController);
+
+            Parent janelaAdicionar = janelaAdicionarLoader.load();
 
             //modalAdicionar.setLayoutX(-531);
-            modalAdicionar.setLayoutY(100);
+            //janelaAdicionar.setLayoutY(100);
 
-            modalPane.getChildren().add(modalAdicionar);
+            paneTelaInteira.getChildren().add(janelaAdicionar);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,19 +143,20 @@ public class TabelaEventoController implements Initializable {
 
 
                     try {
-                        FXMLLoader janelaEventoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEventoBase.fxml"));
+                        FXMLLoader janelaEventoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEvento.fxml"));
 
                         JanelaEventoController janelaEventoController = new JanelaEventoController();
-                        //janelaEventoController.defineController(janelaEventoController);
+                        janelaEventoController.janelaEventoController = janelaEventoController;
+                        janelaEventoController.tabelaEventoController = tabelaEventoController;
+
                         janelaEventoLoader.setController(janelaEventoController);
-
-                        Parent janela = janelaEventoLoader.load();
-
-                        //janela.setLayoutY(-100);
 
                         janelaEventoController.eventoAberto = evento;
 
-                        paneJanelaEvento.getChildren().add(janela);
+                        Parent janela = janelaEventoLoader.load();
+
+
+                        paneTelaInteira.getChildren().add(janela);
 
                     } catch (Exception e) {
                         e.printStackTrace();

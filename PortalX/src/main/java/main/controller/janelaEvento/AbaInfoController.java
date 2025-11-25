@@ -1,30 +1,58 @@
 package main.controller.janelaEvento;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import main.controller.tabelas.TabelaEventoController;
 import model.Evento;
 import servico.EventoServico;
 
 public class AbaInfoController {
+    public JanelaEventoController janelaEventoController;
+    public TabelaEventoController tabelaEventoController;
+
     public Evento eventoAberto;
 
     EventoServico eventoServico = new EventoServico();
 
     @FXML
-    private TextField campoNome;
+    public TextField campoNome;
     @FXML
-    private TextArea campoDescricao;
+    public TextArea campoDescricao;
     @FXML
-    private TextField campoEndereco;
+    public DatePicker campoDataInicio;
     @FXML
-    private DatePicker campoDataInicio;
+    public TextField campoHoraInicio;
     @FXML
-    private DatePicker campoDataFim;
+    public DatePicker campoDataFim;
+    @FXML
+    public TextField campoHoraFim;
+    @FXML
+    public TextField campoEndereco;
+    @FXML
+    public TextField campoCapacidade;
 
-    public void salvar() {
-        eventoServico.alterar(eventoAberto,campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(),campoDataFim.getValue());
+    // DEFINE SE A JANELA FOI ABERTA NO MODO ADIOCIONAR OU ALTERAR
+    public String modo = "";
+
+    @FXML
+    public Button botaoFechar;
+
+    @FXML
+    public void cancelar() {
+        janelaEventoController.botaoFechar();
     }
+
+    @FXML
+    public void salvar() {
+        if(modo == "Adicionar") {
+            eventoServico.cadastrar(campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(),campoDataFim.getValue());
+        } else {
+            eventoServico.alterar(eventoAberto,campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(),campoDataFim.getValue());
+        }
+
+        tabelaEventoController.atualizaTabela();
+        janelaEventoController.botaoFechar();
+    }
+
 }
