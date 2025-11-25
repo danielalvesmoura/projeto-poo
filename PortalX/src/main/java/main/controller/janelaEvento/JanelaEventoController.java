@@ -20,7 +20,7 @@ public class JanelaEventoController {
 
     @FXML
     public void initialize() {
-        abreInformacoes();
+        abreDetalhes();
     }
 
     @FXML
@@ -33,11 +33,26 @@ public class JanelaEventoController {
     // DEFINE SE A JANELA FOI ABERTA NO MODO ADIOCIONAR OU ALTERAR
     public String modo;
 
-    private void abreInformacoes() {
+    AbaInfoController abaInfoController = new AbaInfoController();
+
+    @FXML
+    public void salvar() {
+        abaInfoController.salvar();
+    }
+
+    @FXML
+    public void cancelar() {
+        abaInfoController.cancelar();
+    }
+
+    @FXML
+    public void abreDetalhes() {
         try {
+            paneAncoraAba.getChildren().clear();
+
             FXMLLoader abaInfoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/abaInfo.fxml"));
 
-            AbaInfoController abaInfoController = new AbaInfoController();
+            //AbaInfoController abaInfoController = new AbaInfoController();
             abaInfoController.janelaEventoController = janelaEventoController;
             abaInfoController.tabelaEventoController = tabelaEventoController;
 
@@ -55,6 +70,44 @@ public class JanelaEventoController {
                 abaInfoController.modo = "Adicionar";
                 System.out.println("evento e nulo");
             }
+
+            paneAncoraAba.getChildren().add(janela);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void abreSessoes() {
+        try {
+            paneAncoraAba.getChildren().clear();
+
+            FXMLLoader abaSessoesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/abaSessoes.fxml"));
+
+            AbaSessoesController abaSessoesController = new AbaSessoesController();
+            abaSessoesLoader.setController(abaSessoesController);
+
+            Parent janela = abaSessoesLoader.load();
+
+            paneAncoraAba.getChildren().add(janela);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void abreInscricoes() {
+        try {
+            paneAncoraAba.getChildren().clear();
+
+            FXMLLoader abaInscricoesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/abaInscricoes.fxml"));
+
+            AbaInscricoesController abaInscricoesController = new AbaInscricoesController();
+            abaInscricoesLoader.setController(abaInscricoesController);
+
+            Parent janela = abaInscricoesLoader.load();
 
             paneAncoraAba.getChildren().add(janela);
 

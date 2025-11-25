@@ -22,33 +22,11 @@ public class SecaoDashboardController implements Initializable {
         abreTabelaEventos();
     }
 
-    public void abreTabelaFeedback() {
-        tabelaPane.getChildren().clear();
-
-        try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/tableview.fxml"));
-
-            TabelaFeedbackController tabelaFeedbackController = new TabelaFeedbackController();
-            tabelaFeedbackController.defineTabelaController(tabelaFeedbackController);
-            tabelaLoader.setController(tabelaFeedbackController);
-
-            Parent tabela = tabelaLoader.load();
-
-            //tabela.setLayoutY(-500);
-            //tabela.setLayoutX(-550);
-
-            tabelaPane.getChildren().add(tabela);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void abreTabelaEventos() {
         tabelaPane.getChildren().clear();
 
         try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/tableview.fxml"));
+            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewEventos.fxml"));
 
             TabelaEventoController tabelaEventoController = new TabelaEventoController();
             tabelaEventoController.defineTabelaEventoController(tabelaEventoController);
@@ -65,32 +43,11 @@ public class SecaoDashboardController implements Initializable {
         }
     }
 
-    public void abreTabelaInscricao() {
+    public void abreTabelaPessoas() {
         tabelaPane.getChildren().clear();
 
         try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/tableview.fxml"));
-
-            TabelaInscricaoController tabelaInscricaoController = new TabelaInscricaoController();
-            tabelaInscricaoController.defineTabelaController(tabelaInscricaoController);
-            tabelaLoader.setController(tabelaInscricaoController);
-
-            Parent tabela = tabelaLoader.load();
-
-            tabela.setLayoutY(-100);
-
-            tabelaPane.getChildren().add(tabela);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abreTabelaPalestrante() {
-        tabelaPane.getChildren().clear();
-
-        try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/tableview.fxml"));
+            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewPessoas.fxml"));
 
             TabelaPalestranteController tabelaPalestranteController = new TabelaPalestranteController();
             tabelaPalestranteController.defineTabelaController(tabelaPalestranteController);
@@ -107,57 +64,15 @@ public class SecaoDashboardController implements Initializable {
         }
     }
 
-    public void abreTabelaParticipante() {
-        tabelaPane.getChildren().clear();
-
-        try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/tableview.fxml"));
-
-            TabelaParticipanteController tabelaParticipanteController = new TabelaParticipanteController();
-            tabelaParticipanteController.defineTabelaController(tabelaParticipanteController);
-            tabelaLoader.setController(tabelaParticipanteController);
-
-            Parent tabela = tabelaLoader.load();
-
-            tabela.setLayoutY(-100);
-
-            tabelaPane.getChildren().add(tabela);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void abreTabelaSala() {
         tabelaPane.getChildren().clear();
 
         try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/tableview.fxml"));
+            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewEventos.fxml"));
 
             TabelaSalaController tabelaSalaController = new TabelaSalaController();
             tabelaSalaController.defineTabelaController(tabelaSalaController);
             tabelaLoader.setController(tabelaSalaController);
-
-            Parent tabela = tabelaLoader.load();
-
-            tabela.setLayoutY(-100);
-
-            tabelaPane.getChildren().add(tabela);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void abreTabelaSessao() {
-        tabelaPane.getChildren().clear();
-
-        try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/tableview.fxml"));
-
-            TabelaSessaoController tabelaSessaoController = new TabelaSessaoController();
-            tabelaSessaoController.defineTabelaController(tabelaSessaoController);
-            tabelaLoader.setController(tabelaSessaoController);
 
             Parent tabela = tabelaLoader.load();
 

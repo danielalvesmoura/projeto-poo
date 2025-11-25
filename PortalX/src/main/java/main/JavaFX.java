@@ -22,11 +22,11 @@ public class JavaFX extends Application {
         this.stage = primaryStage;
         stage.setTitle("Portal X");
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/secaoDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/menuPrincipal/secaoDashboard.fxml"));
 
         Scene scene = new Scene(root);
 
-        URL css = getClass().getResource("/fxml/barraLateralInicio.css");
+        URL css = getClass().getResource("/fxml/menuPrincipal/barraLateralInicio.css");
         if(css!=null) scene.getStylesheets().add(css.toExternalForm());
         else System.out.println("nao funfou");
 

@@ -2,80 +2,64 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="paneRaiz" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1546.0" stylesheets="/fxml/janelaEvento/eventoStyle.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="paneRaiz" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0" prefWidth="1465.0" stylesheets="/fxml/janelaEvento/eventoStyle.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label graphicTextGap="1.0" layoutX="47.0" layoutY="52.0" prefHeight="51.0" prefWidth="924.0" text="Semana Nacional de Não Sei o Que" wrapText="true">
-         <font>
-            <Font size="53.0" />
-         </font>
-      </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="859.0" layoutX="47.0" layoutY="173.0" stroke="BLACK" strokeType="INSIDE" width="1465.0" />
-      <Button layoutX="1292.0" layoutY="66.0" mnemonicParsing="false" onAction="#salvar" prefHeight="50.0" prefWidth="186.0" text="Salvar">
-         <font>
-            <Font size="21.0" />
-         </font></Button>
-      <Label layoutX="72.0" layoutY="188.0" text="Informações do Evento">
+      <Label layoutX="33.0" layoutY="34.0" text="Informações do Evento">
          <font>
             <Font size="37.0" />
          </font>
       </Label>
-      <Label layoutX="72.0" layoutY="273.0" text="Nome do Evento">
+      <Label layoutX="33.0" layoutY="119.0" text="Nome do Evento">
          <font>
             <Font size="25.0" />
          </font></Label>
-      <TextField fx:id="campoNome" layoutX="72.0" layoutY="317.0" prefHeight="50.0" prefWidth="1399.0">
+      <TextField fx:id="campoNome" layoutX="33.0" layoutY="163.0" prefHeight="50.0" prefWidth="1399.0">
          <font>
             <Font size="15.0" />
          </font></TextField>
-      <Label layoutX="73.0" layoutY="388.0" text="Nome do Evento">
+      <Label layoutX="34.0" layoutY="234.0" text="Nome do Evento">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextArea fx:id="campoDescricao" layoutX="72.0" layoutY="421.0" prefHeight="164.0" prefWidth="1399.0" />
-      <DatePicker fx:id="campoDataInicio" layoutX="73.0" layoutY="642.0" prefHeight="50.0" prefWidth="331.0" />
-      <Label layoutX="73.0" layoutY="607.0" text="Data do Início">
+      <TextArea fx:id="campoDescricao" layoutX="33.0" layoutY="267.0" prefHeight="164.0" prefWidth="1399.0" />
+      <DatePicker fx:id="campoDataInicio" layoutX="34.0" layoutY="488.0" prefHeight="50.0" prefWidth="331.0" />
+      <Label layoutX="34.0" layoutY="453.0" text="Data do Início">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <DatePicker fx:id="campoDataFim" layoutX="780.0" layoutY="642.0" prefHeight="50.0" prefWidth="331.0" />
-      <Label layoutX="780.0" layoutY="607.0" text="Data de Fim">
+      <DatePicker fx:id="campoDataFim" layoutX="741.0" layoutY="488.0" prefHeight="50.0" prefWidth="331.0" />
+      <Label layoutX="741.0" layoutY="453.0" text="Data de Fim">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="73.0" layoutY="857.0" text="Capacidade">
+      <Label layoutX="34.0" layoutY="703.0" text="Capacidade">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="campoCapacidade" layoutX="73.0" layoutY="893.0" prefHeight="50.0" prefWidth="154.0" />
-      <Label layoutX="448.0" layoutY="607.0" text="Horário de Início">
+      <TextField fx:id="campoCapacidade" layoutX="34.0" layoutY="739.0" prefHeight="50.0" prefWidth="154.0" />
+      <Label layoutX="409.0" layoutY="453.0" text="Horário de Início">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="campoHoraInicio" layoutX="448.0" layoutY="642.0" prefHeight="50.0" prefWidth="184.0" />
-      <Label layoutX="1167.0" layoutY="607.0" text="Horário de Fim">
+      <TextField fx:id="campoHoraInicio" layoutX="409.0" layoutY="488.0" prefHeight="50.0" prefWidth="184.0" />
+      <Label layoutX="1128.0" layoutY="453.0" text="Horário de Fim">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="campoHoraFim" layoutX="1167.0" layoutY="642.0" prefHeight="50.0" prefWidth="184.0" />
-      <Label layoutX="73.0" layoutY="730.0" text="Endereço">
+      <TextField fx:id="campoHoraFim" layoutX="1128.0" layoutY="488.0" prefHeight="50.0" prefWidth="184.0" />
+      <Label layoutX="34.0" layoutY="576.0" text="Endereço">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <TextField fx:id="campoEndereco" layoutX="73.0" layoutY="766.0" prefHeight="50.0" prefWidth="1399.0" />
-      <Button fx:id="botaoFechar" layoutX="1093.0" layoutY="66.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="50.0" prefWidth="186.0" text="Fechar">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </Button>
+      <TextField fx:id="campoEndereco" layoutX="34.0" layoutY="612.0" prefHeight="50.0" prefWidth="1399.0" />
    </children>
 </Pane>

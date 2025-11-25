@@ -1,13 +1,15 @@
 package main.controller.janelaEvento;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import main.controller.tabelas.TabelaEventoController;
 import model.Evento;
 import servico.EventoServico;
 
-public class AbaInfoController {
+public class AbaInscricoesController {
     public JanelaEventoController janelaEventoController;
     public TabelaEventoController tabelaEventoController;
 

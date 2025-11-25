@@ -60,3 +60,11 @@
 .botaoAdicionar:pressed {
     -fx-background-color: #6a00e1;
 }
+
+.campoFiltro {
+    -fx-background-image: url("imagens/lupa.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left center;
+    -fx-background-size: 26px;
+    -fx-padding: 0 50 0 0;
+}
