@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
-import main.controller.tabelas.TabelaEventoController;
+import main.controller.menuPrincipal.tabelas.TabelaEventoController;
 import model.Evento;
 
 public class JanelaEventoController {

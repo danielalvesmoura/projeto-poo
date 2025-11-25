@@ -1,4 +1,4 @@
-package main.controller.tabelas;
+package main.controller.menuPrincipal.tabelas;
 
 import dao.FeedbackDAO;
 import javafx.collections.FXCollections;

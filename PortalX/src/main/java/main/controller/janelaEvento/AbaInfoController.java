@@ -2,8 +2,7 @@ package main.controller.janelaEvento;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
-import main.controller.tabelas.TabelaEventoController;
+import main.controller.menuPrincipal.tabelas.TabelaEventoController;
 import model.Evento;
 import servico.EventoServico;
 

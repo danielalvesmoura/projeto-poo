@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @MappedSuperclass
@@ -15,16 +16,16 @@ public abstract class Pessoa {
     private String nomeCompleto;
     private String email;
     private String telefone;
+    private LocalDate dataNascimento;
 
-    public Pessoa(String nomeCompleto, String email, String telefone) {
+    public Pessoa(String nomeCompleto, String email, String telefone, LocalDate dataNascimento) {
         this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.telefone = telefone;
+        this.dataNascimento = dataNascimento;
     }
 
-    public long getId() {
-        return id;
-    }
+
 
     public String getNomeCompleto() {
         return nomeCompleto;
@@ -48,5 +49,13 @@ public abstract class Pessoa {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }

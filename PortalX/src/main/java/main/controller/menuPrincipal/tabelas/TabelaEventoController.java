@@ -1,4 +1,4 @@
-package main.controller.tabelas;
+package main.controller.menuPrincipal.tabelas;
 
 import dao.EventoDAO;
 import javafx.collections.FXCollections;
@@ -61,6 +61,7 @@ public class TabelaEventoController implements Initializable {
 
 
 
+    @FXML
     public void botaoAdicionar() {
         try {
             FXMLLoader janelaAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEvento.fxml"));

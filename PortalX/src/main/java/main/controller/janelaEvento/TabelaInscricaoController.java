@@ -1,4 +1,4 @@
-package main.controller.tabelas;
+package main.controller.janelaEvento;
 
 import dao.FeedbackDAO;
 import javafx.collections.FXCollections;

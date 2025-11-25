@@ -1,0 +1,8 @@
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #737373;
+}
+
+.label {
+    -fx-text-fill: white;
+}

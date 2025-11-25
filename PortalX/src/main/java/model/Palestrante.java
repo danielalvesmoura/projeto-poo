@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,42 +14,13 @@ public class Palestrante extends Pessoa {
     private long id;
 
     @Column(length = 100)
-    private String biografia;
-    private String especialidade;
-    private String curriculo;
+    private String nome;
+    private String email;
+    private String telefone;
+    private LocalDate dataNascimento;
 
-    public Palestrante(String nomeCompleto, String email, String telefone, String biografia, String especialidade, String curriculo) {
-        super(nomeCompleto, email, telefone);
-        this.biografia = biografia;
-        this.especialidade = especialidade;
-        this.curriculo = curriculo;
+    public Palestrante(String nome, String email, String telefone, LocalDate dataNascimento) {
+        super(nome, email, telefone, dataNascimento);
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getBiografia() {
-        return biografia;
-    }
-
-    public void setBiografia(String biografia) {
-        this.biografia = biografia;
-    }
-
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
-
-    public String getCurriculo() {
-        return curriculo;
-    }
-
-    public void setCurriculo(String curriculo) {
-        this.curriculo = curriculo;
-    }
 }

@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import main.controller.tabelas.TabelaEventoController;
+import main.controller.menuPrincipal.tabelas.TabelaEventoController;
 import model.Evento;
 import servico.EventoServico;
 

@@ -1,6 +1,8 @@
-package main.controller.tabelas;
+package main.controller.menuPrincipal.tabelas;
 
-import dao.EventoDAO;
+import dao.PalestranteDAO;
+import dao.ParticipanteDAO;
+import dao.PessoaDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,9 +12,15 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import main.controller.janelaEvento.JanelaEventoController;
-import model.Evento;
-import servico.EventoServico;
+import main.controller.janelaPessoa.JanelaPessoaController;
+import main.controller.menuPrincipal.AbaAdicionarPessoaController;
+import model.Palestrante;
+import model.Participante;
+import model.Pessoa;
+import model.Pessoa;
+import servico.PalestranteServico;
+import servico.ParticipanteServico;
+import servico.PessoaServico;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -20,36 +28,30 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TabelaPessoasController implements Initializable {
-    //TabelaPessoasController tabelaEventoController;
+    TabelaPessoasController tabelaPessoasController;
 
-    //public void defineTabelaEventoController(TabelaPessoasController tabelaEventoController) {
-    //    this.tabelaEventoController = tabelaEventoController;
-    //}
-
-    @FXML
-    public TableView<Evento> tableView;
+    public void defineTabelaPessoasController(TabelaPessoasController tabelaPessoasController) {
+        this.tabelaPessoasController = tabelaPessoasController;
+    }
 
     @FXML
-    public TableColumn<Evento,String> colId;
-    public TableColumn<Evento,String> col2;
-    public TableColumn<Evento,String> col3;
-    public TableColumn<Evento,String> col4;
-    public TableColumn<Evento,LocalDate> col5;
-    public TableColumn<Evento,LocalDate> col6;
-    public TableColumn<Evento,Void> col7;
-    public TableColumn<Evento,Void> col8;
+    public TableView<Pessoa> tableView;
 
     @FXML
-    public Pane modalPane;
+    public TableColumn<Pessoa,String> colId;
+    public TableColumn<Pessoa,String> col2;
+    public TableColumn<Pessoa,String> col3;
+    public TableColumn<Pessoa,String> col4;
+    public TableColumn<Pessoa,LocalDate> col5;
+    public TableColumn<Pessoa,LocalDate> col6;
+    public TableColumn<Pessoa,Void> col7;
+    public TableColumn<Pessoa,Void> col8;
 
-    // PANE DE CONTERÁ JANELA DO EVENTO
+    // PANE DE CONTERÁ A ABA DE CADASTRO
     @FXML
-    public Pane paneTelaInteira;
+    public Pane paneJanelaParcial;
 
-    @FXML
-    public Pane paneTelaInteiraAdicionar;
-
-    ObservableList<Evento> observableList = FXCollections.observableArrayList();
+    ObservableList<Pessoa> observableList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,57 +63,59 @@ public class TabelaPessoasController implements Initializable {
 
     public void botaoAdicionar() {
         try {
-            FXMLLoader janelaAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEvento.fxml"));
+            FXMLLoader janelaAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/abaAdicionarPessoa.fxml"));
 
-            JanelaEventoController janelaEventoController = new JanelaEventoController();
-            janelaEventoController.janelaEventoController = janelaEventoController;
-            janelaEventoController.tabelaEventoController = tabelaEventoController;
-
-            janelaAdicionarLoader.setController(janelaEventoController);
+            AbaAdicionarPessoaController abaAdicionarPessoaController = new AbaAdicionarPessoaController();
+            janelaAdicionarLoader.setController(abaAdicionarPessoaController);
 
             Parent janelaAdicionar = janelaAdicionarLoader.load();
 
-            //modalAdicionar.setLayoutX(-531);
-            //janelaAdicionar.setLayoutY(100);
 
-            paneTelaInteira.getChildren().add(janelaAdicionar);
+            paneJanelaParcial.getChildren().add(janelaAdicionar);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    PalestranteDAO palestranteDAO = new PalestranteDAO();
+    ParticipanteDAO participanteDAO = new ParticipanteDAO();
 
+    PalestranteServico palestranteServico = new PalestranteServico();
+    ParticipanteServico participanteServico = new ParticipanteServico();
 
-    EventoDAO eventoDAO = new EventoDAO();
-    EventoServico eventoServico = new EventoServico();
+    PessoaDAO pessoaDAO = new PessoaDAO();
+
     public void atualizaTabela() {
         observableList.clear();
 
-        List<Evento> eventos = eventoDAO.buscarTodos(Evento.class);
+        List<Palestrante> palestrantes = palestranteDAO.buscarTodos(Palestrante.class);
+        List<Participante> participantes = participanteDAO.buscarTodos(Participante.class);
 
-        for(Evento e : eventos) {
-            observableList.add(e);
+        for(Palestrante p : palestrantes) {
+            observableList.add(p);
+        }
+        for(Participante p : participantes) {
+            observableList.add(p);
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Descricao"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("DataNascimento"));
 
 
         // BOTÃO DE REMOVER ITEM
 
-        col7.setCellFactory(col -> new TableCell<Evento, Void>() {
+        col7.setCellFactory(col -> new TableCell<Pessoa, Void>() {
 
             private final Button botaoRemover = new Button("Remover");
 
             {
                 botaoRemover.setOnAction(event -> {
-                    Evento e = getTableView().getItems().get(getIndex());
-                    eventoServico.remover(e);
+                    Pessoa p = getTableView().getItems().get(getIndex());
+                    eventoServico.remover(p);
                     atualizaTabela();
                 });
             }
@@ -131,30 +135,30 @@ public class TabelaPessoasController implements Initializable {
 
         // BOTÃO PARA ABRIR EVENTO
 
-        col8.setCellFactory(col -> new TableCell<Evento, Void>() {
+        col8.setCellFactory(col -> new TableCell<Pessoa, Void>() {
 
             private final Button botaoAbrir = new Button("Abrir");
 
             {
                 botaoAbrir.setOnAction(event -> {
-                    Evento evento = getTableView().getItems().get(getIndex());
+                    Pessoa pessoa = getTableView().getItems().get(getIndex());
 
 
                     try {
-                        FXMLLoader janelaEventoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/janelaEvento.fxml"));
+                        FXMLLoader janelaPessoaLoader = new FXMLLoader(getClass().getResource("/fxml/janelaPessoa/janelaPessoa.fxml"));
 
-                        JanelaEventoController janelaEventoController = new JanelaEventoController();
-                        janelaEventoController.janelaEventoController = janelaEventoController;
-                        janelaEventoController.tabelaEventoController = tabelaEventoController;
-
-                        janelaEventoLoader.setController(janelaEventoController);
-
-                        janelaEventoController.eventoAberto = evento;
-
-                        Parent janela = janelaEventoLoader.load();
+                        JanelaPessoaController janelaPessoaController = new JanelaPessoaController();
+                        janelaPessoaController.janelaPessoaController = janelaPessoaController;
 
 
-                        paneTelaInteira.getChildren().add(janela);
+                        janelaPessoaLoader.setController(janelaPessoaController);
+
+                        janelaPessoaController.eventoAberto = evento;
+
+                        Parent janela = janelaPessoaLoader.load();
+
+
+                        //paneTelaInteira.getChildren().add(janela);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -224,8 +228,8 @@ public class TabelaPessoasController implements Initializable {
         eventoServico.cadastrar(campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(),campoDataFim.getValue());
 
         mensagem.setStyle("-fx-text-fill: green;");
-        mensagem.setText("Evento cadastrado com sucesso!");
+        mensagem.setText("Pessoa cadastrado com sucesso!");
 
-        tabelaEventoController.atualizaTabela();
+        //tabelaPessoaController.atualizaTabela();
     }
 }

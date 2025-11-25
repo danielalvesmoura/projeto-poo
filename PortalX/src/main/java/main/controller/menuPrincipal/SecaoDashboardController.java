@@ -1,4 +1,4 @@
-package main.controller;
+package main.controller.menuPrincipal;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -6,24 +6,29 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 
 import javafx.scene.layout.Pane;
-import main.controller.tabelas.*;
+import main.controller.menuPrincipal.tabelas.TabelaEventoController;
+import main.controller.menuPrincipal.tabelas.TabelaPessoasController;
+import main.controller.menuPrincipal.tabelas.TabelaSalaController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SecaoDashboardController implements Initializable {
     @FXML
-    public Pane tabelaPane;
+    public Pane tabelaPane;  // TELA INTEIRA
 
-
+    @FXML
+    public Pane paneAncoraTabela;  // TELA PARCIAL
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         abreTabelaEventos();
     }
 
+    @FXML
     public void abreTabelaEventos() {
         tabelaPane.getChildren().clear();
+        paneAncoraTabela.getChildren().clear();
 
         try {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewEventos.fxml"));
@@ -38,20 +43,22 @@ public class SecaoDashboardController implements Initializable {
 
             tabelaPane.getChildren().add(tabela);
 
+            System.out.println("abretabelaeventos");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void abreTabelaPessoas() {
+    public void abrePessoas() {
         tabelaPane.getChildren().clear();
+        paneAncoraTabela.getChildren().clear();
 
         try {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewPessoas.fxml"));
 
-            TabelaPalestranteController tabelaPalestranteController = new TabelaPalestranteController();
-            tabelaPalestranteController.defineTabelaController(tabelaPalestranteController);
-            tabelaLoader.setController(tabelaPalestranteController);
+            TabelaPessoasController tabelaPessoasController = new TabelaPessoasController();
+            tabelaLoader.setController(tabelaPessoasController);
 
             Parent tabela = tabelaLoader.load();
 
