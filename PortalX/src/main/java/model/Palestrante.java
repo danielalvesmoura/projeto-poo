@@ -9,18 +9,21 @@ import java.util.Date;
 @Table(name = "palestrante")
 public class Palestrante extends Pessoa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private long id;
 
-    @Column(length = 100)
-    private String nome;
-    private String email;
-    private String telefone;
-    private LocalDate dataNascimento;
+    //@Column(length = 100)
+    //private String nome;
+    //private String email;
+    //private String telefone;
+    //private LocalDate dataNascimento;
+
+    public Palestrante(){};
 
     public Palestrante(String nome, String email, String telefone, LocalDate dataNascimento) {
         super(nome, email, telefone, dataNascimento);
     }
+
 
 }

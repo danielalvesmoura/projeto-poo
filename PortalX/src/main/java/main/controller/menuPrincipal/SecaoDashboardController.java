@@ -39,8 +39,6 @@ public class SecaoDashboardController implements Initializable {
 
             Parent tabela = tabelaLoader.load();
 
-            tabela.setLayoutY(-100);
-
             tabelaPane.getChildren().add(tabela);
 
             System.out.println("abretabelaeventos");
@@ -58,6 +56,7 @@ public class SecaoDashboardController implements Initializable {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewPessoas.fxml"));
 
             TabelaPessoasController tabelaPessoasController = new TabelaPessoasController();
+            tabelaPessoasController.tabelaPessoasController = tabelaPessoasController;
             tabelaLoader.setController(tabelaPessoasController);
 
             Parent tabela = tabelaLoader.load();

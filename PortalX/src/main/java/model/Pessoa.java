@@ -13,26 +13,30 @@ public abstract class Pessoa {
     private long id;
 
     @Column(length = 100)
-    private String nomeCompleto;
+    private String nome;
     private String email;
     private String telefone;
     private LocalDate dataNascimento;
 
-    public Pessoa(String nomeCompleto, String email, String telefone, LocalDate dataNascimento) {
-        this.nomeCompleto = nomeCompleto;
+    public Pessoa(String nome, String email, String telefone, LocalDate dataNascimento) {
+        this.nome = nome;
         this.email = email;
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
     }
 
-
-
-    public String getNomeCompleto() {
-        return nomeCompleto;
+    public long getId() {
+        return id;
     }
 
-    public void setNomeCompleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
+    public Pessoa(){};
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {

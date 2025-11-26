@@ -8,7 +8,7 @@
         fx:controller="main.controller.menuPrincipal.tabelas.TabelaEventoController"
 -->
 
-<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TableView fx:id="tableView" layoutX="457.0" layoutY="352.0" prefHeight="703.0" prefWidth="1427.0" styleClass="tableView" stylesheets="/fxml/tableview.css">
             <columns>
@@ -17,8 +17,8 @@
                 <TableColumn fx:id="col3" prefWidth="470.0" styleClass="coluna" text="Descrição" />
                 <TableColumn fx:id="col4" prefWidth="315.0" styleClass="coluna" text="Endereço" />
                 <TableColumn fx:id="col5" minWidth="0.0" prefWidth="100.0" styleClass="coluna" text="Data do Início" />
-                <TableColumn fx:id="col6" prefWidth="168.0" styleClass="coluna" text="Data do Fim" />
-            <TableColumn fx:id="col7" prefWidth="33.0" styleClass="coluna" />
+                <TableColumn fx:id="col6" prefWidth="201.0" styleClass="coluna" />
+            <TableColumn fx:id="col7" minWidth="0.0" prefWidth="0.0" styleClass="coluna" />
             <TableColumn fx:id="col8" prefWidth="118.0" styleClass="coluna" />
             </columns>
         </TableView>

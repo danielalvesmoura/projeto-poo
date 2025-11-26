@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "evento")
@@ -14,6 +15,9 @@ public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @OneToMany(mappedBy = "evento")
+    private List<Sessao> sessoes;
 
     @Column(length = 100)
     private LocalDate dataFim;

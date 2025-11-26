@@ -54,7 +54,7 @@ public class AbaPessoaController {
 
 
     public void salvar() {
-        if(modo == "Adicionar") {
+        if(modo == "Alterar") {
             //if(choiceTipo.getValue() == "Participante") {
             //    participanteServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
             //} else {
@@ -62,6 +62,11 @@ public class AbaPessoaController {
             //}
 
             pessoaServico.alterar(pessoaAberta, campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+            System.out.println("alterado");
+            System.out.println(campoNome.getText());
+            System.out.println(campoEmail.getText());
+            System.out.println(campoTelefone.getText());
+            System.out.println(campoDataNascimento.getValue());
 
         } else {
             if(choiceTipo.getValue() == "Participante") {
@@ -69,6 +74,11 @@ public class AbaPessoaController {
             } else {
                 palestranteServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
             }
+            System.out.println("cadastrado");
+            System.out.println(campoNome.getText());
+            System.out.println(campoEmail.getText());
+            System.out.println(campoTelefone.getText());
+            System.out.println(campoDataNascimento.getValue());
         }
 
         tabelaPessoasController.atualizaTabela();

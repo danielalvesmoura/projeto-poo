@@ -9,15 +9,17 @@ import java.util.Date;
 @Table(name = "participante")
 public class Participante extends Pessoa {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private long id;
 
-    @Column(length = 100)
-    private String nome;
-    private String email;
-    private String telefone;
-    private LocalDate dataNascimento;
+    //@Column(length = 100)
+    //private String nome;
+    //private String email;
+    //private String telefone;
+    //private LocalDate dataNascimento;
+
+    public Participante(){};
 
 
     public Participante(String nome, String email, String telefone, LocalDate dataNascimento) {

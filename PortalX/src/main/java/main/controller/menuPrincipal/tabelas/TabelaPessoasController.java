@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TabelaPessoasController implements Initializable {
-    TabelaPessoasController tabelaPessoasController;
+    public TabelaPessoasController tabelaPessoasController;
 
     public void defineTabelaPessoasController(TabelaPessoasController tabelaPessoasController) {
         this.tabelaPessoasController = tabelaPessoasController;
@@ -64,10 +64,12 @@ public class TabelaPessoasController implements Initializable {
             FXMLLoader janelaAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/abaAdicionarPessoa.fxml"));
 
             AbaPessoaController abaPessoaController = new AbaPessoaController();
+            abaPessoaController.tabelaPessoasController = tabelaPessoasController;
             janelaAdicionarLoader.setController(abaPessoaController);
 
             Parent janelaAdicionar = janelaAdicionarLoader.load();
 
+            System.out.println("era pra abrir");
 
             paneJanelaParcial.getChildren().add(janelaAdicionar);
 
@@ -101,10 +103,10 @@ public class TabelaPessoasController implements Initializable {
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("DataNascimento"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("email"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
 
 
         // BOTÃO DE REMOVER ITEM
@@ -146,11 +148,10 @@ public class TabelaPessoasController implements Initializable {
 
 
                     try {
-                        FXMLLoader janelaPessoaLoader = new FXMLLoader(getClass().getResource("/fxml/janelaPessoa/janelaPessoa.fxml"));
+                        FXMLLoader janelaPessoaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/abaAdicionarPessoa.fxml"));
 
                         AbaPessoaController abaPessoaController = new AbaPessoaController();
                         abaPessoaController.tabelaPessoasController = tabelaPessoasController;
-
                         janelaPessoaLoader.setController(abaPessoaController);
 
                         abaPessoaController.pessoaAberta = pessoaAberta;
@@ -179,10 +180,9 @@ public class TabelaPessoasController implements Initializable {
         });
 
         col2.setText("Nome");
-        col3.setText("Descrição");
-        col4.setText("Endereço");
-        col5.setText("Data do Início");
-        col6.setText("Data do Fim");
+        col3.setText("Email");
+        col4.setText("Telefone");
+        col5.setText("Data de Nascimento");
 
         col2.setPrefWidth(300);
         col3.setPrefWidth(400);

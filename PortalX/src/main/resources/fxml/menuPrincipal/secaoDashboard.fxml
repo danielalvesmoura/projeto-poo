@@ -19,7 +19,6 @@
                   <Image url="@../imagens/logoRoxa.png" />
                </image></ImageView>
             <Separator fx:id="separador" layoutX="374.0" orientation="VERTICAL" prefHeight="1080.0" prefWidth="0.5" />
-            <Pane fx:id="tabelaPane" prefHeight="63.0" prefWidth="58.0" />
             <Button graphicTextGap="0.0" layoutX="27.0" layoutY="185.0" mnemonicParsing="false" onAction="#abreTabelaEventos" prefHeight="58.0" prefWidth="326.0" styleClass="sideBarEventos" text="          Eventos" textFill="#7800ff">
                <font>
                   <Font size="29.0" />
@@ -33,6 +32,7 @@
                   <Font size="29.0" />
                </font>
             </Button>
+            <Pane fx:id="tabelaPane" prefHeight="63.0" prefWidth="58.0" />
             <Pane fx:id="paneAncoraTabela" layoutX="374.0" layoutY="99.0" prefHeight="86.0" prefWidth="88.0" />
          </children></Pane>
        <!--<TableView fx:id="tableView" layoutX="420.0" layoutY="168.0" prefHeight="892.0" prefWidth="1474.0">

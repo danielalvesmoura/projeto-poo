@@ -27,7 +27,7 @@ public class PessoaServico {
 
     public void alterar(Pessoa pessoa, String nome, String email, String telefone, LocalDate dataNascimento) {
 
-        pessoa.setNomeCompleto(nome);
+        pessoa.setNome(nome);
         pessoa.setEmail(email);
         pessoa.setTelefone(telefone);
         pessoa.setDataNascimento(dataNascimento);

@@ -11,6 +11,11 @@ public class ParticipanteServico {
     public void cadastrar(String nome, String email, String telefone, LocalDate dataNascimento) {
         Participante participante = new Participante(nome, email, telefone, dataNascimento);
         participanteDao.inserir(participante);
+        System.out.println("participante");
+        System.out.println(nome);
+        System.out.println(email);
+        System.out.println(telefone);
+        System.out.println(dataNascimento);
     }
 
     public void remover(Participante participante) {
@@ -19,7 +24,7 @@ public class ParticipanteServico {
 
     public void alterar(Participante participante, String nome, String email, String telefone, LocalDate dataNascimento) {
 
-        participante.setNomeCompleto(nome);
+        participante.setNome(nome);
         participante.setEmail(email);
         participante.setTelefone(telefone);
         participante.setDataNascimento(dataNascimento);
