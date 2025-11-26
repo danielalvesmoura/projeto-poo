@@ -61,8 +61,6 @@ public class SecaoDashboardController implements Initializable {
 
             Parent tabela = tabelaLoader.load();
 
-            tabela.setLayoutY(-100);
-
             tabelaPane.getChildren().add(tabela);
 
         } catch (Exception e) {

@@ -13,8 +13,7 @@ import servico.ParticipanteServico;
 import servico.PessoaServico;
 
 public class AbaPessoaController {
-    // DEFINE SE A JANELA FOI ABERTA NO MODO ADIOCIONAR OU ALTERAR
-    public String modo = "";
+
 
     @FXML
     public Pane paneRaiz;
@@ -51,6 +50,9 @@ public class AbaPessoaController {
     PessoaServico pessoaServico = new PessoaServico();
 
     public Pessoa pessoaAberta;
+
+    // DEFINE SE A JANELA FOI ABERTA NO MODO ADIOCIONAR OU ALTERAR
+    public String modo = "";
 
 
     public void salvar() {

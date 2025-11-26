@@ -65,9 +65,12 @@ public class TabelaPessoasController implements Initializable {
 
             AbaPessoaController abaPessoaController = new AbaPessoaController();
             abaPessoaController.tabelaPessoasController = tabelaPessoasController;
+            abaPessoaController.modo = "Cadastrar";
             janelaAdicionarLoader.setController(abaPessoaController);
 
             Parent janelaAdicionar = janelaAdicionarLoader.load();
+
+            janelaAdicionar.setLayoutX(-400);
 
             System.out.println("era pra abrir");
 

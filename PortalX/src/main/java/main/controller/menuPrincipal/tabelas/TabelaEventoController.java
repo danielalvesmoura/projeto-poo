@@ -78,7 +78,7 @@ public class TabelaEventoController implements Initializable {
             //modalAdicionar.setLayoutX(-531);
             //janelaAdicionar.setLayoutY(100);
 
-            paneTelaInteira.getChildren().add(janelaAdicionar);
+            paneTelaInteiraMenuPrincipal.getChildren().add(janelaAdicionar);
 
         } catch (Exception e) {
             e.printStackTrace();

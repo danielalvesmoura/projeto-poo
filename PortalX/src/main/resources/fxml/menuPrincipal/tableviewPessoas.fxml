@@ -36,5 +36,6 @@
             <Font size="25.0" />
          </font>
       </TextField>
+      <Pane fx:id="paneJanelaParcial" prefHeight="89.0" prefWidth="81.0" />
     </children>
 </Pane>
