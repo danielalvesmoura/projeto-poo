@@ -87,7 +87,7 @@ public class TabelaPessoasController implements Initializable {
     PessoaDAO pessoaDAO = new PessoaDAO();
     PessoaServico pessoaServico = new PessoaServico();
 
-
+    public Pane paneTelaInteiraMenuPrincipal;  // PANE VINDO DO MENU PRINCIPAL
 
     public void atualizaTabela() {
         observableList.clear();
@@ -159,7 +159,7 @@ public class TabelaPessoasController implements Initializable {
                         Parent janela = janelaPessoaLoader.load();
 
 
-                        paneJanelaParcial.getChildren().add(janela);
+                        paneTelaInteiraMenuPrincipal.getChildren().add(janela);
 
                     } catch (Exception e) {
                         e.printStackTrace();

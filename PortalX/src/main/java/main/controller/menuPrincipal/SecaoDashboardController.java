@@ -18,7 +18,7 @@ public class SecaoDashboardController implements Initializable {
     public Pane tabelaPane;  // TELA INTEIRA
 
     @FXML
-    public Pane paneAncoraTabela;  // TELA PARCIAL
+    public Pane paneTelaInteiraMenuPrincipal;  // TELA INTEIRA QUE VAI ENTRAR O MENU DO EVENTO
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -28,13 +28,13 @@ public class SecaoDashboardController implements Initializable {
     @FXML
     public void abreTabelaEventos() {
         tabelaPane.getChildren().clear();
-        paneAncoraTabela.getChildren().clear();
 
         try {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewEventos.fxml"));
 
             TabelaEventoController tabelaEventoController = new TabelaEventoController();
             tabelaEventoController.defineTabelaEventoController(tabelaEventoController);
+            tabelaEventoController.paneTelaInteiraMenuPrincipal = paneTelaInteiraMenuPrincipal;
             tabelaLoader.setController(tabelaEventoController);
 
             Parent tabela = tabelaLoader.load();
@@ -50,13 +50,13 @@ public class SecaoDashboardController implements Initializable {
 
     public void abrePessoas() {
         tabelaPane.getChildren().clear();
-        paneAncoraTabela.getChildren().clear();
 
         try {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewPessoas.fxml"));
 
             TabelaPessoasController tabelaPessoasController = new TabelaPessoasController();
             tabelaPessoasController.tabelaPessoasController = tabelaPessoasController;
+            tabelaPessoasController.paneTelaInteiraMenuPrincipal = paneTelaInteiraMenuPrincipal;
             tabelaLoader.setController(tabelaPessoasController);
 
             Parent tabela = tabelaLoader.load();

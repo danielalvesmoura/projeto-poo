@@ -32,8 +32,8 @@
                   <Font size="29.0" />
                </font>
             </Button>
-            <Pane fx:id="tabelaPane" prefHeight="63.0" prefWidth="58.0" />
-            <Pane fx:id="paneAncoraTabela" layoutX="374.0" layoutY="99.0" prefHeight="86.0" prefWidth="88.0" />
+            <Pane fx:id="tabelaPane" layoutX="374.0" prefHeight="63.0" prefWidth="58.0" />
+            <Pane fx:id="paneTelaInteiraMenuPrincipal" layoutY="4.0" prefHeight="86.0" prefWidth="88.0" />
          </children></Pane>
        <!--<TableView fx:id="tableView" layoutX="420.0" layoutY="168.0" prefHeight="892.0" prefWidth="1474.0">
          <columns>

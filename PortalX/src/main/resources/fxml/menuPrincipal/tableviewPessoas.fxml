@@ -8,9 +8,9 @@
         fx:controller="main.controller.menuPrincipal.tabelas.TabelaEventoController"
 -->
 
-<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="tableViewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="1080.0" prefWidth="1546.0" stylesheets="/fxml/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TableView fx:id="tableView" layoutX="457.0" layoutY="352.0" prefHeight="703.0" prefWidth="1427.0" styleClass="tableView" stylesheets="/fxml/tableview.css">
+        <TableView fx:id="tableView" layoutX="33.0" layoutY="267.0" prefHeight="703.0" prefWidth="1427.0" styleClass="tableView" stylesheets="/fxml/tableview.css">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="32.0" styleClass="coluna" text="ID" />
                 <TableColumn fx:id="col2" prefWidth="281.0" styleClass="coluna" text="Nome" />
@@ -22,20 +22,19 @@
             <TableColumn fx:id="col8" prefWidth="118.0" styleClass="coluna" />
             </columns>
         </TableView>
-      <Button layoutX="1569.0" layoutY="258.0" mnemonicParsing="false" onAction="#botaoAdicionar" prefHeight="52.0" prefWidth="275.0" styleClass="botaoAdicionar" text="+ Adicionar nova pessoa">
+      <Button layoutX="1145.0" layoutY="173.0" mnemonicParsing="false" onAction="#botaoAdicionar" prefHeight="52.0" prefWidth="275.0" styleClass="botaoAdicionar" text="+ Adicionar nova pessoa">
          <font>
             <Font size="22.0" />
          </font></Button>
-      <Label layoutX="464.0" layoutY="139.0" prefHeight="48.0" prefWidth="630.0" styleClass="titulo" text="Todos as pessoas">
+      <Label layoutX="40.0" layoutY="54.0" prefHeight="48.0" prefWidth="630.0" styleClass="titulo" text="Todos as pessoas">
          <font>
             <Font size="70.0" />
          </font>
       </Label>
-      <TextField fx:id="campoFiltro" layoutX="464.0" layoutY="258.0" prefHeight="51.0" prefWidth="477.0" promptText="    Pesquise pelo nome da pessoa..." styleClass="campoFiltro">
+      <TextField fx:id="campoFiltro" layoutX="40.0" layoutY="173.0" prefHeight="51.0" prefWidth="477.0" promptText="    Pesquise pelo nome da pessoa..." styleClass="campoFiltro">
          <font>
             <Font size="25.0" />
          </font>
       </TextField>
-      <Pane fx:id="paneJanelaParcial" prefHeight="98.0" prefWidth="82.0" />
     </children>
 </Pane>

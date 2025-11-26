@@ -60,7 +60,7 @@ public class TabelaEventoController implements Initializable {
         tableView.setItems(observableList);
     }
 
-
+    public Pane paneTelaInteiraMenuPrincipal;  // PANE VINDO DO MENU PRINCIPAL
 
     @FXML
     public void botaoAdicionar() {
@@ -135,6 +135,8 @@ public class TabelaEventoController implements Initializable {
 
         // BOTÃO PARA ABRIR EVENTO
 
+
+
         col8.setCellFactory(col -> new TableCell<Evento, Void>() {
 
             private final Button botaoAbrir = new Button("Abrir");
@@ -158,7 +160,7 @@ public class TabelaEventoController implements Initializable {
                         Parent janela = janelaEventoLoader.load();
 
 
-                        paneTelaInteira.getChildren().add(janela);
+                        paneTelaInteiraMenuPrincipal.getChildren().add(janela);
 
                     } catch (Exception e) {
                         e.printStackTrace();
