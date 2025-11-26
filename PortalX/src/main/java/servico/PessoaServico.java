@@ -7,6 +7,8 @@ import model.Palestrante;
 import model.Participante;
 import model.Pessoa;
 
+import java.time.LocalDate;
+
 
 public class PessoaServico {
     PessoaDAO pessoaDAO = new PessoaDAO();
@@ -22,4 +24,25 @@ public class PessoaServico {
             participanteDAO.remover(p);
         }
     }
+
+    public void alterar(Pessoa pessoa, String nome, String email, String telefone, LocalDate dataNascimento) {
+
+        pessoa.setNomeCompleto(nome);
+        pessoa.setEmail(email);
+        pessoa.setTelefone(telefone);
+        pessoa.setDataNascimento(dataNascimento);
+
+        if (pessoa instanceof Palestrante) {
+            Palestrante p = (Palestrante) pessoa;
+            palestranteDAO.alterar(p);
+        } else {
+            Participante p = (Participante) pessoa;
+            participanteDAO.alterar(p);
+        }
+    }
+
+    //public void cadastrar(String nome, String email, String telefone, LocalDate dataNascimento) {
+    //    Participante participante = new Participante(nome, email, telefone, dataNascimento);
+    //    participanteDao.inserir(participante);
+    //}
 }

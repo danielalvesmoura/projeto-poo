@@ -12,11 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import main.controller.janelaPessoa.JanelaPessoaController;
-import main.controller.menuPrincipal.AbaAdicionarPessoaController;
+import main.controller.menuPrincipal.AbaPessoaController;
 import model.Palestrante;
 import model.Participante;
-import model.Pessoa;
 import model.Pessoa;
 import servico.PalestranteServico;
 import servico.ParticipanteServico;
@@ -60,13 +58,13 @@ public class TabelaPessoasController implements Initializable {
     }
 
 
-
+    @FXML
     public void botaoAdicionar() {
         try {
             FXMLLoader janelaAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/abaAdicionarPessoa.fxml"));
 
-            AbaAdicionarPessoaController abaAdicionarPessoaController = new AbaAdicionarPessoaController();
-            janelaAdicionarLoader.setController(abaAdicionarPessoaController);
+            AbaPessoaController abaPessoaController = new AbaPessoaController();
+            janelaAdicionarLoader.setController(abaPessoaController);
 
             Parent janelaAdicionar = janelaAdicionarLoader.load();
 
@@ -85,6 +83,9 @@ public class TabelaPessoasController implements Initializable {
     ParticipanteServico participanteServico = new ParticipanteServico();
 
     PessoaDAO pessoaDAO = new PessoaDAO();
+    PessoaServico pessoaServico = new PessoaServico();
+
+
 
     public void atualizaTabela() {
         observableList.clear();
@@ -115,7 +116,7 @@ public class TabelaPessoasController implements Initializable {
             {
                 botaoRemover.setOnAction(event -> {
                     Pessoa p = getTableView().getItems().get(getIndex());
-                    eventoServico.remover(p);
+                    pessoaServico.remover(p);
                     atualizaTabela();
                 });
             }
@@ -141,24 +142,23 @@ public class TabelaPessoasController implements Initializable {
 
             {
                 botaoAbrir.setOnAction(event -> {
-                    Pessoa pessoa = getTableView().getItems().get(getIndex());
+                    Pessoa pessoaAberta = getTableView().getItems().get(getIndex());
 
 
                     try {
                         FXMLLoader janelaPessoaLoader = new FXMLLoader(getClass().getResource("/fxml/janelaPessoa/janelaPessoa.fxml"));
 
-                        JanelaPessoaController janelaPessoaController = new JanelaPessoaController();
-                        janelaPessoaController.janelaPessoaController = janelaPessoaController;
+                        AbaPessoaController abaPessoaController = new AbaPessoaController();
+                        abaPessoaController.tabelaPessoasController = tabelaPessoasController;
 
+                        janelaPessoaLoader.setController(abaPessoaController);
 
-                        janelaPessoaLoader.setController(janelaPessoaController);
-
-                        janelaPessoaController.eventoAberto = evento;
+                        abaPessoaController.pessoaAberta = pessoaAberta;
 
                         Parent janela = janelaPessoaLoader.load();
 
 
-                        //paneTelaInteira.getChildren().add(janela);
+                        paneJanelaParcial.getChildren().add(janela);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -193,43 +193,4 @@ public class TabelaPessoasController implements Initializable {
         col8.setPrefWidth(50); // BOTÃO ABRIR
     }
 
-
-
-
-    // MODAL ADICIONAR
-
-    @FXML
-    private Pane paneModalAdicionar;
-
-    public void fecharModal() {
-        ((Pane) paneModalAdicionar.getParent()).getChildren().clear();
-    }
-
-    @FXML
-    private TextField campoNome;
-    @FXML
-    private TextArea campoDescricao;
-    @FXML
-    private TextField campoEndereco;
-    @FXML
-    private DatePicker campoDataInicio;
-    @FXML
-    private DatePicker campoDataFim;
-    @FXML
-    private Label mensagem;
-
-    public void confirmar() {
-        System.out.println(campoNome.getText());
-        System.out.println(campoDescricao.getText());
-        System.out.println(campoEndereco.getText());
-        System.out.println(campoDataInicio.getValue());
-        System.out.println(campoDataFim.getValue());
-
-        eventoServico.cadastrar(campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(),campoDataFim.getValue());
-
-        mensagem.setStyle("-fx-text-fill: green;");
-        mensagem.setText("Pessoa cadastrado com sucesso!");
-
-        //tabelaPessoaController.atualizaTabela();
-    }
 }
