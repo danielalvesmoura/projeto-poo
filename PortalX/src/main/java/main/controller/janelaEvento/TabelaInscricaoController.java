@@ -1,99 +1,193 @@
 package main.controller.janelaEvento;
 
-import dao.FeedbackDAO;
+import dao.InscricaoDAO;
+import dao.SessaoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import model.Feedback;
+import main.controller.menuPrincipal.tabelas.TabelaEventoController;
+import model.Evento;
+import model.Inscricao;
+import model.Sessao;
+import servico.EventoServico;
+import servico.InscricaoServico;
+import servico.SessaoServico;
 
-import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class TabelaInscricaoController implements Initializable {
-    TabelaInscricaoController tabelaController;
-
-    public void defineTabelaController(TabelaInscricaoController tabelaController) {
-        this.tabelaController = tabelaController;
-    }
-    @FXML
-    public Pane modalPane;
+public class TabelaInscricaoController {
+    public TabelaInscricaoController tabelaInscricaoController;
+    public JanelaEventoController janelaEventoController;
+    public Evento eventoAberto;
 
     @FXML
-    public TableView<Feedback> tableView;
+    public TableView<Inscricao> tableView;
 
     @FXML
-    public TableColumn<Feedback,String> colId;
-    public TableColumn<Feedback,String> col2;
-    public TableColumn<Feedback,String> col3;
-    public TableColumn<Feedback,String> col4;
-    public TableColumn<Feedback,String> col5;
-    public TableColumn<Feedback,String> col6;
+    public Pane paneAncoraAba;
 
-    ObservableList<Feedback> observableList = FXCollections.observableArrayList();
+    @FXML
+    public TableColumn<Inscricao,String> colId;
+    public TableColumn<Inscricao,String> col2;
+    public TableColumn<Inscricao,String> col3;
+    public TableColumn<Inscricao,String> col4;
+    public TableColumn<Inscricao, LocalDate> col5;
+    public TableColumn<Inscricao, LocalTime> col6;
+    public TableColumn<Inscricao,LocalDate> col7;
+    public TableColumn<Inscricao,LocalTime> col8;
+    public TableColumn<Inscricao,Void> col9;
+    public TableColumn<Inscricao,Void> col10;
 
+    ObservableList<Inscricao> observableList = FXCollections.observableArrayList();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initializeManual() {
         atualizaTabela();
         tableView.setItems(observableList);
     }
 
-    public void botaoAdicionar() {
+    public void botaoInscrever() {
         try {
-            FXMLLoader modalAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/modal/modalAdicionarEvento.fxml"));
+            FXMLLoader tabelaInscreverLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/tableviewInscrever.fxml"));
 
-            modalAdicionarLoader.setController(tabelaController);
+            TabelaInscreverController tabelaInscreverController = new TabelaInscreverController();
+            tabelaInscreverLoader.setController(tabelaInscreverController);
+            //cadastroSessaoController.tabelaSessaoController = tabelaController;
+            tabelaInscreverController.janelaEventoController = janelaEventoController;
 
-            Parent modalAdicionar = modalAdicionarLoader.load();
+            Parent janela = tabelaInscreverLoader.load();
 
-            modalAdicionar.setLayoutX(-531);
-            modalAdicionar.setLayoutY(-230);
+            //janela.setLayoutY(20);
+            //janela.setLayoutX(20);
 
-            modalPane.getChildren().add(modalAdicionar);
+            tabelaInscreverController.eventoAberto = eventoAberto;
+
+            paneAncoraAba.getChildren().add(janela);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void confirmar() {
-        atualizaTabela();
-    }
+    InscricaoDAO inscricaoDAO = new InscricaoDAO();
 
     public void atualizaTabela() {
+        observableList.clear();
 
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        List<Inscricao> inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
 
-        List<Feedback> feedbacks = feedbackDAO.buscarTodos(Feedback.class);
-
-        for (Feedback f : feedbacks) {
-            observableList.add(f);
+        for(Inscricao i : inscricoes) {
+            if(i.getEvento().getId() == eventoAberto.getId()) {
+                observableList.add(i);
+            }
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nota"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Comentario"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("DataEnvio"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("TipoIngresso"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("DataCriacao"));
 
-        col2.setText("Nota");
-        col3.setText("Comentário");
-        col4.setText("Data de Envio");
-        col5.setText("");
-        col6.setText("");
+        // BOTÃO DE REMOVER ITEM
 
-        col2.setPrefWidth(50);
-        col3.setPrefWidth(1200);
-        col4.setPrefWidth(100);
-        col5.setPrefWidth(0);
-        col6.setPrefWidth(0);
+        InscricaoServico inscricaoServico = new InscricaoServico();
+
+        col9.setCellFactory(col -> new TableCell<Inscricao, Void>() {
+
+            private final Button botaoRemover = new Button("Remover");
+
+            {
+                botaoRemover.setOnAction(event -> {
+                    Inscricao i = getTableView().getItems().get(getIndex());
+                    inscricaoServico.remover(i);
+                    atualizaTabela();
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(botaoRemover);
+                }
+            }
+        });
+
+
+        // BOTÃO PARA ABRIR
+
+        col10.setCellFactory(col -> new TableCell<Inscricao, Void>() {
+
+            private final Button botaoAbrir = new Button("Abrir");
+
+            {
+                botaoAbrir.setOnAction(event -> {
+                    Inscricao inscricao = getTableView().getItems().get(getIndex());
+
+
+                    try {
+                        FXMLLoader editarInscricaoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/editarInscricao.fxml"));
+
+                        EditarInscricaoController editarInscricaoController = new EditarInscricaoController();
+                        //cadastroSessaoController.janelaEventoController = janelaEventoController;
+                        editarInscricaoController.tabelaInscricaoController = tabelaInscricaoController;
+
+                        editarInscricaoLoader.setController(editarInscricaoController);
+
+                        editarInscricaoController.inscricao = inscricao;
+
+                        Parent janela = editarInscricaoLoader.load();
+
+                        //janela.setLayoutY(20);
+                        //janela.setLayoutX(20);
+
+                        paneAncoraAba.getChildren().add(janela);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(botaoAbrir);
+                }
+            }
+        });
+
+        col2.setText("Nome");
+        col3.setText("Email");
+        col4.setText("Status");
+        col5.setText("Tipo do Ingresso");
+        col6.setText("Data de Criação");
+        col7.setText("");
+        col8.setText("");
+        col9.setText("");
+        col10.setText("");
+
+        col2.setPrefWidth(200);
+        col3.setPrefWidth(300);
+        col4.setPrefWidth(120);
+        col5.setPrefWidth(100);
+        col6.setPrefWidth(100);
+        col7.setPrefWidth(0); // BOTÃO REMOVER
+        col8.setPrefWidth(1000); // BOTÃO ABRIR
     }
 
 }

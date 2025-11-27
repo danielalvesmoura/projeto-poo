@@ -115,12 +115,15 @@ public class JanelaEventoController {
         try {
             paneAncoraAba.getChildren().clear();
 
-            FXMLLoader abaInscricoesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/abaInscricoes.fxml"));
+            FXMLLoader abaInscricoesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/tableviewInscricao.fxml"));
 
-            AbaInscricoesController abaInscricoesController = new AbaInscricoesController();
-            abaInscricoesLoader.setController(abaInscricoesController);
+            TabelaInscricaoController tabelaInscricaoController = new TabelaInscricaoController();
+            abaInscricoesLoader.setController(tabelaInscricaoController);
 
             Parent janela = abaInscricoesLoader.load();
+
+            tabelaInscricaoController.tabelaInscricaoController = tabelaInscricaoController;
+            tabelaInscricaoController.janelaEventoController = janelaEventoController;
 
             paneAncoraAba.getChildren().add(janela);
 

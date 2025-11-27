@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@MappedSuperclass
+@Entity
 public abstract class Pessoa {
 
     @Id
