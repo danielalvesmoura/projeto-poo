@@ -41,14 +41,16 @@ public class TabelaInscreverController{
     public TableColumn<Pessoa,String> col3;
     public TableColumn<Pessoa,String> col4;
     public TableColumn<Pessoa,LocalDate> col5;
-    public TableColumn<Pessoa,Void> col6;
+    public TableColumn<Pessoa,Boolean> col6;
 
     public Evento eventoAberto;
 
     ObservableList<Pessoa> observableList = FXCollections.observableArrayList();
 
-    @FXML
-    public void initialize() {
+    public void initializeManual() {
+        tableView.setEditable(true);
+        col6.setEditable(true);
+
         atualizaTabela();
         tableView.setItems(observableList);
     }
@@ -76,7 +78,7 @@ public class TabelaInscreverController{
             boolean temInscricao = false;
 
             for(Inscricao inscricao : inscricoes) {
-                if(inscricao.getPessoa().getId() == pessoa.getId()) {
+                if(inscricao.getPessoa().getId() == pessoa.getId() && inscricao.getEvento().getId() == eventoAberto.getId()) {
                     temInscricao = true;
                 }
             }
@@ -109,35 +111,8 @@ public class TabelaInscreverController{
 
         PessoaDAO pessoaDAO = new PessoaDAO();
 
-        col6.setCellFactory(column -> new TableCell<Pessoa, Void>() {
-
-            private final CheckBox check = new CheckBox();
-
-            {
-                // define ação do checkbox
-                check.setOnAction(e -> {
-                    Pessoa pessoa = getTableView().getItems().get(getIndex());
-
-                    if(pessoasSelecionadas.contains(pessoa)) {
-                        pessoasSelecionadas.remove(pessoa);
-                    } else {
-                        pessoasSelecionadas.add(pessoa);
-                    }
-
-                    System.out.println("Linha: " + pessoa.getNome() + "   Marcado: " + check.isSelected());
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(check);
-                }
-            }
-        });
+        col6.setCellValueFactory(param -> param.getValue().selecionadoProperty());
+        col6.setCellFactory(CheckBoxTableCell.forTableColumn(col6));
 
         col2.setText("Nome");
         col3.setText("Email");
@@ -157,6 +132,9 @@ public class TabelaInscreverController{
 
     @FXML
     public void confirmar() {
+
+        List<Pessoa> pessoasSelecionadas = tableView.getItems().stream().filter(Pessoa::isSelecionado).toList();
+
         inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas);
         tabelaInscricaoController.atualizaTabela();
         fechar();

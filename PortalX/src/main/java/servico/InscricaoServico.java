@@ -10,6 +10,7 @@ import model.Enum.TipoIngresso;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class InscricaoServico {
@@ -29,7 +30,7 @@ public class InscricaoServico {
 
     PessoaDAO pessoaDAO = new PessoaDAO();
 
-    public void cadastrar(Evento evento, ArrayList<Pessoa> pessoasSelecionadas) {
+    public void cadastrar(Evento evento, List<Pessoa> pessoasSelecionadas) {
 
         TipoIngresso tipoIngresso;
         Inscricao inscricao;

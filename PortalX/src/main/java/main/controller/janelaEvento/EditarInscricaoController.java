@@ -70,7 +70,7 @@ public class EditarInscricaoController {
         StatusInscricao statusInscricao;
         if(choiceStatus.getValue() == "Pendente") {
             statusInscricao = StatusInscricao.PENDENTE;
-        } else if(choiceStatus.getValue() == "Confirmado") {
+        } else if(choiceStatus.getValue() == "Confirmada") {
             statusInscricao = StatusInscricao.CONFIRMADA;
         } else {
             statusInscricao = StatusInscricao.CANCELADA;

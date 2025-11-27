@@ -1,5 +1,8 @@
 package model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import javax.persistence.*;
 
 import java.time.LocalDate;
@@ -21,6 +24,19 @@ public abstract class Pessoa {
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.REMOVE)
     private List<Inscricao> inscricoes;
+
+
+
+    // CHECKBOX INSCRIÇÃO
+
+    @Transient
+    private BooleanProperty selecionado = new SimpleBooleanProperty(false);
+    public boolean isSelecionado() { return selecionado.get(); }
+    public void setSelecionado(boolean valor) { selecionado.set(valor); }
+    public BooleanProperty selecionadoProperty() { return selecionado; }
+
+    //
+
 
     public Pessoa(String nome, String email, String telefone, LocalDate dataNascimento) {
         this.nome = nome;

@@ -72,6 +72,8 @@ public class TabelaInscricaoController {
             tabelaInscreverController.eventoAberto = eventoAberto;
             tabelaInscreverController.inscricoes = inscricoes;
 
+            tabelaInscreverController.initializeManual();
+
             paneAncoraAba.getChildren().add(janela);
 
         } catch (Exception e) {

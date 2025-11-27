@@ -34,7 +34,6 @@ public class SecaoDashboardController implements Initializable {
 
             TabelaEventoController tabelaEventoController = new TabelaEventoController();
             tabelaEventoController.tabelaEventoController = tabelaEventoController;
-            tabelaEventoController.
             tabelaEventoController.paneTelaInteiraMenuPrincipal = paneTelaInteiraMenuPrincipal;
             tabelaLoader.setController(tabelaEventoController);
 
