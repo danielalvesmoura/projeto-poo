@@ -30,7 +30,7 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="choiceTipoIngresso" layoutX="418.0" layoutY="312.0" prefHeight="54.0" prefWidth="305.0" />
+      <ChoiceBox fx:id="choiceTipoInscricao" layoutX="418.0" layoutY="312.0" prefHeight="54.0" prefWidth="305.0" />
        <Button layoutX="1103.0" layoutY="53.0" mnemonicParsing="false" onAction="#confirmar" prefHeight="50.0" prefWidth="198.0" text="Confirmar">
            <font>
                <Font size="22.0" />

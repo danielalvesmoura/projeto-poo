@@ -40,8 +40,22 @@ public class Inscricao {
         this.evento = evento;
         this.status = statusInscricao;
         this.tipoIngresso = tipoIngresso;
+        this.dataCriacao = LocalDate.now();
     }
 
+
+
+    public long getEventoId() {
+        return evento.getId();
+    }
+
+    public String getPessoaNome() {
+        return pessoa.getNome();
+    }
+
+    public String getPessoaEmail() {
+        return pessoa.getEmail();
+    }
 
     public Inscricao(){};
 

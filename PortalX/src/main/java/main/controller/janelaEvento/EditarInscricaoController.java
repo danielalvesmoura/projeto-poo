@@ -35,8 +35,8 @@ public class EditarInscricaoController {
     @FXML
     public ChoiceBox choiceStatus;
 
-    @FXML
-    public void initialize() {
+
+    public void initializeManual() {
         choiceTipoInscricao.getItems().addAll("Participante","Palestrante");
         choiceTipoInscricao.setValue("Participante");
 

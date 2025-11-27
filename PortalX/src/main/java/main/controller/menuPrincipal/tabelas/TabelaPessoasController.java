@@ -161,8 +161,9 @@ public class TabelaPessoasController implements Initializable {
 
                         Parent janela = janelaPessoaLoader.load();
 
+                        janela.setLayoutX(-400);
 
-                        paneTelaInteiraMenuPrincipal.getChildren().add(janela);
+                        paneJanelaParcial.getChildren().add(janela);
 
                     } catch (Exception e) {
                         e.printStackTrace();

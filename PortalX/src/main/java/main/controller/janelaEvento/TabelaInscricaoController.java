@@ -40,16 +40,19 @@ public class TabelaInscricaoController {
     public TableColumn<Inscricao,String> col4;
     public TableColumn<Inscricao, LocalDate> col5;
     public TableColumn<Inscricao, LocalTime> col6;
-    public TableColumn<Inscricao,LocalDate> col7;
-    public TableColumn<Inscricao,LocalTime> col8;
+    public TableColumn<Inscricao,Void> col7;
+    public TableColumn<Inscricao,Void> col8;
     public TableColumn<Inscricao,Void> col9;
     public TableColumn<Inscricao,Void> col10;
 
     ObservableList<Inscricao> observableList = FXCollections.observableArrayList();
 
+    List<Inscricao> inscricoes;
+
     public void initializeManual() {
         atualizaTabela();
         tableView.setItems(observableList);
+        inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
     }
 
     public void botaoInscrever() {
@@ -58,7 +61,7 @@ public class TabelaInscricaoController {
 
             TabelaInscreverController tabelaInscreverController = new TabelaInscreverController();
             tabelaInscreverLoader.setController(tabelaInscreverController);
-            //cadastroSessaoController.tabelaSessaoController = tabelaController;
+            tabelaInscreverController.tabelaInscricaoController = tabelaInscricaoController;
             tabelaInscreverController.janelaEventoController = janelaEventoController;
 
             Parent janela = tabelaInscreverLoader.load();
@@ -67,6 +70,7 @@ public class TabelaInscricaoController {
             //janela.setLayoutX(20);
 
             tabelaInscreverController.eventoAberto = eventoAberto;
+            tabelaInscreverController.inscricoes = inscricoes;
 
             paneAncoraAba.getChildren().add(janela);
 
@@ -80,7 +84,7 @@ public class TabelaInscricaoController {
     public void atualizaTabela() {
         observableList.clear();
 
-        List<Inscricao> inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
+        inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
 
         for(Inscricao i : inscricoes) {
             if(i.getEvento().getId() == eventoAberto.getId()) {
@@ -90,17 +94,19 @@ public class TabelaInscricaoController {
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>(""));
-        col3.setCellValueFactory(new PropertyValueFactory<>("tipoingresso"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("datacriacao"));
-        //col6.setCellValueFactory(new PropertyValueFactory<>("DataCriacao"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("PessoaNome"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("PessoaEmail"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("TipoIngresso"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("DataCriacao"));
+
+
 
         // BOTÃO DE REMOVER ITEM
 
         InscricaoServico inscricaoServico = new InscricaoServico();
 
-        col9.setCellFactory(col -> new TableCell<Inscricao, Void>() {
+        col7.setCellFactory(col -> new TableCell<Inscricao, Void>() {
 
             private final Button botaoRemover = new Button("Remover");
 
@@ -127,7 +133,7 @@ public class TabelaInscricaoController {
 
         // BOTÃO PARA ABRIR
 
-        col10.setCellFactory(col -> new TableCell<Inscricao, Void>() {
+        col8.setCellFactory(col -> new TableCell<Inscricao, Void>() {
 
             private final Button botaoAbrir = new Button("Abrir");
 
@@ -140,7 +146,7 @@ public class TabelaInscricaoController {
                         FXMLLoader editarInscricaoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/editarInscricao.fxml"));
 
                         EditarInscricaoController editarInscricaoController = new EditarInscricaoController();
-                        //cadastroSessaoController.janelaEventoController = janelaEventoController;
+                        editarInscricaoController.janelaEventoController = janelaEventoController;
                         editarInscricaoController.tabelaInscricaoController = tabelaInscricaoController;
 
                         editarInscricaoLoader.setController(editarInscricaoController);
@@ -148,6 +154,8 @@ public class TabelaInscricaoController {
                         editarInscricaoController.inscricao = inscricao;
 
                         Parent janela = editarInscricaoLoader.load();
+
+                        editarInscricaoController.initializeManual();
 
                         //janela.setLayoutY(20);
                         //janela.setLayoutX(20);
@@ -174,12 +182,12 @@ public class TabelaInscricaoController {
 
         col2.setText("Nome");
         col3.setText("Email");
-        col4.setText("Status");
-        col5.setText("Tipo do Ingresso");
+        col4.setText("Tipo de Cadastro");
+        col5.setText("Status");
         col6.setText("Data de Criação");
         col7.setText("");
         col8.setText("");
-        col9.setText("");
+        col9.setText("                  ");
         col10.setText("");
 
         col2.setPrefWidth(200);
@@ -187,8 +195,9 @@ public class TabelaInscricaoController {
         col4.setPrefWidth(120);
         col5.setPrefWidth(100);
         col6.setPrefWidth(100);
-        col7.setPrefWidth(0); // BOTÃO REMOVER
-        col8.setPrefWidth(1000); // BOTÃO ABRIR
+        col7.setPrefWidth(100); // BOTÃO REMOVER
+        col8.setPrefWidth(100); // BOTÃO ABRIR
+        col9.setPrefWidth(1000);
     }
 
 }

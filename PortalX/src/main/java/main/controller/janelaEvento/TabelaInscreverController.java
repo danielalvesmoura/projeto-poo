@@ -1,5 +1,6 @@
 package main.controller.janelaEvento;
 
+import dao.InscricaoDAO;
 import dao.PalestranteDAO;
 import dao.ParticipanteDAO;
 import dao.PessoaDAO;
@@ -14,10 +15,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import main.controller.menuPrincipal.CadastroPessoaController;
-import model.Evento;
-import model.Palestrante;
-import model.Participante;
-import model.Pessoa;
+import model.*;
 import servico.InscricaoServico;
 import servico.PalestranteServico;
 import servico.ParticipanteServico;
@@ -32,6 +30,7 @@ import java.util.ResourceBundle;
 public class TabelaInscreverController{
     public TabelaInscreverController tabelaInscreverController;
     public JanelaEventoController janelaEventoController;
+    public TabelaInscricaoController tabelaInscricaoController;
 
     @FXML
     public TableView<Pessoa> tableView;
@@ -56,24 +55,47 @@ public class TabelaInscreverController{
 
     PalestranteDAO palestranteDAO = new PalestranteDAO();
     ParticipanteDAO participanteDAO = new ParticipanteDAO();
+    InscricaoDAO inscricaoDAO = new InscricaoDAO();
+    PessoaDAO pessoaDAO = new PessoaDAO();
 
     ArrayList<Pessoa> pessoasSelecionadas = new ArrayList<>();
+
+    List<Inscricao> inscricoes;
 
     public void atualizaTabela() {
         observableList.clear();
 
         List<Palestrante> palestrantes = palestranteDAO.buscarTodos(Palestrante.class);
         List<Participante> participantes = participanteDAO.buscarTodos(Participante.class);
+        inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
+
+        List<Pessoa> pessoas = pessoaDAO.buscarTodos(Pessoa.class);
+
+
+        for(Pessoa pessoa : pessoas) {
+            boolean temInscricao = false;
+
+            for(Inscricao inscricao : inscricoes) {
+                if(inscricao.getPessoa().getId() == pessoa.getId()) {
+                    temInscricao = true;
+                }
+            }
+
+            if (temInscricao == false) {
+                observableList.add(pessoa);
+            }
+        }
 
         //for(Palestrante p : palestrantes) {
-        //    observableList.add(p);
+        //    if(inscricaoDAO.find(Inscricao.class, p.getId()) == null) {
+        //        observableList.add(p);
+        //    }
         //}
         //for(Participante p : participantes) {
-        //    observableList.add(p);
+        //    if(inscricaoDAO.find(Inscricao.class, p.getId()) == null) {
+        //        observableList.add(p);
+        //    }
         //}
-
-        observableList.addAll(palestrantes);
-        observableList.addAll(participantes);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -136,6 +158,8 @@ public class TabelaInscreverController{
     @FXML
     public void confirmar() {
         inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas);
+        tabelaInscricaoController.atualizaTabela();
+        fechar();
     }
 
     @FXML

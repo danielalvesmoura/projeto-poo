@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public abstract class Pessoa {
@@ -17,6 +18,9 @@ public abstract class Pessoa {
     private String email;
     private String telefone;
     private LocalDate dataNascimento;
+
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.REMOVE)
+    private List<Inscricao> inscricoes;
 
     public Pessoa(String nome, String email, String telefone, LocalDate dataNascimento) {
         this.nome = nome;
