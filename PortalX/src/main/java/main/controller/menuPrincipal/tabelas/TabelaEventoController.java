@@ -23,11 +23,8 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class TabelaEventoController implements Initializable {
-    TabelaEventoController tabelaEventoController;
+    public TabelaEventoController tabelaEventoController;
 
-    public void defineTabelaEventoController(TabelaEventoController tabelaEventoController) {
-        this.tabelaEventoController = tabelaEventoController;
-    }
 
     @FXML
     public TableView<Evento> tableView;
@@ -74,6 +71,8 @@ public class TabelaEventoController implements Initializable {
             janelaAdicionarLoader.setController(janelaEventoController);
 
             Parent janelaAdicionar = janelaAdicionarLoader.load();
+
+            janelaEventoController.tituloJanelaEvento.setText("Adicionar novo evento");
 
             //modalAdicionar.setLayoutX(-531);
             //janelaAdicionar.setLayoutY(100);
@@ -159,6 +158,7 @@ public class TabelaEventoController implements Initializable {
 
                         Parent janela = janelaEventoLoader.load();
 
+                        janelaEventoController.tituloJanelaEvento.setText(evento.getNome());
 
                         paneTelaInteiraMenuPrincipal.getChildren().add(janela);
 
@@ -195,43 +195,4 @@ public class TabelaEventoController implements Initializable {
         col8.setPrefWidth(50); // BOTÃO ABRIR
     }
 
-
-
-
-    // MODAL ADICIONAR
-
-    @FXML
-    private Pane paneModalAdicionar;
-
-    public void fecharModal() {
-        ((Pane) paneModalAdicionar.getParent()).getChildren().clear();
-    }
-
-    @FXML
-    private TextField campoNome;
-    @FXML
-    private TextArea campoDescricao;
-    @FXML
-    private TextField campoEndereco;
-    @FXML
-    private DatePicker campoDataInicio;
-    @FXML
-    private DatePicker campoDataFim;
-    @FXML
-    private Label mensagem;
-
-    public void confirmar() {
-        System.out.println(campoNome.getText());
-        System.out.println(campoDescricao.getText());
-        System.out.println(campoEndereco.getText());
-        System.out.println(campoDataInicio.getValue());
-        System.out.println(campoDataFim.getValue());
-
-        eventoServico.cadastrar(campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(),campoDataFim.getValue());
-
-        mensagem.setStyle("-fx-text-fill: green;");
-        mensagem.setText("Evento cadastrado com sucesso!");
-
-        tabelaEventoController.atualizaTabela();
-    }
 }

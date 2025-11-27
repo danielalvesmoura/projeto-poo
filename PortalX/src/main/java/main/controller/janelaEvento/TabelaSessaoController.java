@@ -1,101 +1,202 @@
 package main.controller.janelaEvento;
 
-import dao.FeedbackDAO;
+import dao.SessaoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import model.Feedback;
+import model.Evento;
+import model.Sessao;
+import servico.SessaoServico;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TabelaSessaoController implements Initializable {
+public class TabelaSessaoController {
 
-    TabelaSessaoController tabelaController;
-
-    public void defineTabelaController(TabelaSessaoController tabelaController) {
-        this.tabelaController = tabelaController;
-    }
+    public TabelaSessaoController tabelaController;
+    public JanelaEventoController janelaEventoController;
+    public Evento eventoAberto;
 
     @FXML
-    public Pane modalPane;
+    public TableView<Sessao> tableView;
 
     @FXML
-    public TableView<Feedback> tableView;
+    public Pane paneAncoraAba;
 
     @FXML
-    public TableColumn<Feedback,String> colId;
-    public TableColumn<Feedback,String> col2;
-    public TableColumn<Feedback,String> col3;
-    public TableColumn<Feedback,String> col4;
-    public TableColumn<Feedback,String> col5;
-    public TableColumn<Feedback,String> col6;
+    public TableColumn<Sessao,String> colId;
+    public TableColumn<Sessao,String> col2;
+    public TableColumn<Sessao,String> col3;
+    public TableColumn<Sessao,String> col4;
+    public TableColumn<Sessao, LocalDate> col5;
+    public TableColumn<Sessao, LocalTime> col6;
+    public TableColumn<Sessao,LocalDate> col7;
+    public TableColumn<Sessao,LocalTime> col8;
+    public TableColumn<Sessao,Void> col9;
+    public TableColumn<Sessao,Void> col10;
 
-    ObservableList<Feedback> observableList = FXCollections.observableArrayList();
+    ObservableList<Sessao> observableList = FXCollections.observableArrayList();
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initializeManual() {
         atualizaTabela();
         tableView.setItems(observableList);
     }
 
     public void botaoAdicionar() {
         try {
-            FXMLLoader modalAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/modal/modalAdicionarEvento.fxml"));
+            FXMLLoader cadastroSessaoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/cadastroSessao.fxml"));
 
-            modalAdicionarLoader.setController(tabelaController);
+            CadastroSessaoController cadastroSessaoController = new CadastroSessaoController();
+            cadastroSessaoLoader.setController(cadastroSessaoController);
+            cadastroSessaoController.tabelaSessaoController = tabelaController;
+            cadastroSessaoController.janelaEventoController = janelaEventoController;
 
-            Parent modalAdicionar = modalAdicionarLoader.load();
+            Parent janela = cadastroSessaoLoader.load();
 
-            modalAdicionar.setLayoutX(-531);
-            modalAdicionar.setLayoutY(-230);
+            janela.setLayoutY(20);
+            janela.setLayoutX(20);
 
-            modalPane.getChildren().add(modalAdicionar);
+            cadastroSessaoController.eventoAberto = eventoAberto;
+            cadastroSessaoController.modo = "Adicionar";
+
+            paneAncoraAba.getChildren().add(janela);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void confirmar() {
-        atualizaTabela();
-    }
+    SessaoDAO sessaoDAO = new SessaoDAO();
+    SessaoServico sessaoServico = new SessaoServico();
 
     public void atualizaTabela() {
+        observableList.clear();
 
-        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
-        List<Feedback> feedbacks = feedbackDAO.buscarTodos(Feedback.class);
-
-        for (Feedback f : feedbacks) {
-            observableList.add(f);
+        for(Sessao s : sessoes) {
+            if(s.getEvento().getId() == eventoAberto.getId()) {
+                observableList.add(s);
+            }
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nota"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Comentario"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("DataEnvio"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("Titulo"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        col8.setCellValueFactory(new PropertyValueFactory<>("HoraFim"));
 
-        col2.setText("Nota");
-        col3.setText("Comentário");
-        col4.setText("Data de Envio");
-        col5.setText("");
-        col6.setText("");
 
-        col2.setPrefWidth(50);
-        col3.setPrefWidth(1200);
-        col4.setPrefWidth(100);
-        col5.setPrefWidth(0);
-        col6.setPrefWidth(0);
+        // BOTÃO DE REMOVER ITEM
+
+        col9.setCellFactory(col -> new TableCell<Sessao, Void>() {
+
+            private final Button botaoRemover = new Button("Remover");
+
+            {
+                botaoRemover.setOnAction(event -> {
+                    Sessao s = getTableView().getItems().get(getIndex());
+                    sessaoServico.remover(s);
+                    atualizaTabela();
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(botaoRemover);
+                }
+            }
+        });
+
+
+        // BOTÃO PARA ABRIR EVENTO
+
+        col10.setCellFactory(col -> new TableCell<Sessao, Void>() {
+
+            private final Button botaoAbrir = new Button("Abrir");
+
+            {
+                botaoAbrir.setOnAction(event -> {
+                    Sessao sessao = getTableView().getItems().get(getIndex());
+
+
+                    try {
+                        FXMLLoader cadastroSessaoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/cadastroSessao.fxml"));
+
+                        CadastroSessaoController cadastroSessaoController = new CadastroSessaoController();
+                        cadastroSessaoController.janelaEventoController = janelaEventoController;
+                        cadastroSessaoController.tabelaSessaoController = tabelaController;
+
+                        cadastroSessaoLoader.setController(cadastroSessaoController);
+
+                        cadastroSessaoController.sessaoAberta = sessao;
+
+                        Parent janela = cadastroSessaoLoader.load();
+
+                        janela.setLayoutY(20);
+                        janela.setLayoutX(20);
+
+                        cadastroSessaoController.eventoAberto = eventoAberto;
+                        cadastroSessaoController.modo = "Alterar";
+
+                        paneAncoraAba.getChildren().add(janela);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(botaoAbrir);
+                }
+            }
+        });
+
+        col2.setText("Título");
+        col3.setText("Tipo");
+        col4.setText("Status");
+        col5.setText("Data do Início");
+        col6.setText("Hora Início");
+        col7.setText("Data do Fim");
+        col8.setText("Hora Fim");
+        col9.setText("");
+        col10.setText("");
+
+        col2.setPrefWidth(400);
+        col3.setPrefWidth(150);
+        col4.setPrefWidth(120);
+        col5.setPrefWidth(100);
+        col6.setPrefWidth(100);
+        col7.setPrefWidth(100); // BOTÃO REMOVER
+        col8.setPrefWidth(100); // BOTÃO ABRIR
     }
 
 }

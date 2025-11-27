@@ -12,7 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import main.controller.menuPrincipal.AbaPessoaController;
+import main.controller.menuPrincipal.CadastroPessoaController;
 import model.Palestrante;
 import model.Participante;
 import model.Pessoa;
@@ -63,10 +63,10 @@ public class TabelaPessoasController implements Initializable {
         try {
             FXMLLoader janelaAdicionarLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/abaAdicionarPessoa.fxml"));
 
-            AbaPessoaController abaPessoaController = new AbaPessoaController();
-            abaPessoaController.tabelaPessoasController = tabelaPessoasController;
-            abaPessoaController.modo = "Cadastrar";
-            janelaAdicionarLoader.setController(abaPessoaController);
+            CadastroPessoaController cadastroPessoaController = new CadastroPessoaController();
+            cadastroPessoaController.tabelaPessoasController = tabelaPessoasController;
+            cadastroPessoaController.modo = "Cadastrar";
+            janelaAdicionarLoader.setController(cadastroPessoaController);
 
             Parent janelaAdicionar = janelaAdicionarLoader.load();
 
@@ -153,11 +153,11 @@ public class TabelaPessoasController implements Initializable {
                     try {
                         FXMLLoader janelaPessoaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/abaAdicionarPessoa.fxml"));
 
-                        AbaPessoaController abaPessoaController = new AbaPessoaController();
-                        abaPessoaController.tabelaPessoasController = tabelaPessoasController;
-                        janelaPessoaLoader.setController(abaPessoaController);
+                        CadastroPessoaController cadastroPessoaController = new CadastroPessoaController();
+                        cadastroPessoaController.tabelaPessoasController = tabelaPessoasController;
+                        janelaPessoaLoader.setController(cadastroPessoaController);
 
-                        abaPessoaController.pessoaAberta = pessoaAberta;
+                        cadastroPessoaController.pessoaAberta = pessoaAberta;
 
                         Parent janela = janelaPessoaLoader.load();
 

@@ -35,7 +35,7 @@
             <Font size="29.0" />
          </font>
       </Button>
-       <Label graphicTextGap="1.0" layoutX="413.0" layoutY="78.0" prefHeight="51.0" prefWidth="924.0" text="Semana Nacional de Não Sei o Que" textFill="WHITE" wrapText="true">
+       <Label fx:id="tituloJanelaEvento" graphicTextGap="1.0" layoutX="413.0" layoutY="78.0" prefHeight="51.0" prefWidth="924.0" text="Semana Nacional de Não Sei o Que" textFill="WHITE" wrapText="true">
            <font>
                <Font size="53.0" />
            </font>
@@ -51,5 +51,6 @@
            </font>
        </Button>
       <Pane fx:id="paneAncoraAba" layoutX="421.0" layoutY="199.0" prefHeight="61.0" prefWidth="61.0" />
+      <Pane fx:id="paneJanelaParcial" layoutX="374.0" layoutY="-2.0" prefHeight="77.0" prefWidth="61.0" />
    </children>
 </Pane>

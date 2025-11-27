@@ -3,6 +3,7 @@ package main.controller.janelaEvento;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import main.controller.menuPrincipal.tabelas.TabelaEventoController;
 import model.Evento;
@@ -13,10 +14,14 @@ public class JanelaEventoController {
     public TabelaEventoController tabelaEventoController;
 
     @FXML
-    public Pane paneRaiz;
+    public Label tituloJanelaEvento;
 
     @FXML
+    public Pane paneRaiz;
+    @FXML
     public Pane paneAncoraAba;
+    @FXML
+    public Pane paneJanelaParcial;
 
     @FXML
     public void initialize() {
@@ -49,6 +54,7 @@ public class JanelaEventoController {
     public void abreDetalhes() {
         try {
             paneAncoraAba.getChildren().clear();
+            paneJanelaParcial.getChildren().clear();
 
             FXMLLoader abaInfoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/abaInfo.fxml"));
 
@@ -82,13 +88,20 @@ public class JanelaEventoController {
     public void abreSessoes() {
         try {
             paneAncoraAba.getChildren().clear();
+            paneJanelaParcial.getChildren().clear();
 
-            FXMLLoader abaSessoesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/abaSessoes.fxml"));
+            FXMLLoader tabelaSessaoLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/tableviewSessao.fxml"));
+            TabelaSessaoController tabelaSessaoController = new TabelaSessaoController();
 
-            AbaSessoesController abaSessoesController = new AbaSessoesController();
-            abaSessoesLoader.setController(abaSessoesController);
+            tabelaSessaoLoader.setController(tabelaSessaoController);
 
-            Parent janela = abaSessoesLoader.load();
+            Parent janela = tabelaSessaoLoader.load();
+
+            tabelaSessaoController.paneAncoraAba = paneAncoraAba;
+            tabelaSessaoController.tabelaController = tabelaSessaoController;
+            tabelaSessaoController.janelaEventoController = janelaEventoController;
+            tabelaSessaoController.eventoAberto = eventoAberto;
+            tabelaSessaoController.initializeManual();
 
             paneAncoraAba.getChildren().add(janela);
 

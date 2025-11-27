@@ -6,13 +6,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import main.controller.menuPrincipal.tabelas.TabelaPessoasController;
-import model.Participante;
 import model.Pessoa;
 import servico.PalestranteServico;
 import servico.ParticipanteServico;
 import servico.PessoaServico;
 
-public class AbaPessoaController {
+public class CadastroPessoaController {
 
 
     @FXML

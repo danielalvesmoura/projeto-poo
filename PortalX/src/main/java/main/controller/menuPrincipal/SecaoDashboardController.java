@@ -33,7 +33,8 @@ public class SecaoDashboardController implements Initializable {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewEventos.fxml"));
 
             TabelaEventoController tabelaEventoController = new TabelaEventoController();
-            tabelaEventoController.defineTabelaEventoController(tabelaEventoController);
+            tabelaEventoController.tabelaEventoController = tabelaEventoController;
+            tabelaEventoController.
             tabelaEventoController.paneTelaInteiraMenuPrincipal = paneTelaInteiraMenuPrincipal;
             tabelaLoader.setController(tabelaEventoController);
 
