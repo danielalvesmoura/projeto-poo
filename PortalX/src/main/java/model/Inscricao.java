@@ -17,12 +17,12 @@ public class Inscricao {
     private long id;
 
     @ManyToOne
-    @MapsId("pessoaId")
+    //@MapsId("pessoaId")
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
     @ManyToOne
-    @MapsId("eventoId")
+    //@MapsId("eventoId")
     @JoinColumn(name = "evento_id")
     private Evento evento;
 
@@ -41,6 +41,7 @@ public class Inscricao {
         this.status = statusInscricao;
         this.tipoIngresso = tipoIngresso;
     }
+
 
     public Inscricao(){};
 
@@ -73,7 +74,7 @@ public class Inscricao {
         this.dataCriacao = dataCriacao;
     }
 
-    public Enum getStatus() {
+    public StatusInscricao getStatus() {
         return status;
     }
 
@@ -85,7 +86,7 @@ public class Inscricao {
         return tipoIngresso;
     }
 
-    public void setTipoIngresso(TipoIngresso TipoIngresso) {
+    public void setTipoIngresso(TipoIngresso tipoIngresso) {
         this.tipoIngresso = tipoIngresso;
     }
 }

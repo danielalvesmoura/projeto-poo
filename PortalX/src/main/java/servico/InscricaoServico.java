@@ -9,6 +9,7 @@ import model.Enum.StatusInscricao;
 import model.Enum.TipoIngresso;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class InscricaoServico {
@@ -26,8 +27,25 @@ public class InscricaoServico {
         inscricaoDAO.alterar(inscricao);
     }
 
-    public void cadastrar(Pessoa pessoa, Evento evento, StatusInscricao statusInscricao, TipoIngresso tipoIngresso) {
-        Inscricao inscricao = new Inscricao(pessoa, evento, statusInscricao, tipoIngresso);
-        inscricaoDAO.inserir(inscricao);
+    PessoaDAO pessoaDAO = new PessoaDAO();
+
+    public void cadastrar(Evento evento, ArrayList<Pessoa> pessoasSelecionadas) {
+
+        TipoIngresso tipoIngresso;
+        Inscricao inscricao;
+
+        for(Pessoa pessoa : pessoasSelecionadas) {
+            if(pessoa instanceof Palestrante) {
+                tipoIngresso = TipoIngresso.PALESTRANTE;
+            } else {
+                tipoIngresso = TipoIngresso.PARTICIPANTE;
+            }
+
+            Pessoa pessoaPesquisada = pessoaDAO.find(Pessoa.class,pessoa.getId());
+
+            inscricao = new Inscricao(pessoaPesquisada, evento, StatusInscricao.PENDENTE, tipoIngresso);
+            inscricaoDAO.inserir(inscricao);
+        }
+
     }
 }

@@ -124,6 +124,8 @@ public class JanelaEventoController {
 
             tabelaInscricaoController.tabelaInscricaoController = tabelaInscricaoController;
             tabelaInscricaoController.janelaEventoController = janelaEventoController;
+            tabelaInscricaoController.eventoAberto = eventoAberto;
+            tabelaInscricaoController.initializeManual();
 
             paneAncoraAba.getChildren().add(janela);
 

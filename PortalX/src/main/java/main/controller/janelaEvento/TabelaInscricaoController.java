@@ -85,15 +85,16 @@ public class TabelaInscricaoController {
         for(Inscricao i : inscricoes) {
             if(i.getEvento().getId() == eventoAberto.getId()) {
                 observableList.add(i);
+                System.out.println(i);
             }
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        col2.setCellValueFactory(new PropertyValueFactory<>(""));
+        col3.setCellValueFactory(new PropertyValueFactory<>("tipoingresso"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("TipoIngresso"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("DataCriacao"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("datacriacao"));
+        //col6.setCellValueFactory(new PropertyValueFactory<>("DataCriacao"));
 
         // BOTÃO DE REMOVER ITEM
 

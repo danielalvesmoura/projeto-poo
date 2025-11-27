@@ -18,12 +18,14 @@ import model.Evento;
 import model.Palestrante;
 import model.Participante;
 import model.Pessoa;
+import servico.InscricaoServico;
 import servico.PalestranteServico;
 import servico.ParticipanteServico;
 import servico.PessoaServico;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -55,18 +57,23 @@ public class TabelaInscreverController{
     PalestranteDAO palestranteDAO = new PalestranteDAO();
     ParticipanteDAO participanteDAO = new ParticipanteDAO();
 
+    ArrayList<Pessoa> pessoasSelecionadas = new ArrayList<>();
+
     public void atualizaTabela() {
         observableList.clear();
 
         List<Palestrante> palestrantes = palestranteDAO.buscarTodos(Palestrante.class);
         List<Participante> participantes = participanteDAO.buscarTodos(Participante.class);
 
-        for(Palestrante p : palestrantes) {
-            observableList.add(p);
-        }
-        for(Participante p : participantes) {
-            observableList.add(p);
-        }
+        //for(Palestrante p : palestrantes) {
+        //    observableList.add(p);
+        //}
+        //for(Participante p : participantes) {
+        //    observableList.add(p);
+        //}
+
+        observableList.addAll(palestrantes);
+        observableList.addAll(participantes);
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -74,7 +81,12 @@ public class TabelaInscreverController{
         col4.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         col5.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
 
+
+
         // CHECK BOX
+
+        PessoaDAO pessoaDAO = new PessoaDAO();
+
         col6.setCellFactory(column -> new TableCell<Pessoa, Void>() {
 
             private final CheckBox check = new CheckBox();
@@ -83,6 +95,13 @@ public class TabelaInscreverController{
                 // define ação do checkbox
                 check.setOnAction(e -> {
                     Pessoa pessoa = getTableView().getItems().get(getIndex());
+
+                    if(pessoasSelecionadas.contains(pessoa)) {
+                        pessoasSelecionadas.remove(pessoa);
+                    } else {
+                        pessoasSelecionadas.add(pessoa);
+                    }
+
                     System.out.println("Linha: " + pessoa.getNome() + "   Marcado: " + check.isSelected());
                 });
             }
@@ -112,9 +131,11 @@ public class TabelaInscreverController{
 
     }
 
+    InscricaoServico inscricaoServico = new InscricaoServico();
+
     @FXML
     public void confirmar() {
-
+        inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas);
     }
 
     @FXML

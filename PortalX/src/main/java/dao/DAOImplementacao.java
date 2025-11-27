@@ -51,7 +51,9 @@ public abstract  class DAOImplementacao<T, ID> implements DAOGenerico<T, ID> {
     public T buscarPorId(Class<T> entityClass,ID T) {
         EntityManager em = emf.createEntityManager();
         String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e where id = " + T;
-        return em.createQuery(jpql, entityClass).getSingleResult();
+        T objeto = em.createQuery(jpql, entityClass).getSingleResult();
+        em.close();
+        return objeto;
     }
 
 
@@ -60,6 +62,16 @@ public abstract  class DAOImplementacao<T, ID> implements DAOGenerico<T, ID> {
     public List<T> buscarTodos(Class<T> entityClass) {
         EntityManager em = emf.createEntityManager();
         String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e";
-        return em.createQuery(jpql, entityClass).getResultList();
+        List<T> lista = em.createQuery(jpql, entityClass).getResultList();
+        em.close();
+        return lista;
+    }
+
+    @Override
+    public T find(Class<T> entityClass, ID T) {
+        EntityManager em = emf.createEntityManager();
+        T objeto = em.find(entityClass, T);
+        em.close();
+        return objeto;
     }
 }

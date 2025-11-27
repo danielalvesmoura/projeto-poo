@@ -9,4 +9,5 @@ public interface DAOGenerico<T, ID> {
     T buscarPorId(Class<T> entityClass,ID T);
     //List<T> buscarTodos(String classe);
     List<T> buscarTodos(Class<T> entityClass);
+    T find(Class<T> entityClass,ID T);
 }
