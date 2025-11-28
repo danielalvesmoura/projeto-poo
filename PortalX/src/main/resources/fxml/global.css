@@ -6,3 +6,22 @@
 .label {
     -fx-text-fill: white;
 }
+
+
+
+
+/*=================================== BOTÕES PRINCIPAIS ========================================*/
+
+.botaoPrincipal {
+    -fx-font-size: 25px;
+    -fx-background-color: #7800ff;
+    -fx-text-fill: white;
+}
+
+.botaoPrincipal:hover {
+    -fx-background-color: #8212ff;
+}
+
+.botaoPrincipal:pressed {
+    -fx-background-color: #6a00e1;
+}

@@ -159,6 +159,7 @@ public class TabelaSessaoController {
 
                         cadastroSessaoController.eventoAberto = eventoAberto;
                         cadastroSessaoController.modo = "Alterar";
+                        cadastroSessaoController.carregaValores();
 
                         paneAncoraAba.getChildren().add(janela);
 

@@ -22,16 +22,46 @@ public class Evento {
     @Column(length = 100)
     private LocalDate dataFim;
     private LocalDate dataInicio;
+    private LocalTime horaInicio;
+    private LocalTime horaFim;
     private String endereco;
     private String descricao;
     private String nome;
+    private int capacidade;
 
-    public Evento(String nome, String descricao, String endereco, LocalDate dataInicio, LocalDate dataFim) {
+    public Evento(String nome, String descricao, String endereco, LocalDate dataInicio, String horaInicio, LocalDate dataFim, String horaFim, int capacidade) {
         setDataFim(dataFim);
         setDataInicio(dataInicio);
         setEndereco(endereco);
         setDescricao(descricao);
         setNome(nome);
+        setHoraFim(LocalTime.parse(horaFim));
+        setHoraInicio(LocalTime.parse(horaInicio));
+        setCapacidade(capacidade);
+    }
+
+    public String getCapacidade() {
+        return String.valueOf(capacidade);
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public LocalTime getHoraFim() {
+        return horaFim;
+    }
+
+    public void setHoraFim(LocalTime horaFim) {
+        this.horaFim = horaFim;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
     public Evento() {};

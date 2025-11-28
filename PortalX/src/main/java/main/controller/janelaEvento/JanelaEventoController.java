@@ -72,6 +72,7 @@ public class JanelaEventoController {
                 abaInfoController.eventoAberto = eventoAberto;
                 abaInfoController.modo = "Alterar";
                 System.out.println("evento não e nulo");
+                abaInfoController.carregaValores();
             } else {
                 abaInfoController.modo = "Adicionar";
                 System.out.println("evento e nulo");

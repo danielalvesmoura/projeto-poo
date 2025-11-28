@@ -3,6 +3,8 @@ package main.controller.menuPrincipal.tabelas;
 import dao.EventoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,14 +32,18 @@ public class TabelaEventoController implements Initializable {
     public TableView<Evento> tableView;
 
     @FXML
+    public TextField campoFiltro;
+
+    @FXML
     public TableColumn<Evento,String> colId;
     public TableColumn<Evento,String> col2;
-    public TableColumn<Evento,String> col3;
+    public TableColumn<Evento,Integer> col3;
     public TableColumn<Evento,String> col4;
     public TableColumn<Evento,LocalDate> col5;
     public TableColumn<Evento,LocalDate> col6;
     public TableColumn<Evento,Void> col7;
     public TableColumn<Evento,Void> col8;
+    public TableColumn<Evento,Void> col9;
 
     @FXML
     public Pane modalPane;
@@ -50,6 +56,11 @@ public class TabelaEventoController implements Initializable {
     public Pane paneTelaInteiraAdicionar;
 
     ObservableList<Evento> observableList = FXCollections.observableArrayList();
+
+    // LISTA FILTRADA
+    FilteredList<Evento> filteredList = new FilteredList<>(observableList, p -> true);
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -99,7 +110,7 @@ public class TabelaEventoController implements Initializable {
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Descricao"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
         col6.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
@@ -126,15 +137,15 @@ public class TabelaEventoController implements Initializable {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    botaoRemover.setStyle("-fx-text-fill: red;");
                     setGraphic(botaoRemover);
                 }
             }
         });
 
 
+
         // BOTÃO PARA ABRIR EVENTO
-
-
 
         col8.setCellFactory(col -> new TableCell<Evento, Void>() {
 
@@ -175,24 +186,65 @@ public class TabelaEventoController implements Initializable {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    botaoAbrir.setStyle("-fx-text-fill: #7800ff;");
                     setGraphic(botaoAbrir);
                 }
             }
+
         });
 
         col2.setText("Nome");
-        col3.setText("Descrição");
+        col3.setText("Capacidade");
         col4.setText("Endereço");
         col5.setText("Data do Início");
         col6.setText("Data do Fim");
 
-        col2.setPrefWidth(300);
-        col3.setPrefWidth(400);
+        col2.setPrefWidth(400);
+        col3.setPrefWidth(200);
         col4.setPrefWidth(300);
-        col5.setPrefWidth(100);
-        col6.setPrefWidth(100);
-        col7.setPrefWidth(70); // BOTÃO REMOVER
-        col8.setPrefWidth(50); // BOTÃO ABRIR
+        col5.setPrefWidth(150);
+        col6.setPrefWidth(150);
+        col7.setPrefWidth(100); // BOTÃO REMOVER
+        col8.setPrefWidth(80); // BOTÃO ABRIR
+        col9.setPrefWidth(1000);
+
+        colId.setStyle("-fx-alignment: CENTER;");
+        col2.setStyle("-fx-alignment: CENTER;");
+        col3.setStyle("-fx-alignment: CENTER;");
+        col4.setStyle("-fx-alignment: CENTER;");
+        col5.setStyle("-fx-alignment: CENTER;");
+        col6.setStyle("-fx-alignment: CENTER;");
+        col7.setStyle("-fx-alignment: CENTER;");
+        col8.setStyle("-fx-alignment: CENTER;");
+
+        campoFiltro.textProperty().addListener((obs, oldValue, newValue) -> {
+            filteredList.setPredicate(pessoa -> {
+
+                // Se o campo estiver vazio, mostra tudo
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String filter = newValue.toLowerCase();
+
+                // Condição de filtro (pode adicionar mais colunas aqui)
+                if (pessoa.getNome().toLowerCase().contains(filter)) {
+                    return true;
+                }
+
+                return false;
+            });
+        });
+
+        // Lista ordenável
+        SortedList<Evento> sortedData = new SortedList<>(filteredList);
+
+        // Liga a ordenação da tabela com a lista ordenada
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+        // Adiciona os dados filtrados e ordenados à tabela
+        tableView.setItems(sortedData);
+
     }
 
 }

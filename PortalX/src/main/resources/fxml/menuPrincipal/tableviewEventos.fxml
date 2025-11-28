@@ -10,7 +10,7 @@
 
 <Pane pickOnBounds="false" prefHeight="1080.0" prefWidth="1546.0" stylesheets="/fxml/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-        <TableView fx:id="tableView" layoutX="46.0" layoutY="308.0" prefHeight="746.0" prefWidth="1427.0" stylesheets="/fxml/tableview.css">
+        <TableView fx:id="tableView" layoutX="371.0" layoutY="308.0" prefHeight="746.0" prefWidth="1102.0" stylesheets="/fxml/tableview.css">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="32.0" styleClass="coluna" text="ID" />
                 <TableColumn fx:id="col2" prefWidth="281.0" styleClass="coluna" text="Nome" />
@@ -20,9 +20,10 @@
                 <TableColumn fx:id="col6" prefWidth="168.0" styleClass="coluna" text="Data do Fim" />
             <TableColumn fx:id="col7" prefWidth="33.0" styleClass="coluna" />
             <TableColumn fx:id="col8" prefWidth="118.0" styleClass="coluna" />
+            <TableColumn fx:id="col9" prefWidth="118.0" styleClass="coluna" />
             </columns>
         </TableView>
-       <Button layoutX="1145.0" layoutY="173.0" mnemonicParsing="false" onAction="#botaoAdicionar" prefHeight="52.0" prefWidth="275.0" styleClass="botaoAdicionar" text="+ Adicionar nova pessoa">
+       <Button fx:id="botaoPrincipal" layoutX="1079.0" layoutY="173.0" mnemonicParsing="false" onAction="#botaoAdicionar" prefHeight="52.0" prefWidth="341.0" styleClass="botaoPrincipal" text="+ Adicionar nova pessoa">
            <font>
                <Font size="22.0" />
            </font></Button>
@@ -31,7 +32,7 @@
             <Font size="70.0" />
          </font>
       </Label>
-      <TextField fx:id="campoFiltro" layoutX="46.0" layoutY="210.0" prefHeight="51.0" prefWidth="477.0" promptText="    Pesquise por nome do evento..." styleClass="campoFiltro">
+      <TextField fx:id="campoFiltro" layoutX="33.0" layoutY="314.0" prefHeight="52.0" prefWidth="287.0" promptText="    Pesquise por nome do evento..." styleClass="campoFiltro">
          <font>
             <Font size="25.0" />
          </font>

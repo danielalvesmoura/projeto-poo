@@ -7,7 +7,7 @@
 
 .sideBarEventos {
     -fx-font-size: 25px;
-    -fx-background-color: rgba(120, 0, 255, 0.3);
+    -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-alignment: TOP_LEFT;
 
@@ -25,8 +25,7 @@
 
 }
 
-.separator:vertical .line {
-    -fx-background-color: #1e1a22;     /* cor da linha */
-    -fx-border-color: #1e1a22;
+.separator:vertical .line {     /* cor da linha */
+    -fx-border-color: #3b3b3b;
     -fx-border-width: 1px;
 }

@@ -72,6 +72,15 @@ public class CadastroSessaoController {
     // DEFINE SE A JANELA FOI ABERTA NO MODO ADIOCIONAR OU ALTERAR
     public String modo = "";
 
+    public void carregaValores() {
+        campoTitulo.setText(sessaoAberta.getTitulo());
+        campoDescricao.setText(sessaoAberta.getDescricao());
+        campoDataInicio.setValue(sessaoAberta.getDataInicio());
+        campoHoraInicio.setText(sessaoAberta.getHoraInicio().toString());
+        campoDataFim.setValue(sessaoAberta.getDataFim());
+        campoHoraFim.setText(sessaoAberta.getHoraFim().toString());
+    }
+
     @FXML
     public void confirmar() {
         TipoSessao tipoSessao;

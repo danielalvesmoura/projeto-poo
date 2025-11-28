@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import main.controller.menuPrincipal.tabelas.TabelaEventoController;
 import main.controller.menuPrincipal.tabelas.TabelaPessoasController;
-import main.controller.menuPrincipal.tabelas.TabelaSalaController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -68,25 +67,6 @@ public class SecaoDashboardController implements Initializable {
         }
     }
 
-    public void abreTabelaSala() {
-        tabelaPane.getChildren().clear();
 
-        try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewEventos.fxml"));
-
-            TabelaSalaController tabelaSalaController = new TabelaSalaController();
-            tabelaSalaController.defineTabelaController(tabelaSalaController);
-            tabelaLoader.setController(tabelaSalaController);
-
-            Parent tabela = tabelaLoader.load();
-
-            tabela.setLayoutY(-100);
-
-            tabelaPane.getChildren().add(tabela);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }
