@@ -15,7 +15,18 @@ public class Debugg {
         PalestranteServico palestranteServico = new PalestranteServico();
         ParticipanteServico participanteServico = new ParticipanteServico();
 
+        eventoServico.cadastrar("Festival da Lua","Celebração cultural com música e gastronomia artesanal","Praça Central, 120 - Centro",LocalDate.parse("2025-03-14"),"18:00",LocalDate.parse("2025-03-14"),"23:30",500);
+        eventoServico.cadastrar("Corrida Verde","Competição esportiva para incentivar práticas sustentáveis","Parque das Águas, 45 - Jardim Verde",LocalDate.parse("2025-04-02"),"07:30",LocalDate.parse("2025-04-02"),"12:00",800);
+        eventoServico.cadastrar("Feira Literária Jovem","Encontro de autores, leitores e editoras independentes","Av. das Letras, 900 - Bela Vista",LocalDate.parse("2025-05-20"),"09:00",LocalDate.parse("2025-05-20"),"18:00",300);
+        eventoServico.cadastrar("TechDay Inovação","Palestras e workshops sobre novas tecnologias","Rua dos Inventores, 210 - Distrito Industrial",LocalDate.parse("2025-06-10"),"10:00",LocalDate.parse("2025-06-10"),"17:00",450);
+        eventoServico.cadastrar("Encontro de Vinhos do Sul","Degustações e palestras sobre produção vinícola","Estrada do Vale, km 8 - Vinhedos",LocalDate.parse("2025-07-05"),"16:00",LocalDate.parse("2025-07-05"),"22:00",250);
+        eventoServico.cadastrar("Mostra de Cinema Independente","Exibição de curtas e longas de novos cineastas","Cine Art, Rua Aurora, 77 - Centro",LocalDate.parse("2025-08-12"),"14:00",LocalDate.parse("2025-08-12"),"22:00",350);
+        eventoServico.cadastrar("Congresso de Medicina Holística","Debates sobre terapias integrativas e bem-estar","Centro de Convenções Horizonte, 300 - Universitário",LocalDate.parse("2025-09-18"),"08:00",LocalDate.parse("2025-09-19"),"18:00",600);
+        eventoServico.cadastrar("Semana da Fotografia","Exposições, concursos e aulas abertas","Galeria Luz & Arte, Rua Amarela, 333 - Antigo",LocalDate.parse("2025-10-02"),"10:00",LocalDate.parse("2025-10-07"),"20:00",200);
+        eventoServico.cadastrar("Festival Gourmet de Primavera","Pratos sazonais preparados por chefs locais","Boulevard Gastronômico, 12 - Lago Norte",LocalDate.parse("2025-11-15"),"11:00",LocalDate.parse("2025-11-15"),"21:00",700);
+        eventoServico.cadastrar("Hackathon Social","Maratona de programação para criar soluções comunitárias","Espaço InovaLab, Rua Projetada, 500 - TechPark",LocalDate.parse("2025-12-05"),"09:00",LocalDate.parse("2025-12-06"),"09:00",120);
 
+        /*
         palestranteServico.cadastrar("Marcos Silva","marcos.silva@example.com","(11) 91234-5678",LocalDate.parse("1985-03-12"));
         palestranteServico.cadastrar("Ana Rodrigues","ana.rodrigues@example.com","(21) 99876-5432",LocalDate.parse("1990-07-25"));
         palestranteServico.cadastrar("João Pereira","joao.pereira@example.com","(31) 98765-4321",LocalDate.parse("1978-11-05"));
@@ -57,7 +68,7 @@ public class Debugg {
         participanteServico.cadastrar("Isabela Pires","isabela.pires@example.com","(71) 93322-1188",LocalDate.parse("1999-03-29"));
         participanteServico.cadastrar("Caio Santos","caio.santos@example.com","(81) 98877-4433",LocalDate.parse("2000-10-12"));
         participanteServico.cadastrar("Viviane Rocha","viviane.rocha@example.com","(91) 91223-5566",LocalDate.parse("1997-02-06"));
-
+        */
 
 
     }

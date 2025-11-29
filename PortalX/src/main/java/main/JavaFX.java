@@ -5,36 +5,33 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import main.controller.menuPrincipal.MenuPrincipalController;
+
 import java.io.IOException;
-import java.net.URL;
 
 public class JavaFX extends Application {
 
     private Stage stage;
 
-    int x = 1200;
-    int y = 700;
-
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //Logger.getLogger("").setLevel(Level.OFF);
 
         this.stage = primaryStage;
         stage.setTitle("Portal X");
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/menuPrincipal/secaoDashboard.fxml"));
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/menuPrincipal.fxml"));
 
-        Scene scene = new Scene(root);
+        MenuPrincipalController menuPrincipalController = new MenuPrincipalController();
+        appLoader.setController(menuPrincipalController);
 
-        URL css = getClass().getResource("/fxml/menuPrincipal/barraLateralInicio.css");
-        if(css!=null) scene.getStylesheets().add(css.toExternalForm());
-        else System.out.println("nao funfou");
+        menuPrincipalController.stage = stage;
 
-        //scene.getStylesheets().add(getClass().getResource("/fxml/barraLateralInicio.css").toExternalForm());
+        Parent app = appLoader.load();
+
+        Scene scene = new Scene(app);
+
         stage.setScene(scene);
-
-        stage.setFullScreen(true);
-
+        //stage.setFullScreen(true);
         stage.show();
     }
 

@@ -1,0 +1,32 @@
+.label {
+    -fx-text-fill: white;
+}
+
+.botaoEventos {
+    -fx-background-color: transparent;
+    -fx-background-image: url("imagens/iconeCalendarioBranco.png");
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-text-fill: white;
+}
+
+.botaoEventos:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+    -fx-background-image: url("imagens/iconeCalendarioRoxo.png");
+    -fx-text-fill: #7800ff;
+}
+
+.botaoPessoas {
+    -fx-background-color: transparent;
+    -fx-background-image: url("imagens/pessoaBranco.png");
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-text-fill: white;
+}
+
+.botaoPessoas:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+    -fx-background-image: url("imagens/pessoaRoxo.png");
+    -fx-text-fill: #7800ff;
+}
+

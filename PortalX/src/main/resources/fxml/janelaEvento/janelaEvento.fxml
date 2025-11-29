@@ -22,7 +22,7 @@
            </font></Button>
       <ImageView fitHeight="63.0" fitWidth="61.0" layoutX="36.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../imagens/logoRoxa.png" />
+            <Image url="@../estilos/imagens/logoRoxa.png" />
          </image>
       </ImageView>
       <Button graphicTextGap="0.0" layoutX="27.0" layoutY="258.0" mnemonicParsing="false" onAction="#abreSessoes" prefHeight="58.0" prefWidth="326.0" styleClass="sideBarEventos" text="Sessões" textFill="#7800ff">

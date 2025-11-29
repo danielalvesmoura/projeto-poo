@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/menuPrincipal/barraLateralInicio.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.menuPrincipal.SecaoDashboardController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" stylesheets="/fxml/menuPrincipal/barraLateralInicio.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.menuPrincipal.MenuPrincipalController">
    <children>
-      <Pane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black;">
+      <Pane fx:id="barralatearl" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: black;">
          <children>
             <Label layoutX="91.0" layoutY="36.0" prefHeight="80.0" prefWidth="238.0" style="-fx-alignment: center;" styleClass="texto" text="Portal X" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
@@ -16,7 +16,7 @@
             </Label>
             <ImageView fitHeight="65.0" fitWidth="58.0" layoutX="44.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../imagens/logoRoxa.png" />
+                  <Image url="@../estilos/imagens/logoRoxa.png" />
                </image></ImageView>
             <Separator fx:id="separador" layoutX="374.0" orientation="VERTICAL" prefHeight="1080.0" prefWidth="0.5" />
             <Button graphicTextGap="0.0" layoutX="27.0" layoutY="185.0" mnemonicParsing="false" onAction="#abreTabelaEventos" prefHeight="58.0" prefWidth="326.0" styleClass="sideBarEventos" text="          Eventos" textFill="#7800ff">
@@ -25,7 +25,7 @@
                </font></Button>
             <ImageView fitHeight="40.0" fitWidth="33.0" layoutX="57.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../imagens/iconeCalendarioRoxo.png" />
+                  <Image url="@../estilos/imagens/iconeCalendarioRoxo.png" />
                </image></ImageView>
             <Button graphicTextGap="0.0" layoutX="27.0" layoutY="259.0" mnemonicParsing="false" onAction="#abrePessoas" prefHeight="58.0" prefWidth="326.0" styleClass="sideBarEventos" text="          Pessoas" textFill="#7800ff">
                <font>
