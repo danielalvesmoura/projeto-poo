@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import main.controller.menuPrincipal.MenuPrincipalController;
+import main.controller.menuPrincipal.novo.MenuPrincipalController;
 
 import java.io.IOException;
 
@@ -19,12 +19,10 @@ public class JavaFX extends Application {
         this.stage = primaryStage;
         stage.setTitle("Portal X");
 
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/menuPrincipal.fxml"));
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
 
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController();
+        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
         appLoader.setController(menuPrincipalController);
-
-        menuPrincipalController.stage = stage;
 
         Parent app = appLoader.load();
 
@@ -32,6 +30,7 @@ public class JavaFX extends Application {
 
         stage.setScene(scene);
         //stage.setFullScreen(true);
+        stage.setMaximized(true);
         stage.show();
     }
 

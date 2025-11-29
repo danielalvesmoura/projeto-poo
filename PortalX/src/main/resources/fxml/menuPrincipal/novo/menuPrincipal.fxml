@@ -20,7 +20,7 @@
                      <graphic>
                         <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../estilos/imagens/logoRoxa.png" />
+                              <Image url="@../../estilos/imagens/logoRoxa.png" />
                            </image>
                            <viewport>
                               <Rectangle2D />

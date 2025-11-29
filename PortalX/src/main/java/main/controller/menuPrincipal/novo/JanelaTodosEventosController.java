@@ -1,4 +1,4 @@
-package main.controller.menuPrincipal;
+package main.controller.menuPrincipal.novo;
 
 import dao.EventoDAO;
 import javafx.beans.value.ChangeListener;
@@ -13,26 +13,28 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import main.controller.janelaEvento.JanelaEventoController;
+import main.controller.janelaEvento.novo.JanelaEditarEventoController;
 import model.Evento;
 import servico.EventoServico;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class JanelaTodosEventosController {
 
     public Stage stage;
 
+    public JanelaTodosEventosController(Stage stage) {
+        this.stage = stage;
+    }
+
     @FXML
     public void fechar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/menuPrincipal.fxml"));
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
 
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController();
+        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
         appLoader.setController(menuPrincipalController);
 
         menuPrincipalController.stage = stage;
@@ -42,6 +44,29 @@ public class JanelaTodosEventosController {
         Scene menuPrincipal = new Scene(app);
 
         stage.setScene(menuPrincipal);
+
+        stage.setMaximized(false);
+        stage.setMaximized(true);
+    }
+
+    @FXML
+    public void adicionar() throws IOException {
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
+
+        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage);
+        appLoader.setController(janelaEditarEventoController);
+        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
+
+        janelaEditarEventoController.stage = stage;
+
+        Parent app = appLoader.load();
+
+        Scene scene = new Scene(app);
+
+        stage.setScene(scene);
+
+        stage.setMaximized(false);
+        stage.setMaximized(true);
     }
 
     @FXML
@@ -88,6 +113,7 @@ public class JanelaTodosEventosController {
 
     EventoDAO eventoDAO = new EventoDAO();
     EventoServico eventoServico = new EventoServico();
+
     public void atualizaTabela() {
         observableList.clear();
 
@@ -145,6 +171,27 @@ public class JanelaTodosEventosController {
                 botaoAbrir.setOnAction(event -> {
                     Evento evento = getTableView().getItems().get(getIndex());
 
+                    try {
+                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
+
+                        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage,evento);
+                        appLoader.setController(janelaEditarEventoController);
+                        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
+
+                        janelaEditarEventoController.stage = stage;
+
+                        Parent app = appLoader.load();
+
+                        Scene scene = new Scene(app);
+
+                        stage.setScene(scene);
+
+                        stage.setMaximized(false);
+                        stage.setMaximized(true);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 });
             }
 
@@ -270,8 +317,7 @@ public class JanelaTodosEventosController {
                     }
 
                 } catch (Exception e) {
-                    // Se usuário digitar hora inválida, não filtra por hora
-                    System.out.println("Hora inválida no filtro.");
+
                 }
 
                 return match;

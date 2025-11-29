@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane minWidth="0.0" prefHeight="500.0" prefWidth="800.0" stylesheets="/fxml/estilos/menuPrincipal.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox fx:id="hboxPrincipal" minWidth="0.0" style="-fx-background-color: black;">
+         <children>
+            <VBox prefWidth="267.0">
+               <children>
+                  <Label style="-fx-text-fill: white;" text="Portal X">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../estilos/imagens/logoRoxa.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Region prefHeight="27.0" prefWidth="152.0" />
+                  <Button alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaDetalhes" styleClass="botaoEventos" text="    Detalhes" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaSessoes" styleClass="botaoPessoas" text="    Sessões">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="147.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaInscricoes" styleClass="botaoPessoas" text="    Inscrições">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox fx:id="vboxConteudo" prefHeight="200.0" prefWidth="100.0" spacing="20.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER" minWidth="0.0">
+                     <children>
+                        <Label text="Título do Evento Aberto" textFill="WHITE">
+                           <font>
+                              <Font size="31.0" />
+                           </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#fechar" text="Fechar">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

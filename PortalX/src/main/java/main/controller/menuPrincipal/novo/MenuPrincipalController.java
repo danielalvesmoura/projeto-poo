@@ -1,4 +1,4 @@
-package main.controller.menuPrincipal;
+package main.controller.menuPrincipal.novo;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +11,15 @@ import javafx.stage.Stage;
 import main.controller.menuPrincipal.tabelas.TabelaPessoasController;
 
 public class MenuPrincipalController {
-    @FXML
-    public Pane paneConteudo;
 
     public Stage stage;
+
+    public MenuPrincipalController(Stage stage) {
+        this.stage = stage;
+    }
+
+    @FXML
+    public Pane paneConteudo;
 
     @FXML
     public PieChart pieChart;
@@ -28,20 +33,19 @@ public class MenuPrincipalController {
     public void abreTabelaEventos() {
 
         try {
-            FXMLLoader janelaTodosEventosLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/janelaTodosEventos.fxml"));
+            FXMLLoader janelaTodosEventosLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml"));
 
-            JanelaTodosEventosController janelaTodosEventosController = new JanelaTodosEventosController();
-            //TabelaEventoController tabelaEventoController = new TabelaEventoController();
-            //tabelaEventoController.tabelaEventoController = tabelaEventoController;
+            JanelaTodosEventosController janelaTodosEventosController = new JanelaTodosEventosController(stage);
             janelaTodosEventosLoader.setController(janelaTodosEventosController);
-
-            janelaTodosEventosController.stage = stage;
 
             Parent janela = janelaTodosEventosLoader.load();
 
             Scene cenaTodosEventos = new Scene(janela);
 
             stage.setScene(cenaTodosEventos);
+
+            stage.setMaximized(false);
+            stage.setMaximized(true);
 
         } catch (Exception e) {
             e.printStackTrace();

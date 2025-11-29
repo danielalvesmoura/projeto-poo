@@ -23,7 +23,7 @@
                         <Font size="39.0" />
                      </font></Label>
                   <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
-                  <Button minWidth="0.0" mnemonicParsing="false" text="+ Adicionar novo evento" HBox.hgrow="ALWAYS">
+                  <Button minWidth="0.0" mnemonicParsing="false" onAction="#adicionar" text="+ Adicionar novo evento" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />
                      </font></Button>

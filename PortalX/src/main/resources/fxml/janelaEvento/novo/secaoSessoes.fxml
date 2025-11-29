@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="722.0" prefWidth="800.0" spacing="20.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+   </padding>
+   <children>
+      <HBox alignment="CENTER" minWidth="0.0">
+         <children>
+            <Label minWidth="0.0" text="Todos as sessões" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
+            <Button minWidth="0.0" mnemonicParsing="false" onAction="#adicionar" text="+ Adicionar nova sessão" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <HBox minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0" VBox.vgrow="ALWAYS">
+         <children>
+            <TableView fx:id="tableView" minHeight="0.0" minWidth="0.0" HBox.hgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="colId" prefWidth="51.0" text="colId" />
+                <TableColumn fx:id="col2" prefWidth="57.0" text="col2" />
+                  <TableColumn fx:id="col3" prefWidth="49.0" text="col3" />
+                  <TableColumn fx:id="col4" prefWidth="44.0" text="col4" />
+                  <TableColumn fx:id="col5" prefWidth="61.0" text="col5" />
+                  <TableColumn fx:id="col6" prefWidth="62.0" text="col6" />
+                  <TableColumn fx:id="col7" prefWidth="59.0" text="col7" />
+                  <TableColumn fx:id="col8" prefWidth="49.0" text="col8" />
+                  <TableColumn fx:id="col9" prefWidth="49.0" text="col9" />
+                  <TableColumn fx:id="col10" prefWidth="153.0" text="col10" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+   </children>
+</VBox>
