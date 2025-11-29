@@ -20,6 +20,7 @@ import servico.EventoServico;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -50,6 +51,16 @@ public class JanelaTodosEventosController {
     public TextField campoNome;
     @FXML
     public TextField campoEndereco;
+    @FXML
+    public TextField campoCapacidade;
+    @FXML
+    public DatePicker campoDataInicio;
+    @FXML
+    public TextField campoHoraInicio;
+    @FXML
+    public DatePicker campoDataFim;
+    @FXML
+    public TextField campoHoraFim;
 
     @FXML
     public TableColumn<Evento,String> colId;
@@ -57,9 +68,9 @@ public class JanelaTodosEventosController {
     public TableColumn<Evento,Integer> col3;
     public TableColumn<Evento,String> col4;
     public TableColumn<Evento, LocalDate> col5;
-    public TableColumn<Evento,LocalDate> col6;
-    public TableColumn<Evento,Void> col7;
-    public TableColumn<Evento,Void> col8;
+    public TableColumn<Evento,LocalTime> col6;
+    public TableColumn<Evento,LocalDate> col7;
+    public TableColumn<Evento, LocalTime> col8;
     public TableColumn<Evento,Void> col9;
     public TableColumn<Evento,Void> col10;
 
@@ -91,12 +102,14 @@ public class JanelaTodosEventosController {
         col3.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        col8.setCellValueFactory(new PropertyValueFactory<>("HoraFim"));
 
 
         // BOTÃO DE REMOVER ITEM
 
-        col7.setCellFactory(col -> new TableCell<Evento, Void>() {
+        col9.setCellFactory(col -> new TableCell<Evento, Void>() {
 
             private final Button botaoRemover = new Button("Remover");
 
@@ -124,7 +137,7 @@ public class JanelaTodosEventosController {
 
         // BOTÃO PARA ABRIR EVENTO
 
-        col8.setCellFactory(col -> new TableCell<Evento, Void>() {
+        col10.setCellFactory(col -> new TableCell<Evento, Void>() {
 
             private final Button botaoAbrir = new Button("Abrir");
 
@@ -154,9 +167,9 @@ public class JanelaTodosEventosController {
         col3.setText("Capacidade");
         col4.setText("Endereço");
         col5.setText("Data do Início");
-        col6.setText("Data do Fim");
-        col7.setText("");
-        col8.setText("");
+        col6.setText("Hora do Início");
+        col7.setText("Data do Fim");
+        col8.setText("Hora do Fim");
         col9.setText("");
         col10.setText("");
 
@@ -166,10 +179,10 @@ public class JanelaTodosEventosController {
         col4.setPrefWidth(300);
         col5.setPrefWidth(150);
         col6.setPrefWidth(150);
-        col7.setPrefWidth(100); // BOTÃO REMOVER
-        col8.setPrefWidth(80); // BOTÃO ABRIR
-        col9.setPrefWidth(0);
-        col10.setPrefWidth(0);
+        col7.setPrefWidth(100);
+        col8.setPrefWidth(100);
+        col9.setPrefWidth(100); // BOTÃO REMOVER
+        col10.setPrefWidth(80); // BOTÃO ABRIR
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -182,38 +195,100 @@ public class JanelaTodosEventosController {
         col7.setStyle("-fx-alignment: CENTER;");
         col8.setStyle("-fx-alignment: CENTER;");
 
+
+        // FILTRO
+
         // Listener genérico para atualizar o filtro
-        ChangeListener<String> filtroListener = (obs, oldValue, newValue) -> {
+        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
             filteredList.setPredicate(evento -> {
 
-                // Converte os filtros para lowercase
-                String nomeFiltro = campoNome.getText().toLowerCase();
-                String enderecoFiltro = campoEndereco.getText().toLowerCase();
+                // Strings
+                String nomeFiltro       = campoNome.getText().toLowerCase();
+                String enderecoFiltro   = campoEndereco.getText().toLowerCase();
+                String capacidadeFiltro = campoCapacidade.getText().toLowerCase();
 
-                // Se ambos os campos estiverem vazios → mostra tudo
-                if (nomeFiltro.isEmpty() && enderecoFiltro.isEmpty()) {
+                // Horas (strings vindas dos TextFields)
+                String horaIniFiltroStr = campoHoraInicio.getText().toLowerCase();
+                String horaFimFiltroStr = campoHoraFim.getText().toLowerCase();
+
+                // Datas (LocalDate)
+                LocalDate dataIniFiltro = campoDataInicio.getValue();
+                LocalDate dataFimFiltro = campoDataFim.getValue();
+
+                // Se tudo estiver vazio → mostra tudo
+                if (nomeFiltro.isEmpty() &&
+                        enderecoFiltro.isEmpty() &&
+                        capacidadeFiltro.isEmpty() &&
+                        horaIniFiltroStr.isEmpty() &&
+                        horaFimFiltroStr.isEmpty() &&
+                        dataIniFiltro == null &&
+                        dataFimFiltro == null) {
+
                     return true;
                 }
 
                 boolean match = true;
 
-                // Aplica filtro do nome
-                if (!nomeFiltro.isEmpty()) {
-                    match &= evento.getNome().toLowerCase().contains(nomeFiltro);
+                // -------------------------------------------------------------
+                // 1) FILTROS DE STRING SIMPLES
+                // -------------------------------------------------------------
+                if (!nomeFiltro.isEmpty()) {match &= evento.getNome().toLowerCase().contains(nomeFiltro);}
+
+                if (!enderecoFiltro.isEmpty()) {match &= evento.getEndereco().toLowerCase().contains(enderecoFiltro);}
+
+                if (!capacidadeFiltro.isEmpty()) { match &= (evento.getCapacidade().contains(capacidadeFiltro));}
+
+                // -------------------------------------------------------------
+                // 2) FILTROS DE DATA COM >= e <=
+                // -------------------------------------------------------------
+                LocalDate dataInicioEvento = evento.getDataInicio();
+                LocalDate dataFimEvento    = evento.getDataFim();
+
+                // data início → deve ser >= campo
+                if (dataIniFiltro != null && dataInicioEvento != null) {
+                    match &= !dataInicioEvento.isBefore(dataIniFiltro);   // >=
                 }
 
-                // Aplica filtro do endereço
-                if (!enderecoFiltro.isEmpty()) {
-                    match &= evento.getEndereco().toLowerCase().contains(enderecoFiltro);
+                // data fim → deve ser <= campo
+                if (dataFimFiltro != null && dataFimEvento != null) {
+                    match &= !dataFimEvento.isAfter(dataFimFiltro);       // <=
+                }
+
+                // -------------------------------------------------------------
+                // 3) FILTROS DE HORÁRIO COM >= e <=
+                // -------------------------------------------------------------
+                try {
+                    // Converte somente se o usuário digitou
+                    if (!horaIniFiltroStr.isEmpty()) {
+                        LocalTime horaIniFiltro = LocalTime.parse(horaIniFiltroStr);
+                        match &= !evento.getHoraInicio().isBefore(horaIniFiltro);  // >=
+                    }
+
+                    if (!horaFimFiltroStr.isEmpty()) {
+                        LocalTime horaFimFiltro = LocalTime.parse(horaFimFiltroStr);
+                        match &= !evento.getHoraFim().isAfter(horaFimFiltro);      // <=
+                    }
+
+                } catch (Exception e) {
+                    // Se usuário digitar hora inválida, não filtra por hora
+                    System.out.println("Hora inválida no filtro.");
                 }
 
                 return match;
             });
         };
 
-        // OIE: Adiciona o mesmo listener em ambos os campos de texto
+        // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoEndereco.textProperty().addListener(filtroListener);
+        campoCapacidade.textProperty().addListener(filtroListener);
+        campoHoraInicio.textProperty().addListener(filtroListener);
+        campoHoraFim.textProperty().addListener(filtroListener);
+
+        // Datas
+        campoDataInicio.valueProperty().addListener(filtroListener);
+        campoDataFim.valueProperty().addListener(filtroListener);
+
 
         // Lista ordenável
         SortedList<Evento> sortedData = new SortedList<>(filteredList);
