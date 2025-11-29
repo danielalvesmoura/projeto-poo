@@ -12,14 +12,15 @@ import java.time.LocalTime;
 
 public class SessaoServico {
     SessaoDAO sessaoDAO = new SessaoDAO();
+    EventoDAO eventoDAO = new EventoDAO();
 
     public void cadastrar(Evento evento, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
         Sessao sessao = new Sessao(evento, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
         sessaoDAO.inserir(sessao);
     }
 
-    public void remover(Sessao sessao) {
-        sessaoDAO.remover(sessao);
+    public void remover(Sessao sessao, Evento eventoAberto) {
+        sessaoDAO.removerSessao(eventoAberto.getId(),sessao.getId());
     }
 
     public void alterar(Sessao sessao, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim, StatusSessao status) {

@@ -30,6 +30,7 @@ public class SecaoCadastraSessaoController {
     public SecaoCadastraSessaoController(Stage stage, Evento eventoAberto, Sessao sessaoAberta) {
         this.stage = stage;
         this.eventoAberto = eventoAberto;
+        this.sessaoAberta = sessaoAberta;
     }
 
     public SecaoCadastraSessaoController(Stage stage, Evento eventoAberto) {

@@ -40,6 +40,14 @@ public class Evento {
         setCapacidade(capacidade);
     }
 
+    public List<Sessao> getSessoes() {
+        return sessoes;
+    }
+
+    public void setSessoes(List<Sessao> sessoes) {
+        this.sessoes = sessoes;
+    }
+
     public String getCapacidade() {
         return String.valueOf(capacidade);
     }

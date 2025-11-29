@@ -81,8 +81,7 @@ public class SecaoDetalhesController {
 
                 stage.setScene(cenaTodosEventos);
 
-                stage.setMaximized(false);
-                stage.setMaximized(true);
+
 
             } catch (Exception e) {
                 e.printStackTrace();

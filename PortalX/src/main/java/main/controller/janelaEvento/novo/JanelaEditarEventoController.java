@@ -19,12 +19,6 @@ public class JanelaEditarEventoController {
     public Evento eventoAberto;
     public JanelaEditarEventoController janelaEditarEventoController;
 
-    public JanelaEditarEventoController(Stage stage, Evento eventoAberto, String abaAberta) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
-        this.abaAberta = abaAberta;
-    }
-
     public JanelaEditarEventoController(Stage stage, Evento eventoAberto) {
         this.stage = stage;
         this.eventoAberto = eventoAberto;
@@ -52,61 +46,52 @@ public class JanelaEditarEventoController {
 
         stage.setScene(cenaTodosEventos);
 
-        stage.setMaximized(false);
-        stage.setMaximized(true);
+
     }
 
     @FXML
     public void initialize() throws IOException {
-        if(abaAberta == null) {
-            abreAbaDetalhes();
-        } else {
-            abreAbaSessoes();
-        }
+        abreAbaDetalhes();
     }
 
-    private String abaAberta;
-    private Parent janela;
+    @FXML
+    public BorderPane borderpaneConteudo;
+
 
     @FXML
     public void abreAbaDetalhes() throws IOException {
-        if(!Objects.equals(abaAberta, "Detalhes")) {
-            abaAberta = "Detalhes";
-            vboxConteudo.getChildren().remove(janela);
+        borderpaneConteudo.getChildren().clear();
 
-            FXMLLoader secaoDetalhesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoDetalhes.fxml"));
+        FXMLLoader secaoDetalhesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoDetalhes.fxml"));
 
-            SecaoDetalhesController secaoDetalhesController = new SecaoDetalhesController(stage,eventoAberto);
-            secaoDetalhesLoader.setController(secaoDetalhesController);
+        SecaoDetalhesController secaoDetalhesController = new SecaoDetalhesController(stage,eventoAberto);
+        secaoDetalhesLoader.setController(secaoDetalhesController);
 
-            janela = secaoDetalhesLoader.load();
+        Parent janela = secaoDetalhesLoader.load();
 
-            VBox.setVgrow(janela, Priority.ALWAYS);
+        VBox.setVgrow(janela, Priority.ALWAYS);
 
-            vboxConteudo.getChildren().add(janela);
-        }
+        borderpaneConteudo.setCenter(janela);
+
     }
 
     @FXML
     public void abreAbaSessoes() throws IOException {
-        if(eventoAberto != null && !Objects.equals(abaAberta, "Sessoes")) {
-            abaAberta = "Sessoes";
-            vboxConteudo.getChildren().remove(janela);
+        if(eventoAberto != null) {
+            borderpaneConteudo.getChildren().clear();
 
             FXMLLoader secaoDetalhesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoSessoes.fxml"));
 
             SecaoSessoesController secaoSessoesController = new SecaoSessoesController(stage,eventoAberto);
             secaoDetalhesLoader.setController(secaoSessoesController);
-            secaoSessoesController.vboxConteudo = vboxConteudo;
+            secaoSessoesController.borderpaneConteudo = borderpaneConteudo;
             secaoSessoesController.janelaEditarEventoController = janelaEditarEventoController;
 
-            janela = secaoDetalhesLoader.load();
-
-            secaoSessoesController.janela = janela;
+            Parent janela = secaoDetalhesLoader.load();
 
             VBox.setVgrow(janela, Priority.ALWAYS);
 
-            vboxConteudo.getChildren().add(janela);
+            borderpaneConteudo.setCenter(janela);
 
         }
     }

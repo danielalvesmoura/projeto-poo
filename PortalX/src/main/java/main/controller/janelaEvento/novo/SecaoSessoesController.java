@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import main.controller.menuPrincipal.novo.MenuPrincipalController;
@@ -30,8 +31,7 @@ public class SecaoSessoesController {
 
     public Stage stage;
     public Evento eventoAberto;
-    public VBox vboxConteudo;
-    public Parent janela;
+    public BorderPane borderpaneConteudo;
     JanelaEditarEventoController janelaEditarEventoController;
 
     public SecaoSessoesController(Stage stage, Evento eventoAberto) {
@@ -41,7 +41,7 @@ public class SecaoSessoesController {
 
     @FXML
     public void adicionar() throws IOException {
-        vboxConteudo.getChildren().remove(janela);
+        borderpaneConteudo.getChildren().clear();
 
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoCadastraSessao.fxml"));
 
@@ -51,27 +51,12 @@ public class SecaoSessoesController {
 
         Parent app = appLoader.load();
 
-        vboxConteudo.getChildren().add(app);
+        borderpaneConteudo.setCenter(app);
 
     }
 
     @FXML
     public TableView<Sessao> tableView;
-
-    @FXML
-    public TextField campoNome;
-    @FXML
-    public TextField campoEndereco;
-    @FXML
-    public TextField campoCapacidade;
-    @FXML
-    public DatePicker campoDataInicio;
-    @FXML
-    public TextField campoHoraInicio;
-    @FXML
-    public DatePicker campoDataFim;
-    @FXML
-    public TextField campoHoraFim;
 
     @FXML
     public TableColumn<Sessao,String> colId;
@@ -112,9 +97,9 @@ public class SecaoSessoesController {
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("Titulo"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("Status"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
         col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
         col7.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
@@ -129,9 +114,10 @@ public class SecaoSessoesController {
 
             {
                 botaoRemover.setOnAction(event -> {
-                    Sessao e = getTableView().getItems().get(getIndex());
-                    sessaoServico.remover(e);
+                    Sessao sessao = getTableView().getItems().get(getIndex());
+                    sessaoServico.remover(sessao, eventoAberto);
                     atualizaTabela();
+
                 });
             }
 
@@ -157,20 +143,20 @@ public class SecaoSessoesController {
 
             {
                 botaoAbrir.setOnAction(event -> {
-                    Sessao evento = getTableView().getItems().get(getIndex());
+                    Sessao sessaoAberta = getTableView().getItems().get(getIndex());
 
                     try {
-                        vboxConteudo.getChildren().remove(janela);
+                        borderpaneConteudo.getChildren().clear();
 
                         FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoCadastraSessao.fxml"));
 
-                        SecaoCadastraSessaoController secaoCadastraSessaoController = new SecaoCadastraSessaoController(stage,eventoAberto,evento);
+                        SecaoCadastraSessaoController secaoCadastraSessaoController = new SecaoCadastraSessaoController(stage,eventoAberto,sessaoAberta);
                         appLoader.setController(secaoCadastraSessaoController);
                         secaoCadastraSessaoController.janelaEditarEventoController = janelaEditarEventoController;
 
                         Parent app = appLoader.load();
 
-                        vboxConteudo.getChildren().add(app);
+                        borderpaneConteudo.setCenter(app);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -193,9 +179,9 @@ public class SecaoSessoesController {
         });
 
         colId.setText("ID");
-        col2.setText("Nome");
-        col3.setText("Capacidade");
-        col4.setText("Endereço");
+        col2.setText("Título");
+        col3.setText("Tipo");
+        col4.setText("Status");
         col5.setText("Data do Início");
         col6.setText("Hora do Início");
         col7.setText("Data do Fim");

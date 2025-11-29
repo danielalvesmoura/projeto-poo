@@ -112,7 +112,6 @@ public class TabelaSessaoController {
             {
                 botaoRemover.setOnAction(event -> {
                     Sessao s = getTableView().getItems().get(getIndex());
-                    sessaoServico.remover(s);
                     atualizaTabela();
                 });
             }

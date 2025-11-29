@@ -45,8 +45,7 @@ public class JanelaTodosEventosController {
 
         stage.setScene(menuPrincipal);
 
-        stage.setMaximized(false);
-        stage.setMaximized(true);
+
     }
 
     @FXML
@@ -65,8 +64,7 @@ public class JanelaTodosEventosController {
 
         stage.setScene(scene);
 
-        stage.setMaximized(false);
-        stage.setMaximized(true);
+
     }
 
     @FXML
@@ -186,8 +184,6 @@ public class JanelaTodosEventosController {
 
                         stage.setScene(scene);
 
-                        stage.setMaximized(false);
-                        stage.setMaximized(true);
 
                     } catch (Exception e) {
                         e.printStackTrace();
