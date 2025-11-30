@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import main.controller.menuPrincipal.novo.JanelaTodasPessoasController;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Evento;
 
@@ -97,9 +98,20 @@ public class JanelaEditarEventoController {
     }
 
     @FXML
-    public void abreJanelaInscricoes() {
+    public void abreJanelaInscricoes() throws IOException {
         if(eventoAberto != null) {
+            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaTodasInscricoes.fxml"));
 
+            JanelaTodasInscricoesController janelaTodasInscricoesController = new JanelaTodasInscricoesController(stage,eventoAberto);
+            janelaTodasInscricoesController.janelaTodasInscricoesController = janelaTodasInscricoesController;
+
+            tabelaLoader.setController(janelaTodasInscricoesController);
+
+            Parent janela = tabelaLoader.load();
+
+            Scene cenaTodasInscricoes = new Scene(janela);
+
+            stage.setScene(cenaTodasInscricoes);
         }
     }
 }

@@ -49,12 +49,20 @@ public class Inscricao {
         return evento.getId();
     }
 
-    public String getPessoaNome() {
+    public String getNome() {
         return pessoa.getNome();
     }
 
-    public String getPessoaEmail() {
+    public String getEmail() {
         return pessoa.getEmail();
+    }
+
+    public String getTelefone() {
+        return pessoa.getTelefone();
+    }
+
+    public String getDataNascimento() {
+        return pessoa.getDataNascimento().toString();
     }
 
     public Inscricao(){};

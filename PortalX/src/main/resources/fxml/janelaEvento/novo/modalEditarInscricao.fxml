@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Tipo">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="campoTipo" prefHeight="33.0" prefWidth="256.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+            <VBox layoutX="50.0" layoutY="50.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Status">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="campoStatus" prefHeight="33.0" prefWidth="247.0" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </padding>
+      </HBox>
+   </center>
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="titulo" text="Nome da pessoa">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar">
+               <font>
+                  <Font size="19.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#confirmar" text="Confirmar">
+               <font>
+                  <Font size="19.0" />
+               </font></Button>
+         </children>
+         <padding>
+            <Insets left="40.0" right="40.0" top="40.0" />
+         </padding>
+      </HBox>
+   </top>
+</BorderPane>

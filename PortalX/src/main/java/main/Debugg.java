@@ -1,11 +1,11 @@
 package main;
 
-import dao.SessaoDAO;
-import model.Feedback;
-import model.Sessao;
+import dao.*;
+import model.*;
 import servico.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Debugg {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class Debugg {
         FeedbackServico feedbackServico = new FeedbackServico();
         PessoaServico pessoaServico = new PessoaServico();
 
-
+        /*
         eventoServico.cadastrar("Festival da Lua","Celebração cultural com música e gastronomia artesanal","Praça Central, 120 - Centro",LocalDate.parse("2025-03-14"),"18:00",LocalDate.parse("2025-03-14"),"23:30",500);
         eventoServico.cadastrar("Corrida Verde","Competição esportiva para incentivar práticas sustentáveis","Parque das Águas, 45 - Jardim Verde",LocalDate.parse("2025-04-02"),"07:30",LocalDate.parse("2025-04-02"),"12:00",800);
         eventoServico.cadastrar("Feira Literária Jovem","Encontro de autores, leitores e editoras independentes","Av. das Letras, 900 - Bela Vista",LocalDate.parse("2025-05-20"),"09:00",LocalDate.parse("2025-05-20"),"18:00",300);
@@ -163,6 +163,15 @@ public class Debugg {
         pessoaServico.cadastrar("Caio Santos","caio.santos@example.com","(81) 98877-4433",LocalDate.parse("2000-10-12"));
         pessoaServico.cadastrar("Viviane Rocha","viviane.rocha@example.com","(91) 91223-5566",LocalDate.parse("1997-02-06"));
 
+         */
+
+        InscricaoServico inscricaoServico = new InscricaoServico();
+        EventoDAO eventoDAO = new EventoDAO();
+        Evento evento = eventoDAO.find(Evento.class,10L);
+        PessoaDAO pessoaDAO = new PessoaDAO();
+        List<Pessoa> pessoas = pessoaDAO.buscarTodos(Pessoa.class);
+
+        inscricaoServico.cadastrar(evento,pessoas,"Participante");
 
     }
 }
