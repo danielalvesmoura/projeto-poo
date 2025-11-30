@@ -23,6 +23,16 @@
                         <Font size="39.0" />
                      </font></Label>
                   <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Inscrever como:">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ChoiceBox fx:id="campoTipo" prefHeight="31.0" prefWidth="170.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
                   <Button minWidth="0.0" mnemonicParsing="false" onAction="#confirmar" text="Confirmar" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />

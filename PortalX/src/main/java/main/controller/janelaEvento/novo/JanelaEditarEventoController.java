@@ -104,6 +104,7 @@ public class JanelaEditarEventoController {
 
             JanelaTodasInscricoesController janelaTodasInscricoesController = new JanelaTodasInscricoesController(stage,eventoAberto);
             janelaTodasInscricoesController.janelaTodasInscricoesController = janelaTodasInscricoesController;
+            janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
 
             tabelaLoader.setController(janelaTodasInscricoesController);
 

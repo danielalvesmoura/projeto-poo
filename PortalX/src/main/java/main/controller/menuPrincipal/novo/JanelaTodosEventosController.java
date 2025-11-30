@@ -104,6 +104,8 @@ public class JanelaTodosEventosController {
 
     @FXML
     public void initialize() {
+        configuraTabela();
+
         atualizaTabela();
         tableView.setItems(observableList);
         atualizaTabela();
@@ -112,99 +114,7 @@ public class JanelaTodosEventosController {
     EventoDAO eventoDAO = new EventoDAO();
     EventoServico eventoServico = new EventoServico();
 
-    public void atualizaTabela() {
-        observableList.clear();
-
-        List<Evento> eventos = eventoDAO.buscarTodos(Evento.class);
-
-        for (Evento e : eventos) {
-            observableList.add(e);
-        }
-
-        colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
-        col7.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
-        col8.setCellValueFactory(new PropertyValueFactory<>("HoraFim"));
-
-
-        // BOTÃO DE REMOVER ITEM
-
-        col9.setCellFactory(col -> new TableCell<Evento, Void>() {
-
-            private final Button botaoRemover = new Button("Remover");
-
-            {
-                botaoRemover.setOnAction(event -> {
-                    Evento e = getTableView().getItems().get(getIndex());
-                    eventoServico.remover(e);
-                    atualizaTabela();
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    botaoRemover.setStyle("-fx-text-fill: red;");
-                    setGraphic(botaoRemover);
-                }
-            }
-        });
-
-
-        // BOTÃO PARA ABRIR EVENTO
-
-        col10.setCellFactory(col -> new TableCell<Evento, Void>() {
-
-            private final Button botaoAbrir = new Button("Abrir");
-
-            {
-                botaoAbrir.setOnAction(event -> {
-                    Evento evento = getTableView().getItems().get(getIndex());
-
-                    try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
-
-                        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage,evento);
-                        appLoader.setController(janelaEditarEventoController);
-                        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
-
-                        janelaEditarEventoController.stage = stage;
-
-                        Parent app = appLoader.load();
-
-                        Scene scene = new Scene(app);
-
-                        stage.setScene(scene);
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    botaoAbrir.setStyle("-fx-text-fill: #7800ff;");
-                    setGraphic(botaoAbrir);
-                }
-            }
-
-        });
-
+    public void configuraTabela() {
         colId.setText("ID");
         col2.setText("Nome");
         col3.setText("Capacidade");
@@ -217,6 +127,7 @@ public class JanelaTodosEventosController {
         col10.setText("");
 
 
+        colId.setPrefWidth(100);
         col2.setPrefWidth(400);
         col3.setPrefWidth(200);
         col4.setPrefWidth(300);
@@ -330,6 +241,102 @@ public class JanelaTodosEventosController {
         // Datas
         campoDataInicio.valueProperty().addListener(filtroListener);
         campoDataFim.valueProperty().addListener(filtroListener);
+    }
+
+    public void atualizaTabela() {
+        observableList.clear();
+
+        List<Evento> eventos = eventoDAO.buscarTodos(Evento.class);
+
+        for (Evento e : eventos) {
+            observableList.add(e);
+        }
+
+        colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        col8.setCellValueFactory(new PropertyValueFactory<>("HoraFim"));
+
+
+        // BOTÃO DE REMOVER ITEM
+
+        col9.setCellFactory(col -> new TableCell<Evento, Void>() {
+
+            private final Button botaoRemover = new Button("Remover");
+
+            {
+                botaoRemover.setOnAction(event -> {
+                    Evento e = getTableView().getItems().get(getIndex());
+                    eventoServico.remover(e);
+                    atualizaTabela();
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    botaoRemover.setStyle("-fx-text-fill: red;");
+                    setGraphic(botaoRemover);
+                }
+            }
+        });
+
+
+        // BOTÃO PARA ABRIR EVENTO
+
+        col10.setCellFactory(col -> new TableCell<Evento, Void>() {
+
+            private final Button botaoAbrir = new Button("Abrir");
+
+            {
+                botaoAbrir.setOnAction(event -> {
+                    Evento evento = getTableView().getItems().get(getIndex());
+
+                    try {
+                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
+
+                        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage,evento);
+                        appLoader.setController(janelaEditarEventoController);
+                        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
+
+                        janelaEditarEventoController.stage = stage;
+
+                        Parent app = appLoader.load();
+
+                        Scene scene = new Scene(app);
+
+                        stage.setScene(scene);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    botaoAbrir.setStyle("-fx-text-fill: #7800ff;");
+                    setGraphic(botaoAbrir);
+                }
+            }
+
+        });
+
+
 
 
         // Lista ordenável

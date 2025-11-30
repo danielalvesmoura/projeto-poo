@@ -96,16 +96,16 @@ public class Inscricao {
         this.dataCriacao = dataCriacao;
     }
 
-    public StatusInscricao getStatus() {
-        return status;
+    public String getStatus() {
+        return status.toString();
     }
 
     public void setStatus(StatusInscricao status) {
         this.status = status;
     }
 
-    public TipoIngresso getTipoIngresso() {
-        return tipoIngresso;
+    public String getTipoIngresso() {
+        return tipoIngresso.toString();
     }
 
     public void setTipoIngresso(TipoIngresso tipoIngresso) {

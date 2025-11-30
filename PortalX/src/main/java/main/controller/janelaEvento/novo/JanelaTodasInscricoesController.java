@@ -26,6 +26,7 @@ public class JanelaTodasInscricoesController {
 
     public Stage stage;
     JanelaTodasInscricoesController janelaTodasInscricoesController;
+    JanelaEditarEventoController janelaEditarEventoController;
     public Evento eventoAberto;
 
     public JanelaTodasInscricoesController(Stage stage, Evento eventoAberto) {
@@ -35,30 +36,31 @@ public class JanelaTodasInscricoesController {
 
     @FXML
     public void fechar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
 
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
-        appLoader.setController(menuPrincipalController);
+        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage,eventoAberto);
+        appLoader.setController(janelaEditarEventoController);
+        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
 
-        menuPrincipalController.stage = stage;
+        janelaEditarEventoController.stage = stage;
 
         Parent app = appLoader.load();
 
-        Scene menuPrincipal = new Scene(app);
+        Scene scene = new Scene(app);
 
-        stage.setScene(menuPrincipal);
-
-
+        stage.setScene(scene);
     }
 
 
     @FXML
     public void inscrever() throws IOException {
-        /*
+
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaInscreverPessoas.fxml"));
 
-        CadastroInscricaoController cadastroInscricaoController = new CadastroInscricaoController(stage,janelaTodasInscricoesController);
-        appLoader.setController(cadastroInscricaoController);
+        JanelaInscreverController janelaInscreverController = new JanelaInscreverController(stage,eventoAberto);
+        appLoader.setController(janelaInscreverController);
+
+        janelaInscreverController.janelaEditarEventoController = janelaEditarEventoController;
 
         Parent app = appLoader.load();
 
@@ -66,7 +68,7 @@ public class JanelaTodasInscricoesController {
 
         stage.setScene(inscrever);
 
-         */
+
 
     }
 
@@ -123,11 +125,110 @@ public class JanelaTodasInscricoesController {
         campoTipo.getItems().addAll("","Participante","Palestrante");
         campoStatus.getItems().addAll("","Pendente","Confirmada","Cancelada");
 
+        defineListerners();
+
         atualizaTabela();
     }
 
     InscricaoDAO inscricaoDAO = new InscricaoDAO();
     InscricaoServico inscricaoServico = new InscricaoServico();
+
+    ChangeListener<Object> filtroListener;
+
+    public void defineListerners() {
+        filtroListener = (obs, oldValue, newValue) -> {
+            filteredList.setPredicate(inscricao -> {
+
+                // Strings
+                String nomeFiltro       = campoNome.getText().toLowerCase();
+                String emailFiltro   = campoEmail.getText().toLowerCase();
+                String telefoneFiltro = campoTelefone.getText().toLowerCase();
+
+                // Datas (LocalDate)
+                LocalDate dataIniFiltro = campoDataNascimentoMinimo.getValue();
+                LocalDate dataFimFiltro = campoDataNascimentoMaximo.getValue();
+
+                String tipoFiltro = campoTipo.getValue() == null ? "" : campoTipo.getValue().toString();
+                String statusFiltro = campoStatus.getValue() == null ? "" : campoStatus.getValue().toString();
+
+                LocalDate dataInscricaoMaximaFiltro = campoDataInscricaoMaxima.getValue();
+                LocalDate dataInscricaoMinimaFiltro = campoDataInscricaoMinima.getValue();
+
+                // Se tudo estiver vazio → mostra tudo
+                if (nomeFiltro.isEmpty() &&
+                        emailFiltro.isEmpty() &&
+                        telefoneFiltro.isEmpty() &&
+                        tipoFiltro.isEmpty() &&
+                        statusFiltro.isEmpty() &&
+                        dataIniFiltro == null &&
+                        dataFimFiltro == null &&
+                        dataInscricaoMaximaFiltro == null &&
+                        dataInscricaoMinimaFiltro == null) {
+
+                    return true;
+                }
+
+                boolean match = true;
+
+                // -------------------------------------------------------------
+                // 1) FILTROS DE STRING SIMPLES
+                // -------------------------------------------------------------
+                if (!nomeFiltro.isEmpty()) {match &= inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);}
+                if (!emailFiltro.isEmpty()) {match &= inscricao.getPessoa().getEmail().toLowerCase().contains(emailFiltro);}
+                if (!telefoneFiltro.isEmpty()) { match &= (inscricao.getPessoa().getTelefone().contains(telefoneFiltro));}
+
+
+                if (tipoFiltro != null && !tipoFiltro.isEmpty()) {
+                    match &= inscricao.getTipoIngresso().equalsIgnoreCase(tipoFiltro);
+                }
+                if (statusFiltro != null && !statusFiltro.isEmpty()) {
+                    match &= inscricao.getStatus().equalsIgnoreCase(statusFiltro);
+                }
+
+
+                // -------------------------------------------------------------
+                // 2) FILTROS DE DATA COM >= e <=
+                // -------------------------------------------------------------
+                LocalDate dataNascimento = inscricao.getPessoa().getDataNascimento();
+
+                // data início → deve ser >= campo
+                if (dataIniFiltro != null && dataNascimento != null) {
+                    match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
+                }
+
+                if (dataFimFiltro != null && dataNascimento != null) {
+                    match &= !dataNascimento.isAfter(dataFimFiltro);   // >=
+                }
+
+                // data fim → deve ser <= campo
+                if (dataInscricaoMaximaFiltro != null && inscricao.getDataCriacao() != null) {
+                    match &= !inscricao.getDataCriacao().isBefore(dataInscricaoMaximaFiltro);       // <=
+                }
+
+                // data início → deve ser <= campo
+                if (dataInscricaoMinimaFiltro != null && inscricao.getDataCriacao() != null) {
+                    match &= !inscricao.getDataCriacao().isAfter(dataInscricaoMinimaFiltro);       // <=
+                }
+
+                return match;
+            });
+        };
+
+        // Strings
+        campoNome.textProperty().addListener(filtroListener);
+        campoEmail.textProperty().addListener(filtroListener);
+        campoTelefone.textProperty().addListener(filtroListener);
+
+        campoTipo.valueProperty().addListener(filtroListener);
+        campoStatus.valueProperty().addListener(filtroListener);
+
+        // Datas
+        campoDataNascimentoMaximo.valueProperty().addListener(filtroListener);
+        campoDataNascimentoMinimo.valueProperty().addListener(filtroListener);
+
+        campoDataInscricaoMinima.valueProperty().addListener(filtroListener);
+        campoDataInscricaoMaxima.valueProperty().addListener(filtroListener);
+    }
 
     public void atualizaTabela() {
         observableList.clear();
@@ -216,17 +317,19 @@ public class JanelaTodasInscricoesController {
         });
 
 
-
+        /*
         colId.setPrefWidth(50);
-        col2.setPrefWidth(300);
-        col3.setPrefWidth(300);
-        col4.setPrefWidth(300);
-        col5.setPrefWidth(150);
-        col6.setPrefWidth(0);
-        col7.setPrefWidth(100);// BOTÃO REMOVER
-        col8.setPrefWidth(100);// BOTÃO ABRIR
+        col2.setPrefWidth(100);
+        col3.setPrefWidth(100);
+        col4.setPrefWidth(70);
+        col5.setPrefWidth(100);
+        col6.setPrefWidth(80);
+        col7.setPrefWidth(50);// BOTÃO REMOVER
+        col8.setPrefWidth(50);// BOTÃO ABRIR
         col5.setPrefWidth(0);
         col6.setPrefWidth(0);
+
+         */
 
         colId.setText("ID");
         col2.setText("Nome");
@@ -242,15 +345,15 @@ public class JanelaTodasInscricoesController {
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        colId.setMaxWidth(1f * Integer.MAX_VALUE * 1);
-        col2.setMaxWidth(1f * Integer.MAX_VALUE * 25);
-        col3.setMaxWidth(1f * Integer.MAX_VALUE * 25);
-        col4.setMaxWidth(1f * Integer.MAX_VALUE * 15);
-        col5.setMaxWidth(1f * Integer.MAX_VALUE * 10);
+        colId.setMaxWidth(1f * Integer.MAX_VALUE * 2);
+        col2.setMaxWidth(1f * Integer.MAX_VALUE * 23);
+        col3.setMaxWidth(1f * Integer.MAX_VALUE * 23);
+        col4.setMaxWidth(1f * Integer.MAX_VALUE * 13);
+        col5.setMaxWidth(1f * Integer.MAX_VALUE * 8);
         col6.setMaxWidth(1f * Integer.MAX_VALUE * 0);
-        col7.setMaxWidth(1f * Integer.MAX_VALUE * 5);
-        col8.setMaxWidth(1f * Integer.MAX_VALUE * 5);
-        col9.setMaxWidth(1f * Integer.MAX_VALUE * 0);
+        col7.setMaxWidth(1f * Integer.MAX_VALUE * 3);
+        col8.setMaxWidth(1f * Integer.MAX_VALUE * 3);
+        col9.setMaxWidth(1f * Integer.MAX_VALUE * 3);
         col10.setMaxWidth(1f * Integer.MAX_VALUE * 0);
 
 
@@ -262,96 +365,6 @@ public class JanelaTodasInscricoesController {
         col6.setStyle("-fx-alignment: CENTER;");
         col7.setStyle("-fx-alignment: CENTER;");
         col8.setStyle("-fx-alignment: CENTER;");
-
-        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
-            filteredList.setPredicate(inscricao -> {
-
-                // Strings
-                String nomeFiltro       = campoNome.getText().toLowerCase();
-                String emailFiltro   = campoEmail.getText().toLowerCase();
-                String telefoneFiltro = campoTelefone.getText().toLowerCase();
-
-                // Datas (LocalDate)
-                LocalDate dataIniFiltro = campoDataNascimentoMinimo.getValue();
-                LocalDate dataFimFiltro = campoDataNascimentoMaximo.getValue();
-
-                String tipoFiltro = campoTipo.getValue().toString();
-                String statusFiltro = campoStatus.getValue().toString();
-
-                LocalDate dataInscricaoMaximaFiltro = campoDataInscricaoMaxima.getValue();
-                LocalDate dataInscricaoMinimaFiltro = campoDataInscricaoMinima.getValue();
-
-                // Se tudo estiver vazio → mostra tudo
-                if (nomeFiltro.isEmpty() &&
-                        emailFiltro.isEmpty() &&
-                        telefoneFiltro.isEmpty() &&
-                        tipoFiltro.isEmpty() &&
-                        statusFiltro.isEmpty() &&
-                        dataIniFiltro == null &&
-                        dataFimFiltro == null &&
-                        dataInscricaoMaximaFiltro == null &&
-                        dataInscricaoMinimaFiltro == null) {
-
-                    return true;
-                }
-
-                boolean match = true;
-
-                // -------------------------------------------------------------
-                // 1) FILTROS DE STRING SIMPLES
-                // -------------------------------------------------------------
-                if (!nomeFiltro.isEmpty()) {match &= inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);}
-                if (!emailFiltro.isEmpty()) {match &= inscricao.getPessoa().getEmail().toLowerCase().contains(emailFiltro);}
-                if (!telefoneFiltro.isEmpty()) { match &= (inscricao.getPessoa().getTelefone().contains(telefoneFiltro));}
-
-
-                if (tipoFiltro != null && !tipoFiltro.isEmpty()) {
-                    match &= inscricao.getPessoa().getClass().getSimpleName().equalsIgnoreCase(tipoFiltro);
-                }
-                if (statusFiltro != null && !statusFiltro.isEmpty()) {
-                    match &= inscricao.getStatus().toString().equalsIgnoreCase(statusFiltro);
-                }
-
-
-                // -------------------------------------------------------------
-                // 2) FILTROS DE DATA COM >= e <=
-                // -------------------------------------------------------------
-                LocalDate dataNascimento = inscricao.getPessoa().getDataNascimento();
-
-                // data início → deve ser >= campo
-                if (dataIniFiltro != null && dataNascimento != null) {
-                    match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
-                }
-
-                // data fim → deve ser <= campo
-                if (dataInscricaoMaximaFiltro != null && inscricao.getDataCriacao() != null) {
-                    match &= !inscricao.getDataCriacao().isAfter(dataInscricaoMaximaFiltro);       // <=
-                }
-
-                // data fim → deve ser <= campo
-                if (dataInscricaoMinimaFiltro != null && inscricao.getDataCriacao() != null) {
-                    match &= !inscricao.getDataCriacao().isAfter(dataInscricaoMinimaFiltro);       // <=
-                }
-
-                return match;
-            });
-        };
-
-        // Strings
-        campoNome.textProperty().addListener(filtroListener);
-        campoEmail.textProperty().addListener(filtroListener);
-        campoTelefone.textProperty().addListener(filtroListener);
-
-        campoTipo.valueProperty().addListener(filtroListener);
-        campoStatus.valueProperty().addListener(filtroListener);
-
-        // Datas
-        campoDataNascimentoMaximo.valueProperty().addListener(filtroListener);
-        campoDataNascimentoMinimo.valueProperty().addListener(filtroListener);
-
-        campoDataInscricaoMinima.valueProperty().addListener(filtroListener);
-        campoDataInscricaoMaxima.valueProperty().addListener(filtroListener);
-
 
         // Lista ordenável
         SortedList<Inscricao> sortedData = new SortedList<>(filteredList);

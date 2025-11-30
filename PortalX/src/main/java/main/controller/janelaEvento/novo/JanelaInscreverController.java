@@ -1,8 +1,7 @@
-package main.controller.menuPrincipal.novo;
+package main.controller.janelaEvento.novo;
 
-import dao.EventoDAO;
+import dao.InscricaoDAO;
 import dao.PessoaDAO;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,73 +12,55 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.controller.janelaEvento.novo.JanelaEditarEventoController;
+import main.controller.menuPrincipal.novo.CadastroPessoaController;
+import main.controller.menuPrincipal.novo.MenuPrincipalController;
 import model.Evento;
+import model.Inscricao;
 import model.Pessoa;
-import servico.EventoServico;
+import servico.InscricaoServico;
 import servico.PessoaServico;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaTodasPessoasController {
+public class JanelaInscreverController {
 
     public Stage stage;
-    JanelaTodasPessoasController janelaTodasPessoasController;
+    JanelaEditarEventoController janelaEditarEventoController;
+    public Evento eventoAberto;
 
-    public JanelaTodasPessoasController(Stage stage) {
-        this.stage = stage;;
+    public JanelaInscreverController(Stage stage, Evento eventoAberto) {
+        this.stage = stage;
+        this.eventoAberto = eventoAberto;
     }
 
     @FXML
     public void fechar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
+        FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaTodasInscricoes.fxml"));
 
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
-        appLoader.setController(menuPrincipalController);
+        JanelaTodasInscricoesController janelaTodasInscricoesController = new JanelaTodasInscricoesController(stage,eventoAberto);
+        janelaTodasInscricoesController.janelaTodasInscricoesController = janelaTodasInscricoesController;
+        janelaTodasInscricoesController.janelaEditarEventoController = janelaEditarEventoController;
 
-        menuPrincipalController.stage = stage;
+        tabelaLoader.setController(janelaTodasInscricoesController);
 
-        Parent app = appLoader.load();
+        Parent janela = tabelaLoader.load();
 
-        Scene menuPrincipal = new Scene(app);
+        Scene cenaTodasInscricoes = new Scene(janela);
 
-        stage.setScene(menuPrincipal);
+        stage.setScene(cenaTodasInscricoes);
 
 
     }
 
 
-    @FXML
-    public void adicionar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml"));
 
-        CadastroPessoaController cadastroPessoaController = new CadastroPessoaController(stage,janelaTodasPessoasController);
-        appLoader.setController(cadastroPessoaController);
-
-        Parent app = appLoader.load();
-
-        Stage modal = new Stage();
-        modal.setTitle("Cadastrar nova pessoa");
-        modal.setScene(new Scene(app));
-
-        // Modal bloqueia interação com a janela principal
-        modal.initModality(Modality.WINDOW_MODAL);
-
-        // Define que a janela principal é a "dona" do modal
-        modal.initOwner(stage);
-
-        modal.setResizable(true);
-
-        // Abre o modal e bloqueia até fechar
-        modal.showAndWait();
-
-    }
 
     @FXML
     public TableView<Pessoa> tableView;
@@ -101,7 +82,7 @@ public class JanelaTodasPessoasController {
     public TableColumn<Pessoa,String> col3;
     public TableColumn<Pessoa,String> col4;
     public TableColumn<Pessoa,LocalDate> col5;
-    public TableColumn<Pessoa,String> col6;
+    public TableColumn<Pessoa,Boolean> col6;
     public TableColumn<Pessoa,Void> col7;
     public TableColumn<Pessoa, Void> col8;
     public TableColumn<Pessoa,Void> col9;
@@ -115,16 +96,37 @@ public class JanelaTodasPessoasController {
 
     @FXML
     public void initialize() {
+        campoTipo.getItems().addAll("Participante","Palestrante");
+        campoTipo.setValue("Participante");
+
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
         col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataNascimento"));
 
+        tableView.setEditable(true);
+        col6.setEditable(true);
+
         configuraTabela();
 
         atualizaTabela();
     }
+
+    @FXML
+    public ChoiceBox campoTipo;
+
+    InscricaoServico inscricaoServico = new InscricaoServico();
+
+    @FXML
+    public void confirmar() throws IOException {
+        List<Pessoa> pessoasSelecionadas = tableView.getItems().stream().filter(Pessoa::isSelecionado).toList();
+
+        inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas,campoTipo.toString());
+        //tabelaInscricaoController.atualizaTabela();
+        fechar();
+    }
+
 
     PessoaDAO pessoaDAO = new PessoaDAO();
     PessoaServico pessoaServico = new PessoaServico();
@@ -230,94 +232,31 @@ public class JanelaTodasPessoasController {
         campoDataNascimentoMinimo.valueProperty().addListener(filtroListener);
     }
 
+    InscricaoDAO inscricaoDAO = new InscricaoDAO();
+    ArrayList<Pessoa> pessoasSelecionadas = new ArrayList<>();
+
     public void atualizaTabela() {
         observableList.clear();
-        observableList.addAll(pessoaDAO.buscarTodos(Pessoa.class));
 
+        List<Pessoa> pessoas = pessoaDAO.buscarTodos(Pessoa.class);
+        List<Inscricao> inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
 
-        // BOTÃO DE REMOVER ITEM
+        for(Pessoa pessoa : pessoas) {
+            boolean temInscricao = false;
 
-        col7.setCellFactory(col -> new TableCell<Pessoa, Void>() {
-
-            private final Button botaoRemover = new Button("Remover");
-
-            {
-                botaoRemover.setOnAction(event -> {
-                    Pessoa e = getTableView().getItems().get(getIndex());
-                    pessoaServico.remover(e);
-                    atualizaTabela();
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    botaoRemover.setStyle("-fx-text-fill: red;");
-                    setGraphic(botaoRemover);
-                }
-            }
-        });
-
-
-        // BOTÃO PARA ABRIR Pessoa
-
-        col8.setCellFactory(col -> new TableCell<Pessoa, Void>() {
-
-            private final Button botaoAbrir = new Button("Abrir");
-
-            {
-                botaoAbrir.setOnAction(event -> {
-                    Pessoa pessoa = getTableView().getItems().get(getIndex());
-
-                    try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml"));
-
-                        CadastroPessoaController cadastroPessoaController = new CadastroPessoaController(stage,janelaTodasPessoasController,pessoa);
-                        appLoader.setController(cadastroPessoaController);
-
-                        Parent app = appLoader.load();
-
-                        Stage modal = new Stage();
-                        modal.setTitle("Editar pessoa");
-                        modal.setScene(new Scene(app));
-
-                        // Modal bloqueia interação com a janela principal
-                        modal.initModality(Modality.WINDOW_MODAL);
-
-                        // Define que a janela principal é a "dona" do modal
-                        modal.initOwner(stage);
-
-                        modal.setResizable(true);
-
-                        // Abre o modal e bloqueia até fechar
-                        modal.showAndWait();
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    botaoAbrir.setStyle("-fx-text-fill: #7800ff;");
-                    setGraphic(botaoAbrir);
+            for(Inscricao inscricao : inscricoes) {
+                if(inscricao.getPessoa().getId() == pessoa.getId() && inscricao.getEvento().getId() == eventoAberto.getId()) {
+                    temInscricao = true;
                 }
             }
 
-        });
+            if (!temInscricao) {
+                observableList.add(pessoa);
+            }
+        }
 
-
+        col6.setCellValueFactory(param -> param.getValue().selecionadoProperty());
+        col6.setCellFactory(CheckBoxTableCell.forTableColumn(col6));
 
         // Lista ordenável
         SortedList<Pessoa> sortedData = new SortedList<>(filteredList);
@@ -330,4 +269,6 @@ public class JanelaTodasPessoasController {
 
 
     }
+
+
 }
