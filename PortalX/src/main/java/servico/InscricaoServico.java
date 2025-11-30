@@ -1,8 +1,6 @@
 package servico;
 
 import dao.InscricaoDAO;
-import dao.PalestranteDAO;
-import dao.ParticipanteDAO;
 import dao.PessoaDAO;
 import model.*;
 import model.Enum.StatusInscricao;
@@ -30,22 +28,29 @@ public class InscricaoServico {
 
     PessoaDAO pessoaDAO = new PessoaDAO();
 
-    public void cadastrar(Evento evento, List<Pessoa> pessoasSelecionadas) {
+    public void cadastrar(Evento evento, List<Pessoa> pessoasSelecionadas, String tipoIngresso) {
 
-        TipoIngresso tipoIngresso;
-        Inscricao inscricao;
+        TipoIngresso tipoIngressoEnum;
+
+        if(tipoIngresso == "Participante") {
+            tipoIngressoEnum = TipoIngresso.PARTICIPANTE;
+        } else {
+            tipoIngressoEnum = TipoIngresso.PALESTRANTE;
+        }
 
         for(Pessoa pessoa : pessoasSelecionadas) {
+            /*
             if(pessoa instanceof Palestrante) {
                 tipoIngresso = TipoIngresso.PALESTRANTE;
             } else {
                 tipoIngresso = TipoIngresso.PARTICIPANTE;
             }
 
+             */
+
             Pessoa pessoaPesquisada = pessoaDAO.find(Pessoa.class,pessoa.getId());
 
-            inscricao = new Inscricao(pessoaPesquisada, evento, StatusInscricao.PENDENTE, tipoIngresso);
-            inscricaoDAO.inserir(inscricao);
+            inscricaoDAO.inserir(new Inscricao(pessoaPesquisada, evento, StatusInscricao.PENDENTE, tipoIngressoEnum));
         }
 
     }

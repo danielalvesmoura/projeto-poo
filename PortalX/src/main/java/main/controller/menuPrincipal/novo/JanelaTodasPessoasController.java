@@ -14,10 +14,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
 import model.Evento;
-import model.Palestrante;
 import model.Pessoa;
 import servico.EventoServico;
 import servico.PessoaServico;
@@ -30,9 +30,10 @@ import java.util.List;
 public class JanelaTodasPessoasController {
 
     public Stage stage;
+    JanelaTodasPessoasController janelaTodasPessoasController;
 
     public JanelaTodasPessoasController(Stage stage) {
-        this.stage = stage;
+        this.stage = stage;;
     }
 
     @FXML
@@ -56,17 +57,27 @@ public class JanelaTodasPessoasController {
 
     @FXML
     public void adicionar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodasPessoas.fxml"));
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml"));
 
-        //CadastroPessoaController cadastroPessoaController = new CadastroPessoaController(stage);
-        //appLoader.setController(cadastroPessoaController);
+        CadastroPessoaController cadastroPessoaController = new CadastroPessoaController(stage,janelaTodasPessoasController);
+        appLoader.setController(cadastroPessoaController);
 
-        //Parent app = appLoader.load();
+        Parent app = appLoader.load();
 
-        //Scene scene = new Scene(app);
+        Stage modal = new Stage();
+        modal.setTitle("Cadastrar nova pessoa");
+        modal.setScene(new Scene(app));
 
-        //stage.setScene(scene);
+        // Modal bloqueia interação com a janela principal
+        modal.initModality(Modality.WINDOW_MODAL);
 
+        // Define que a janela principal é a "dona" do modal
+        modal.initOwner(stage);
+
+        modal.setResizable(true);
+
+        // Abre o modal e bloqueia até fechar
+        modal.showAndWait();
 
     }
 
@@ -83,8 +94,6 @@ public class JanelaTodasPessoasController {
     public DatePicker campoDataNascimentoMinimo;
     @FXML
     public DatePicker campoDataNascimentoMaximo;
-    @FXML
-    public ChoiceBox campoTipo;
 
     @FXML
     public TableColumn<Pessoa,String> colId;
@@ -111,11 +120,6 @@ public class JanelaTodasPessoasController {
         col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataNascimento"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
-
-
-        campoTipo.getItems().addAll("","Participante","Palestrante");
-        campoTipo.setValue("");
 
         atualizaTabela();
     }
@@ -126,12 +130,6 @@ public class JanelaTodasPessoasController {
     public void atualizaTabela() {
         observableList.clear();
         observableList.addAll(pessoaDAO.buscarTodos(Pessoa.class));
-
-        List<Pessoa> pessoas = pessoaDAO.buscarTodos(Pessoa.class);
-
-        for (Pessoa e : pessoas) {
-            observableList.add(e);
-        }
 
 
         // BOTÃO DE REMOVER ITEM
@@ -173,19 +171,27 @@ public class JanelaTodasPessoasController {
                     Pessoa pessoa = getTableView().getItems().get(getIndex());
 
                     try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
+                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml"));
 
-                        //JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage,pessoa);
-                        //appLoader.setController(janelaEditarEventoController);
-                        //janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
+                        CadastroPessoaController cadastroPessoaController = new CadastroPessoaController(stage,janelaTodasPessoasController,pessoa);
+                        appLoader.setController(cadastroPessoaController);
 
-                        //janelaEditarEventoController.stage = stage;
+                        Parent app = appLoader.load();
 
-                        //Parent app = appLoader.load();
+                        Stage modal = new Stage();
+                        modal.setTitle("Editar pessoa");
+                        modal.setScene(new Scene(app));
 
-                        //Scene scene = new Scene(app);
+                        // Modal bloqueia interação com a janela principal
+                        modal.initModality(Modality.WINDOW_MODAL);
 
-                        //stage.setScene(scene);
+                        // Define que a janela principal é a "dona" do modal
+                        modal.initOwner(stage);
+
+                        modal.setResizable(true);
+
+                        // Abre o modal e bloqueia até fechar
+                        modal.showAndWait();
 
 
                     } catch (Exception e) {
@@ -215,7 +221,7 @@ public class JanelaTodasPessoasController {
         col3.setPrefWidth(300);
         col4.setPrefWidth(300);
         col5.setPrefWidth(150);
-        col6.setPrefWidth(150);
+        col6.setPrefWidth(0);
         col7.setPrefWidth(100);// BOTÃO REMOVER
         col8.setPrefWidth(100);// BOTÃO ABRIR
 
@@ -224,7 +230,7 @@ public class JanelaTodasPessoasController {
         col3.setText("Email");
         col4.setText("Telefone");
         col5.setText("Data de Nascimento");
-        col6.setText("Tipo");
+        col6.setText("");
         col7.setText("");
         col8.setText("");
 
@@ -259,13 +265,10 @@ public class JanelaTodasPessoasController {
                 LocalDate dataIniFiltro = campoDataNascimentoMinimo.getValue();
                 LocalDate dataFimFiltro = campoDataNascimentoMaximo.getValue();
 
-                String tipoFiltro = campoTipo.getValue().toString();
-
                 // Se tudo estiver vazio → mostra tudo
                 if (nomeFiltro.isEmpty() &&
                         emailFiltro.isEmpty() &&
                         telefoneFiltro.isEmpty() &&
-                        tipoFiltro.isEmpty() &&
                         dataIniFiltro == null &&
                         dataFimFiltro == null) {
 
@@ -281,10 +284,6 @@ public class JanelaTodasPessoasController {
                 if (!emailFiltro.isEmpty()) {match &= pessoa.getEmail().toLowerCase().contains(emailFiltro);}
                 if (!telefoneFiltro.isEmpty()) { match &= (pessoa.getTelefone().contains(telefoneFiltro));}
 
-
-                if (tipoFiltro != null && !tipoFiltro.isEmpty()) {
-                    match &= pessoa.getClass().getSimpleName().equalsIgnoreCase(tipoFiltro);
-                }
 
                 // -------------------------------------------------------------
                 // 2) FILTROS DE DATA COM >= e <=
@@ -313,8 +312,6 @@ public class JanelaTodasPessoasController {
         // Datas
         campoDataNascimentoMaximo.valueProperty().addListener(filtroListener);
         campoDataNascimentoMinimo.valueProperty().addListener(filtroListener);
-
-        campoTipo.valueProperty().addListener(filtroListener);
 
 
         // Lista ordenável

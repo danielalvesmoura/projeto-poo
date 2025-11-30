@@ -1,7 +1,6 @@
 package dao;
 
 import model.Evento;
-import model.Participante;
 import model.Sessao;
 
 import javax.persistence.EntityManager;

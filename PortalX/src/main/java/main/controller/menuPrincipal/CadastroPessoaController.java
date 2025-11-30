@@ -71,9 +71,9 @@ public class CadastroPessoaController {
 
         } else {
             if(choiceTipo.getValue() == "Participante") {
-                participanteServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+                //participanteServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
             } else {
-                palestranteServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+               //palestranteServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
             }
             System.out.println("cadastrado");
             System.out.println(campoNome.getText());

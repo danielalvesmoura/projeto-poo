@@ -12,8 +12,7 @@ import model.Enum.TipoSessao;
 import model.Evento;
 import model.Pessoa;
 import model.Sessao;
-import servico.PalestranteServico;
-import servico.ParticipanteServico;
+
 import servico.PessoaServico;
 import servico.SessaoServico;
 

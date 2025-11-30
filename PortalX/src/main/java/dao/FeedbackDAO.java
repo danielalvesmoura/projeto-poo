@@ -1,7 +1,7 @@
 package dao;
 
 import model.Feedback;
-import model.Participante;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

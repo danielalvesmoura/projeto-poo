@@ -1,114 +1,95 @@
 package main.controller.menuPrincipal.novo;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.controller.janelaEvento.novo.JanelaEditarEventoController;
-import model.Enum.StatusSessao;
-import model.Enum.TipoSessao;
-import model.Evento;
-import model.Sessao;
-import servico.EventoServico;
-import servico.SessaoServico;
+import model.Pessoa;
+import servico.PessoaServico;
 
 import java.io.IOException;
-import java.time.LocalTime;
 
 public class CadastroPessoaController {
 
     public Stage stage;
-    public Evento eventoAberto;
-    public Sessao sessaoAberta;
+    JanelaTodasPessoasController janelaTodasPessoasController;
+    public Pessoa pessoaAberta;
 
-    public CadastroPessoaController(Stage stage, Evento eventoAberto, Sessao sessaoAberta) {
+    public CadastroPessoaController(Stage stage, JanelaTodasPessoasController janelaTodasPessoasController, Pessoa pessoaAberta) {
         this.stage = stage;
-        this.eventoAberto = eventoAberto;
-        this.sessaoAberta = sessaoAberta;
+        this.janelaTodasPessoasController = janelaTodasPessoasController;
+        this.pessoaAberta = pessoaAberta;
     }
 
-    public CadastroPessoaController(Stage stage, Evento eventoAberto) {
+    public CadastroPessoaController(Stage stage, JanelaTodasPessoasController janelaTodasPessoasController) {
         this.stage = stage;
-        this.eventoAberto = eventoAberto;
+        this.janelaTodasPessoasController = janelaTodasPessoasController;
     }
 
 
-    EventoServico eventoServico = new EventoServico();
-
     @FXML
-    public TextField campoTitulo;
+    public TextField campoNome;
     @FXML
-    public TextArea campoDescricao;
+    public TextField campoEmail;
     @FXML
-    public DatePicker campoDataInicio;
+    public TextField campoTelefone;
     @FXML
-    public TextField campoHoraInicio;
-    @FXML
-    public DatePicker campoDataFim;
-    @FXML
-    public TextField campoHoraFim;
+    public DatePicker campoDataNascimento;
     @FXML
     public ChoiceBox campoTipo;
     @FXML
-    public ChoiceBox campoStatus;
+    public Label titulo;
+
 
     @FXML
     public void initialize() {
-        campoTipo.getItems().addAll("Palestra","Painel", "Treinamento");
-        campoTipo.setValue("Treinamento");
+        if(pessoaAberta != null) {
+            titulo.setText(pessoaAberta.getNome());
 
-        campoStatus.getItems().addAll("Pendente","Confirmado", "Cancelado");
-        campoStatus.setValue("Pendente");
+            campoNome.setText(pessoaAberta.getNome());
+            campoEmail.setText(pessoaAberta.getEmail());
+            campoTelefone.setText(pessoaAberta.getTelefone());
+            campoDataNascimento.setValue(pessoaAberta.getDataNascimento());
 
-        if(sessaoAberta != null) {
-            campoTitulo.setText(sessaoAberta.getTitulo());
-            campoDescricao.setText(sessaoAberta.getDescricao());
-            campoDataInicio.setValue(sessaoAberta.getDataInicio());
-            campoHoraInicio.setText(sessaoAberta.getHoraInicio().toString());
-            campoDataFim.setValue(sessaoAberta.getDataFim());
-            campoHoraFim.setText(sessaoAberta.getHoraFim().toString());
-            campoTipo.setValue(sessaoAberta.getTipo());
-            campoStatus.setValue(sessaoAberta.getStatus());
+            /*
+            if(pessoaAberta instanceof Palestrante) {
+                campoTipo.setValue("Palestrante");
+            } else {
+                campoTipo.setValue("Participante");
+            }
+
+             */
+        } else {
+            titulo.setText("Cadastrar nova pessoa");
         }
 
     }
 
-    SessaoServico sessaoServico = new SessaoServico();
+    PessoaServico pessoaServico = new PessoaServico();
 
     @FXML
-    public void salvar() throws IOException {
-        TipoSessao tipoSessao;
-        if(campoTipo.getValue() == "Palestra") {
-            tipoSessao = TipoSessao.PALESTRA;
-        } else if(campoTipo.getValue() == "Painel") {
-            tipoSessao = TipoSessao.PAINEL;
-        } else {
-            tipoSessao = TipoSessao.TREINAMENTO;
-        }
+    private Button botaoCancelar;
 
-        StatusSessao statusSessao;
-        if(campoStatus.getValue() == "Pendente") {
-            statusSessao = StatusSessao.PENDENTE;
-        } else if(campoStatus.getValue() == "Confirmado") {
-            statusSessao = StatusSessao.CONFIRMADO;
-        } else {
-            statusSessao = StatusSessao.CANCELADO;
-        }
-
-        LocalTime horaInicio = LocalTime.parse("01:00");
-        LocalTime horaFim = LocalTime.parse("01:00");
-
-        if(sessaoAberta == null) {
-            sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim);
-        } else {
-            sessaoServico.alterar(sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim, statusSessao);
-        }
-
-        janelaEditarEventoController.abreAbaSessoes();
+    public void fechar() {
+        Stage stage = (Stage) botaoCancelar.getScene().getWindow();
+        stage.close();
     }
 
-    JanelaEditarEventoController janelaEditarEventoController;
+    @FXML
+    public void cancelar() {
+        fechar();
+    }
+
+    @FXML
+    public void confirmar() throws IOException {
+
+        if(pessoaAberta == null) {
+            pessoaServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+        } else {
+            pessoaServico.alterar(pessoaAberta, campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+        }
+
+        janelaTodasPessoasController.atualizaTabela();
+        fechar();
+    }
 
 }

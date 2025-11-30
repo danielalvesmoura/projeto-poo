@@ -9,6 +9,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.controller.Global;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
@@ -92,6 +93,7 @@ public class SecaoCadastraSessaoController {
             tipoSessao = TipoSessao.TREINAMENTO;
         }
 
+
         StatusSessao statusSessao;
         if(campoStatus.getValue() == "Pendente") {
             statusSessao = StatusSessao.PENDENTE;
@@ -101,16 +103,46 @@ public class SecaoCadastraSessaoController {
             statusSessao = StatusSessao.CANCELADO;
         }
 
-        LocalTime horaInicio = LocalTime.parse("01:00");
-        LocalTime horaFim = LocalTime.parse("01:00");
 
-        if(sessaoAberta == null) {
-            sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim);
-        } else {
-            sessaoServico.alterar(sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim, statusSessao);
+        if(Objects.equals(campoHoraInicio.getText(), "")) {
+            campoHoraInicio.setText("00:00");
+        }
+        if(Objects.equals(campoHoraFim.getText(), "")) {
+            campoHoraFim.setText("00:00");
         }
 
-        janelaEditarEventoController.abreAbaSessoes();
+
+        LocalTime horaInicio = LocalTime.parse(campoHoraInicio.getText());
+        LocalTime horaFim = LocalTime.parse(campoHoraFim.getText());
+
+
+
+        if(campoDataInicio.getValue() == null) {
+            campoDataInicio.setValue(eventoAberto.getDataInicio());
+        }
+        if(campoDataFim.getValue() == null) {
+            campoDataFim.setValue(eventoAberto.getDataFim());
+        }
+
+
+
+        if(campoDataInicio.getValue().isBefore(eventoAberto.getDataInicio())) {
+            Global.mostraErro("Data de ínicio informada vem antes do início do evento.\nInício do evento: "
+                    + eventoAberto.getDataInicio() + "\nInício da sessão informada: " + campoDataInicio.getValue());
+
+        } else if(campoDataFim.getValue().isAfter(eventoAberto.getDataFim())) {
+            Global.mostraErro("Data de fim informada vem depois do fim do evento.\nFim do evento: "
+                    + eventoAberto.getDataFim() + "\nFim da sessão informada: " + campoDataFim.getValue());
+
+        } else {
+            if(sessaoAberta == null) {
+                sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()));
+            } else {
+                sessaoServico.alterar(sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
+            }
+            janelaEditarEventoController.abreAbaSessoes();
+        }
+
     }
 
     JanelaEditarEventoController janelaEditarEventoController;

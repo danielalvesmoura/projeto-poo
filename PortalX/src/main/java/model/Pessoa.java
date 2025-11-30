@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public abstract class Pessoa {
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -55,6 +55,7 @@ public class MenuPrincipalController {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodasPessoas.fxml"));
 
             JanelaTodasPessoasController janelaTodasPessoasController = new JanelaTodasPessoasController(stage);
+            janelaTodasPessoasController.janelaTodasPessoasController = janelaTodasPessoasController;
 
             tabelaLoader.setController(janelaTodasPessoasController);
 

@@ -1,7 +1,7 @@
 package main.controller.menuPrincipal.tabelas;
 
-import dao.PalestranteDAO;
-import dao.ParticipanteDAO;
+//import dao.PalestranteDAO;
+//import dao.ParticipanteDAO;
 import dao.PessoaDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import main.controller.menuPrincipal.CadastroPessoaController;
-import model.Palestrante;
-import model.Participante;
+//import model.Palestrante;
+//import model.Participante;
 import model.Pessoa;
 import servico.PalestranteServico;
 import servico.ParticipanteServico;
@@ -81,8 +81,8 @@ public class TabelaPessoasController implements Initializable {
         }
     }
 
-    PalestranteDAO palestranteDAO = new PalestranteDAO();
-    ParticipanteDAO participanteDAO = new ParticipanteDAO();
+    //PalestranteDAO palestranteDAO = new PalestranteDAO();
+    //ParticipanteDAO participanteDAO = new ParticipanteDAO();
 
     PalestranteServico palestranteServico = new PalestranteServico();
     ParticipanteServico participanteServico = new ParticipanteServico();
@@ -95,15 +95,15 @@ public class TabelaPessoasController implements Initializable {
     public void atualizaTabela() {
         observableList.clear();
 
-        List<Palestrante> palestrantes = palestranteDAO.buscarTodos(Palestrante.class);
-        List<Participante> participantes = participanteDAO.buscarTodos(Participante.class);
+        //List<Palestrante> palestrantes = palestranteDAO.buscarTodos(Palestrante.class);
+        //List<Participante> participantes = participanteDAO.buscarTodos(Participante.class);
 
-        for(Palestrante p : palestrantes) {
-            observableList.add(p);
-        }
-        for(Participante p : participantes) {
-            observableList.add(p);
-        }
+        //for(Palestrante p : palestrantes) {
+            //observableList.add(p);
+        //}
+        //for(Participante p : participantes) {
+            //observableList.add(p);
+        //}
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("nome"));

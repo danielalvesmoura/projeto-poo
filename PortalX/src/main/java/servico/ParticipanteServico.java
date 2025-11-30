@@ -1,11 +1,10 @@
 package servico;
 
-import dao.ParticipanteDAO;
-import model.Participante;
 
 import java.time.LocalDate;
 
 public class ParticipanteServico {
+    /*
     ParticipanteDAO participanteDao = new ParticipanteDAO();
 
     public void cadastrar(String nome, String email, String telefone, LocalDate dataNascimento) {
@@ -31,4 +30,6 @@ public class ParticipanteServico {
 
         participanteDao.alterar(participante);
     }
+    */
+
 }

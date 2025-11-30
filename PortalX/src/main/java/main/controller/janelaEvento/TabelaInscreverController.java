@@ -1,8 +1,8 @@
 package main.controller.janelaEvento;
 
 import dao.InscricaoDAO;
-import dao.PalestranteDAO;
-import dao.ParticipanteDAO;
+//import dao.PalestranteDAO;
+//import dao.ParticipanteDAO;
 import dao.PessoaDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +17,6 @@ import javafx.scene.layout.Pane;
 import main.controller.menuPrincipal.CadastroPessoaController;
 import model.*;
 import servico.InscricaoServico;
-import servico.PalestranteServico;
-import servico.ParticipanteServico;
 import servico.PessoaServico;
 
 import java.net.URL;
@@ -55,8 +53,8 @@ public class TabelaInscreverController{
         tableView.setItems(observableList);
     }
 
-    PalestranteDAO palestranteDAO = new PalestranteDAO();
-    ParticipanteDAO participanteDAO = new ParticipanteDAO();
+    //PalestranteDAO palestranteDAO = new PalestranteDAO();
+    //ParticipanteDAO participanteDAO = new ParticipanteDAO();
     InscricaoDAO inscricaoDAO = new InscricaoDAO();
     PessoaDAO pessoaDAO = new PessoaDAO();
 
@@ -67,8 +65,8 @@ public class TabelaInscreverController{
     public void atualizaTabela() {
         observableList.clear();
 
-        List<Palestrante> palestrantes = palestranteDAO.buscarTodos(Palestrante.class);
-        List<Participante> participantes = participanteDAO.buscarTodos(Participante.class);
+        //List<Palestrante> palestrantes = palestranteDAO.buscarTodos(Palestrante.class);
+        //List<Participante> participantes = participanteDAO.buscarTodos(Participante.class);
         inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
 
         List<Pessoa> pessoas = pessoaDAO.buscarTodos(Pessoa.class);
@@ -135,7 +133,7 @@ public class TabelaInscreverController{
 
         List<Pessoa> pessoasSelecionadas = tableView.getItems().stream().filter(Pessoa::isSelecionado).toList();
 
-        inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas);
+        //inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas);
         tabelaInscricaoController.atualizaTabela();
         fechar();
     }

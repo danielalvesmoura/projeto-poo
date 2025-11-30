@@ -2,6 +2,7 @@ package servico;
 
 import dao.EventoDAO;
 import dao.SessaoDAO;
+import main.controller.Global;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
 import model.Evento;
@@ -15,8 +16,12 @@ public class SessaoServico {
     EventoDAO eventoDAO = new EventoDAO();
 
     public void cadastrar(Evento evento, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
-        Sessao sessao = new Sessao(evento, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
-        sessaoDAO.inserir(sessao);
+        if(dataInicio.isBefore(evento.getDataInicio())) {
+            Global.mostraErro("Data de ínicio informada vem antes do início do evento.");
+        } else {
+            Sessao sessao = new Sessao(evento, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
+            sessaoDAO.inserir(sessao);
+        }
     }
 
     public void remover(Sessao sessao, Evento eventoAberto) {
