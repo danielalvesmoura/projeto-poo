@@ -1,12 +1,17 @@
 package model;
 
 import javafx.collections.ObservableList;
+import main.controller.Global;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ArvoreSessoesTeste {
     No sessaoRaiz;
+
+    public No getSessaoRaiz() {
+        return sessaoRaiz;
+    }
 
     private static class No {
         No esquerda;
@@ -125,14 +130,19 @@ public class ArvoreSessoesTeste {
         return raiz;
     }
 
-    public void adicionaItensNaLista(ObservableList observableList, ArvoreSessoesTeste sessoes) {
-        if(sessoes.sessaoRaiz == null) {
+    public void adicionaItensNaLista(ObservableList<Sessao> observableList, No raiz) {
+        if (raiz == null) {
             return;
         }
 
-        printInOrder(sessoes.sessaoRaiz.esquerda);
-        observableList.add(sessoes.sessaoRaiz.sessao);
-        printInOrder(sessoes.sessaoRaiz.direita);
+        // Percorre a subárvore esquerda
+        adicionaItensNaLista(observableList, raiz.esquerda);
+
+        // Adiciona o nó atual
+        observableList.add(raiz.sessao);
+
+        // Percorre a subárvore direita
+        adicionaItensNaLista(observableList, raiz.direita);
     }
 
     private No min(No raiz) {

@@ -151,6 +151,7 @@ public class SecaoCadastraSessaoController {
                     + eventoAberto.getDataFim() + "\nFim da sessão informada: " + campoDataFim.getValue());
 
         } else {
+
             if(sessaoAberta == null) {
                 sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()));
             } else {

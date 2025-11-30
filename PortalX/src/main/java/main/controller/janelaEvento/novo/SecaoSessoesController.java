@@ -84,7 +84,7 @@ public class SecaoSessoesController {
 
         ArvoreSessoesTeste sessoes = sessaoServico.carregaArvore();
 
-        sessoes.adicionaItensNaLista(observableList,sessoes);
+        sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
 
         /*
         for(Sessao s : sessoes) {
@@ -115,8 +115,12 @@ public class SecaoSessoesController {
                 botaoRemover.setOnAction(event -> {
                     Sessao sessao = getTableView().getItems().get(getIndex());
                     sessaoServico.remover(sessao, eventoAberto);
-                    atualizaTabela();
 
+                    try {
+                        janelaEditarEventoController.abreAbaSessoes();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
 

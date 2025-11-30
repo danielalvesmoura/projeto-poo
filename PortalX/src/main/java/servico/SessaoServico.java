@@ -32,7 +32,13 @@ public class SessaoServico {
 
     public void cadastrar(Evento eventoAberto, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
         Sessao sessao = new Sessao(eventoAberto, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
-        sessaoDAO.inserirSessao(eventoAberto,sessao);
+        if(!temSobreposicao(sessao)) {
+            sessaoDAO.inserirSessao(eventoAberto,sessao);
+        } else {
+            Global.mostraErro("Sobreposição de horários!");
+        }
+
+
     }
 
     public void remover(Sessao sessao, Evento eventoAberto) {
@@ -50,7 +56,21 @@ public class SessaoServico {
         sessao.setHoraFim(horaFim);
         sessao.setStatus(status);
 
-        sessaoDAO.alterar(sessao);
+        if(!temSobreposicao(sessao)) {
+            sessaoDAO.alterar(sessao);
+        } else {
+            Global.mostraErro("Sobreposição de horários!");
+        }
+    }
 
+    public boolean temSobreposicao(Sessao sessao) {
+        ArvoreSessoesTeste arvoreSessoesTeste = carregaArvore();
+
+        try {
+            arvoreSessoesTeste.add(sessao);
+            return false;
+        } catch (IllegalArgumentException e) {
+            return true;
+        }
     }
 }
