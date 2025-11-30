@@ -1,7 +1,5 @@
 package model;
 
-import javafx.beans.property.SimpleStringProperty;
-
 import javax.persistence.*;
 
 import java.time.LocalDate;
@@ -40,12 +38,12 @@ public class Evento {
         setCapacidade(capacidade);
     }
 
-    public List<Sessao> getSessoes() {
-        return sessoes;
-    }
-
     public void setSessoes(List<Sessao> sessoes) {
         this.sessoes = sessoes;
+    }
+
+    public List<Sessao> getSessoes() {
+        return sessoes;
     }
 
     public String getCapacidade() {

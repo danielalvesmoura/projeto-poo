@@ -5,6 +5,7 @@ import model.*;
 import servico.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Debugg {
@@ -163,7 +164,7 @@ public class Debugg {
         pessoaServico.cadastrar("Caio Santos","caio.santos@example.com","(81) 98877-4433",LocalDate.parse("2000-10-12"));
         pessoaServico.cadastrar("Viviane Rocha","viviane.rocha@example.com","(91) 91223-5566",LocalDate.parse("1997-02-06"));
 
-         */
+
 
         InscricaoServico inscricaoServico = new InscricaoServico();
         EventoDAO eventoDAO = new EventoDAO();
@@ -172,6 +173,9 @@ public class Debugg {
         List<Pessoa> pessoas = pessoaDAO.buscarTodos(Pessoa.class);
 
         inscricaoServico.cadastrar(evento,pessoas,"Participante");
+
+         */
+
 
     }
 }

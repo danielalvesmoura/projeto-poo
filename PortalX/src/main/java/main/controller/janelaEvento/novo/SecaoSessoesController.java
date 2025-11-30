@@ -1,31 +1,24 @@
 package main.controller.janelaEvento.novo;
 
-import dao.EventoDAO;
 import dao.SessaoDAO;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import main.controller.menuPrincipal.novo.MenuPrincipalController;
+import model.ArvoreSessoesTeste;
 import model.Evento;
 import model.Sessao;
-import servico.EventoServico;
 import servico.SessaoServico;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 public class SecaoSessoesController {
 
@@ -79,7 +72,6 @@ public class SecaoSessoesController {
     public void initialize() {
         atualizaTabela();
         tableView.setItems(observableList);
-        atualizaTabela();
     }
 
     SessaoDAO sessaoDAO = new SessaoDAO();
@@ -88,13 +80,20 @@ public class SecaoSessoesController {
     public void atualizaTabela() {
         observableList.clear();
 
-        List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
+        //List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
+        ArvoreSessoesTeste sessoes = sessaoServico.carregaArvore();
+
+        sessoes.adicionaItensNaLista(observableList,sessoes);
+
+        /*
         for(Sessao s : sessoes) {
             if(s.getEvento().getId() == eventoAberto.getId()) {
                 observableList.add(s);
             }
         }
+
+         */
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("Titulo"));

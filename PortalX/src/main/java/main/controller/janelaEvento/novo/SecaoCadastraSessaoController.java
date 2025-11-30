@@ -19,6 +19,8 @@ import servico.EventoServico;
 import servico.SessaoServico;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -76,6 +78,11 @@ public class SecaoCadastraSessaoController {
             campoHoraFim.setText(sessaoAberta.getHoraFim().toString());
             campoTipo.setValue(sessaoAberta.getTipo());
             campoStatus.setValue(sessaoAberta.getStatus());
+        } else {
+            campoDataInicio.setValue(eventoAberto.getDataInicio());
+            campoDataFim.setValue(eventoAberto.getDataFim());
+            campoHoraInicio.setText(eventoAberto.getHoraInicio().toString());
+            campoHoraFim.setText(eventoAberto.getHoraFim().toString());
         }
 
     }
@@ -110,9 +117,18 @@ public class SecaoCadastraSessaoController {
         if(Objects.equals(campoHoraFim.getText(), "")) {
             campoHoraFim.setText("00:00");
         }
+        if(campoDataInicio.getValue() == null) {
+            campoDataInicio.setValue(eventoAberto.getDataInicio());
+        }
+        if(campoDataFim.getValue() == null) {
+            campoDataFim.setValue(eventoAberto.getDataFim());
+        }
 
 
+        LocalDate dataInicio = LocalDate.parse(campoDataInicio.getValue().toString());
         LocalTime horaInicio = LocalTime.parse(campoHoraInicio.getText());
+
+        LocalDate dataFim = LocalDate.parse(campoDataFim.getValue().toString());
         LocalTime horaFim = LocalTime.parse(campoHoraFim.getText());
 
 
@@ -138,7 +154,7 @@ public class SecaoCadastraSessaoController {
             if(sessaoAberta == null) {
                 sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()));
             } else {
-                sessaoServico.alterar(sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
+                sessaoServico.alterar(eventoAberto, sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
             }
             janelaEditarEventoController.abreAbaSessoes();
         }

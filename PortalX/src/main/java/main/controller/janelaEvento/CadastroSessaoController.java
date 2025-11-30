@@ -109,7 +109,7 @@ public class CadastroSessaoController {
         if(modo == "Adicionar") {
             sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim);
         } else {
-            sessaoServico.alterar(sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim, statusSessao);
+            //sessaoServico.alterar(sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim, statusSessao);
         }
 
         tabelaSessaoController.atualizaTabela();
