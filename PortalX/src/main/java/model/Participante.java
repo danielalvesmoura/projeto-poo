@@ -26,5 +26,9 @@ public class Participante extends Pessoa {
         super(nome, email, telefone, dataNascimento);
     }
 
+    public String getTipo() {
+        return "Participante";
+    }
+
 
 }

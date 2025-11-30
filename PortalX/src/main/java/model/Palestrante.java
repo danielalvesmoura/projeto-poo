@@ -25,5 +25,7 @@ public class Palestrante extends Pessoa {
         super(nome, email, telefone, dataNascimento);
     }
 
-
+    public String getTipo() {
+        return "Palestrante";
+    }
 }

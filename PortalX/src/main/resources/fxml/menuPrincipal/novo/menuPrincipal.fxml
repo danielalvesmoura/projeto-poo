@@ -34,7 +34,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="botaoPessoas" text="    Pessoas">
+                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaPessoas" styleClass="botaoPessoas" text="    Pessoas">
                      <font>
                         <Font size="23.0" />
                      </font>

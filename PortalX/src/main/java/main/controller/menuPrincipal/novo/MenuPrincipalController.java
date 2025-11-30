@@ -50,20 +50,19 @@ public class MenuPrincipalController {
         }
     }
 
-    public void abrePessoas() {
-        paneConteudo.getChildren().clear();
-
+    public void abreJanelaPessoas() {
         try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/tableviewPessoas.fxml"));
+            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodasPessoas.fxml"));
 
-            TabelaPessoasController tabelaPessoasController = new TabelaPessoasController();
-            tabelaPessoasController.tabelaPessoasController = tabelaPessoasController;
-            //tabelaPessoasController.paneTelaInteiraMenuPrincipal = paneTelaInteiraMenuPrincipal;
-            tabelaLoader.setController(tabelaPessoasController);
+            JanelaTodasPessoasController janelaTodasPessoasController = new JanelaTodasPessoasController(stage);
 
-            Parent tabela = tabelaLoader.load();
+            tabelaLoader.setController(janelaTodasPessoasController);
 
-            paneConteudo.getChildren().add(tabela);
+            Parent janela = tabelaLoader.load();
+
+            Scene cenaTodasPessoas = new Scene(janela);
+
+            stage.setScene(cenaTodasPessoas);
 
         } catch (Exception e) {
             e.printStackTrace();
