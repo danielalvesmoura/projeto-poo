@@ -8,8 +8,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.controller.Global;
+import main.controller.menuPrincipal.novo.CadastroPessoaController;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
@@ -85,6 +87,31 @@ public class SecaoCadastraSessaoController {
             campoHoraFim.setText(eventoAberto.getHoraFim().toString());
         }
 
+    }
+
+    @FXML
+    public void trocarSala() throws IOException {
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml"));
+
+        ModalSalasController modalSalasController = new ModalSalasController(stage);
+        appLoader.setController(modalSalasController);
+
+        Parent app = appLoader.load();
+
+        Stage modal = new Stage();
+        modal.setTitle("Seleção de sala");
+        modal.setScene(new Scene(app));
+
+        // Modal bloqueia interação com a janela principal
+        modal.initModality(Modality.WINDOW_MODAL);
+
+        // Define que a janela principal é a "dona" do modal
+        modal.initOwner(stage);
+
+        modal.setResizable(true);
+
+        // Abre o modal e bloqueia até fechar
+        modal.showAndWait();
     }
 
     SessaoServico sessaoServico = new SessaoServico();
