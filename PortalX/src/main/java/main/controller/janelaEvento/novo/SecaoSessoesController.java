@@ -82,7 +82,7 @@ public class SecaoSessoesController {
 
         //List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
-        ArvoreSessoesTeste sessoes = sessaoServico.carregaArvore();
+        ArvoreSessoesTeste sessoes = sessaoServico.carregaArvore(eventoAberto);
 
         sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
 

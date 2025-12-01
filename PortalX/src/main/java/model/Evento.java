@@ -1,5 +1,7 @@
 package model;
 
+import servico.EventoServico;
+
 import javax.persistence.*;
 
 import java.time.LocalDate;

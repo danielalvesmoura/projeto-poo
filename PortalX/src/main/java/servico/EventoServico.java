@@ -1,8 +1,10 @@
 package servico;
 
 import dao.EventoDAO;
+import dao.InscricaoDAO;
 import javafx.collections.transformation.SortedList;
 import model.Evento;
+import model.Inscricao;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -13,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class EventoServico {
     EventoDAO eventoDAO = new EventoDAO();
@@ -106,4 +109,5 @@ public class EventoServico {
             e.printStackTrace();
         }
     }
+
 }

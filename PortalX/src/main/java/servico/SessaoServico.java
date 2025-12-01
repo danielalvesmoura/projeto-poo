@@ -20,11 +20,14 @@ public class SessaoServico {
 
     ArvoreSessoesTeste arvore = new ArvoreSessoesTeste();
 
-    public ArvoreSessoesTeste carregaArvore() {
+    public ArvoreSessoesTeste carregaArvore(Evento eventoAberto) {
         List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
         for(Sessao s : sessoes) {
-            arvore.add(s);
+
+            if(s.getEvento().getId() == eventoAberto.getId()) {
+                arvore.add(s);
+            }
         }
 
         return this.arvore;
@@ -32,7 +35,7 @@ public class SessaoServico {
 
     public void cadastrar(Evento eventoAberto, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
         Sessao sessao = new Sessao(eventoAberto, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
-        if(!temSobreposicaoInserir(sessao)) {
+        if(!temSobreposicaoInserir(eventoAberto, sessao)) {
             sessaoDAO.inserirSessao(eventoAberto,sessao);
         } else {
             Global.mostraErro("Sobreposição de horários!");
@@ -51,7 +54,7 @@ public class SessaoServico {
         Sessao sessaoNova = new Sessao(eventoAberto,titulo,descricao,tipo,dataInicio,horaInicio,dataFim,horaFim,status);
 
         // Testar sobreposição sem modificar a sessão antiga ainda
-        if (temSobreposicaoAlterar(sessaoAntiga, sessaoNova)) {
+        if (temSobreposicaoAlterar(eventoAberto, sessaoAntiga, sessaoNova)) {
             Global.mostraErro("Sobreposição de horários!");
             return;
         }
@@ -70,8 +73,8 @@ public class SessaoServico {
         sessaoDAO.alterar(sessaoAntiga);
     }
 
-    public boolean temSobreposicaoAlterar(Sessao sessaoAntiga, Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvore();
+    public boolean temSobreposicaoAlterar(Evento eventoAberto, Sessao sessaoAntiga, Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvore(eventoAberto);
 
         arvoreAux.remove(sessaoAntiga);
 
@@ -83,8 +86,8 @@ public class SessaoServico {
         }
     }
 
-    public boolean temSobreposicaoInserir(Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvore();
+    public boolean temSobreposicaoInserir(Evento eventoAberto, Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvore(eventoAberto);
 
         try {
             arvoreAux.add(sessaoNova);
