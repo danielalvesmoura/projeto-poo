@@ -122,7 +122,7 @@ public class JanelaTodasInscricoesController {
         col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Telefone"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataNascimento"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("TipoIngresso"));
         col7.setCellValueFactory(new PropertyValueFactory<>("Status"));
 
         campoTipo.getItems().addAll("","Participante","Palestrante");
@@ -350,7 +350,7 @@ public class JanelaTodasInscricoesController {
         col3.setText("Email");
         col4.setText("Telefone");
         col5.setText("Data de Nascimento");
-        col6.setText("");
+        col6.setText("Tipo de Ingresso");
         col7.setText("");
         col8.setText("");
         col9.setText("");
@@ -364,7 +364,7 @@ public class JanelaTodasInscricoesController {
         col3.setMaxWidth(1f * Integer.MAX_VALUE * 23);
         col4.setMaxWidth(1f * Integer.MAX_VALUE * 13);
         col5.setMaxWidth(1f * Integer.MAX_VALUE * 8);
-        col6.setMaxWidth(1f * Integer.MAX_VALUE * 0);
+        col6.setMaxWidth(1f * Integer.MAX_VALUE * 8);
         col7.setMaxWidth(1f * Integer.MAX_VALUE * 3);
         col8.setMaxWidth(1f * Integer.MAX_VALUE * 3);
         col9.setMaxWidth(1f * Integer.MAX_VALUE * 3);

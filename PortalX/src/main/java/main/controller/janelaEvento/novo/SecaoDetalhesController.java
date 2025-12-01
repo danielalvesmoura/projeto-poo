@@ -8,11 +8,15 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.controller.Global;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Evento;
 import servico.EventoServico;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class SecaoDetalhesController {
@@ -62,10 +66,69 @@ public class SecaoDetalhesController {
 
     @FXML
     public void salvar() {
+        if(campoNome.getText().isEmpty()) {
+            Global.mostraErro("O nome é obrigatório.");
+            return;
+        } else if(campoDescricao.getText().isEmpty()) {
+            Global.mostraErro("A descrição é obrigatória.");
+            return;
+        } else if(campoEndereco.getText().isEmpty()) {
+            Global.mostraErro("O endereço é obrigatório.");
+            return;
+        } else {
+
+            try {
+                LocalDate teste = campoDataInicio.getValue();
+            } catch (Exception e) {
+                Global.mostraErro("Data de início inválida.");
+                return;
+            }
+            try {
+                LocalDate teste = campoDataFim.getValue();
+            } catch (Exception e) {
+                Global.mostraErro("Data de fim inválida.");
+                return;
+            }
+            try {
+                LocalTime.parse(campoHoraInicio.getText());
+            } catch (Exception e) {
+                Global.mostraErro("Hora de início inválida.");
+                return;
+            }
+            try {
+                LocalTime.parse(campoHoraFim.getText());
+            } catch (Exception e) {
+                Global.mostraErro("Hora de fim inválida.");
+                return;
+            }
+
+            LocalDate dataInicio = campoDataInicio.getValue();
+            LocalDate dataFim = campoDataFim.getValue();
+
+            LocalTime horaInicio = LocalTime.parse(campoHoraInicio.getText());
+            LocalTime horaFim = LocalTime.parse(campoHoraInicio.getText());
+
+            try {
+                if (LocalDateTime.of(dataInicio, horaInicio).isAfter(LocalDateTime.of(dataFim, horaFim))) {
+                    Global.mostraErro("Data de início não pode vir depois do fim");
+                    return;
+                }
+            } catch (Exception e) {
+                Global.mostraErro("Data inválida.");
+                return;
+            }
+
+            try {
+                int teste = Integer.parseInt(campoCapacidade.getText());
+            } catch (Exception e) {
+                Global.mostraErro("Capacidade deve ser um número.");
+                return;
+            }
+
+
+        }
+
         if(eventoAberto == null) {
-            if(Objects.equals(campoCapacidade.getText(), "")) campoCapacidade.setText("1");
-            if(Objects.equals(campoHoraInicio.getText(), "")) campoHoraInicio.setText("00:00");
-            if(Objects.equals(campoHoraFim.getText(), "")) campoHoraFim.setText("00:00");
 
             eventoServico.cadastrar(campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(), campoHoraInicio.getText(),campoDataFim.getValue(), campoHoraFim.getText(), Integer.parseInt(campoCapacidade.getText()));
 
@@ -86,6 +149,7 @@ public class SecaoDetalhesController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         } else {
             eventoServico.alterar(eventoAberto,campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), Integer.parseInt(campoCapacidade.getText()));
         }

@@ -33,12 +33,12 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaSessoes" styleClass="botaoPessoas" text="    Sessões">
+                  <Button fx:id="botaoSessoes" alignment="TOP_LEFT" layoutX="30.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaSessoes" styleClass="botaoPessoas" text="    Sessões">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="147.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaInscricoes" styleClass="botaoPessoas" text="    Inscrições">
+                  <Button fx:id="botaoInscricoes" alignment="TOP_LEFT" layoutX="30.0" layoutY="147.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaInscricoes" styleClass="botaoPessoas" text="    Inscrições">
                      <font>
                         <Font size="23.0" />
                      </font>

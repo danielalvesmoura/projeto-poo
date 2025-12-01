@@ -104,7 +104,7 @@ public class CadastroPessoaController {
                 janelaTodasPessoasController.atualizaTabela();
                 fechar();
 
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
                 Global.mostraErro("Data de nascimento inválida");
             }
 

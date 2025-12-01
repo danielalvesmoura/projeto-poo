@@ -10,6 +10,7 @@ import servico.PessoaServico;
 import servico.SalaServico;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class CadastroSalaController {
 
@@ -74,16 +75,26 @@ public class CadastroSalaController {
     @FXML
     public void confirmar() throws IOException {
 
+
         try {
-            if(salaAberto == null) {
-                salaServico.cadastrar(campoNome.getText(), Integer.parseInt(campoCapacidade.getText()), campoLocalizacao.getText());
+            if(campoNome.getText().isEmpty()) {
+                Global.mostraErro("O nome é obrigatório.");
+            } else if(campoLocalizacao.getText().isEmpty()) {
+                Global.mostraErro("O email é obrigatório.");
+            } else if(campoCapacidade.getText().isEmpty()) {
+                Global.mostraErro("A capacidade é obrigatória.");
             } else {
-                salaServico.alterar(salaAberto, campoNome.getText(), Integer.parseInt(campoCapacidade.getText()), campoLocalizacao.getText());
+                if(salaAberto == null) {
+                    salaServico.cadastrar(campoNome.getText(), Integer.parseInt(campoCapacidade.getText()), campoLocalizacao.getText());
+                } else {
+                    salaServico.alterar(salaAberto, campoNome.getText(), Integer.parseInt(campoCapacidade.getText()), campoLocalizacao.getText());
+                }
+
+                janelaTodasSalasController.atualizaTabela();
+                fechar();
             }
 
-            janelaTodasSalasController.atualizaTabela();
-            fechar();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             Global.mostraErro("A capacidade deve ser um número!");
         }
 

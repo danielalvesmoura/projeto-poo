@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import main.controller.Global;
 import main.controller.menuPrincipal.novo.JanelaTodasPessoasController;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Evento;
@@ -51,8 +53,18 @@ public class JanelaEditarEventoController {
     }
 
     @FXML
+    public Button botaoSessoes;
+    @FXML
+    public Button botaoInscricoes;
+
+    @FXML
     public void initialize() throws IOException {
         abreAbaDetalhes();
+
+        if(eventoAberto == null) {
+            botaoSessoes.setVisible(false);
+            botaoInscricoes.setVisible(false);
+        }
     }
 
     @FXML
