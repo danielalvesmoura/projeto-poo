@@ -3,10 +3,12 @@ package main.controller.menuPrincipal.novo;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import main.controller.Global;
 import model.Pessoa;
 import servico.PessoaServico;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class CadastroPessoaController {
 
@@ -82,14 +84,32 @@ public class CadastroPessoaController {
     @FXML
     public void confirmar() throws IOException {
 
-        if(pessoaAberta == null) {
-            pessoaServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+        if(campoNome.getText().isEmpty()) {
+            Global.mostraErro("O nome é obrigatório.");
+        } else if(campoEmail.getText().isEmpty()) {
+            Global.mostraErro("O email é obrigatório.");
+        } else if(campoTelefone.getText().isEmpty()) {
+            Global.mostraErro("O telefone é obrigatório.");
         } else {
-            pessoaServico.alterar(pessoaAberta, campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+
+            try {
+                LocalDate.parse(campoDataNascimento.getValue().toString());
+
+                if(pessoaAberta == null) {
+                    pessoaServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+                } else {
+                    pessoaServico.alterar(pessoaAberta, campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
+                }
+
+                janelaTodasPessoasController.atualizaTabela();
+                fechar();
+
+            } catch (IllegalArgumentException e) {
+                Global.mostraErro("Data de nascimento inválida");
+            }
+
         }
 
-        janelaTodasPessoasController.atualizaTabela();
-        fechar();
     }
 
 }

@@ -121,7 +121,7 @@ public class JanelaTodosEventosController {
     public ChoiceBox campoTipoRelatorio;
 
     @FXML
-    public void gerarRelatorio() {
+    public void exportarTabela() {
         if(campoTipoRelatorio.getValue().toString().equals("CSV")) {
             FileChooser fc = new FileChooser();
             fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
