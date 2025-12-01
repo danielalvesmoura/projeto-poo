@@ -1,5 +1,6 @@
 package main;
 
+import com.github.javafaker.Faker;
 import dao.*;
 import model.*;
 import servico.*;
@@ -7,6 +8,7 @@ import servico.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 
 public class Debugg {
     public static void main(String[] args) {
@@ -174,8 +176,17 @@ public class Debugg {
 
         inscricaoServico.cadastrar(evento,pessoas,"Participante");
 
-         */
 
+
+        SalaServico salaServico = new SalaServico();
+
+        Faker faker = new Faker(new Locale("pt-BR"));
+
+        for(int i = 0; i < 50; i++) {
+            salaServico.cadastrar(faker.funnyName().name(),faker.random().nextInt(61),faker.address().streetName());
+        }
+
+         */
 
     }
 }

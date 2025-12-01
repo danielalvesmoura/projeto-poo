@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.controller.Global;
 import model.Sala;
@@ -28,44 +29,33 @@ import java.util.List;
 public class JanelaTodasSalasController {
 
     public Stage stage;
+    public JanelaTodasSalasController janelaTodasSalasController;
 
-
-    @FXML
-    public void fechar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
-
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
-        appLoader.setController(menuPrincipalController);
-
-        menuPrincipalController.stage = stage;
-
-        Parent app = appLoader.load();
-
-        Scene menuPrincipal = new Scene(app);
-
-        stage.setScene(menuPrincipal);
-
-
-    }
 
     @FXML
     public void adicionar() throws IOException {
-        /*
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaSala/novo/janelaEditarSala.fxml"));
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroSala.fxml"));
 
-        JanelaEditarSalaController janelaEditarSalaController = new JanelaEditarSalaController(stage);
-        appLoader.setController(janelaEditarSalaController);
-        janelaEditarSalaController.janelaEditarSalaController = janelaEditarSalaController;
-
-        janelaEditarSalaController.stage = stage;
+        CadastroSalaController cadastroSalaController = new CadastroSalaController();
+        cadastroSalaController.janelaTodasSalasController = janelaTodasSalasController;
+        appLoader.setController(cadastroSalaController);
 
         Parent app = appLoader.load();
 
-        Scene scene = new Scene(app);
+        Stage modal = new Stage();
+        modal.setTitle("Cadastrar nova sala");
+        modal.setScene(new Scene(app));
 
-        stage.setScene(scene);
+        // Modal bloqueia interação com a janela principal
+        modal.initModality(Modality.WINDOW_MODAL);
 
-         */
+        // Define que a janela principal é a "dona" do modal
+        modal.initOwner(stage);
+
+        modal.setResizable(true);
+
+        // Abre o modal e bloqueia até fechar
+        modal.showAndWait();
 
 
     }
@@ -78,7 +68,9 @@ public class JanelaTodasSalasController {
     @FXML
     public TextField campoLocalizacao;
     @FXML
-    public TextField campoCapacidade;
+    public TextField campoCapacidadeMinima;
+    @FXML
+    public TextField campoCapacidadeMaxima;
     @FXML
     public TextField campoNotaMinima;
     @FXML
@@ -106,8 +98,6 @@ public class JanelaTodasSalasController {
     public void initialize() {
         configuraTabela();
 
-        atualizaTabela();
-        tableView.setItems(observableList);
         atualizaTabela();
     }
 
@@ -156,8 +146,8 @@ public class JanelaTodasSalasController {
         col7.setText("");
 
 
-        colId.setPrefWidth(100);
-        col2.setPrefWidth(400);
+        colId.setPrefWidth(50);
+        col2.setPrefWidth(50);
         col3.setPrefWidth(200);
         col4.setPrefWidth(300);
         col5.setPrefWidth(150);
@@ -188,7 +178,9 @@ public class JanelaTodasSalasController {
                 // Strings
                 String nomeFiltro       = campoNome.getText().toLowerCase();
                 String localizacaoFiltro   = campoLocalizacao.getText().toLowerCase();
-                String capacidadeFiltro = campoCapacidade.getText().toLowerCase();
+
+                String capacidadeMinimaFiltro = campoCapacidadeMinima.getText().toLowerCase();
+                String capacidadeMaximaFiltro = campoCapacidadeMaxima.getText().toLowerCase();
 
                 // Horas (strings vindas dos TextFields)
                 String notaMinimaFiltro = campoNotaMinima.getText().toLowerCase();
@@ -197,7 +189,8 @@ public class JanelaTodasSalasController {
                 // Se tudo estiver vazio → mostra tudo
                 if (nomeFiltro.isEmpty() &&
                         localizacaoFiltro.isEmpty() &&
-                        capacidadeFiltro.isEmpty() &&
+                        capacidadeMinimaFiltro.isEmpty() &&
+                        capacidadeMaximaFiltro.isEmpty() &&
                         notaMinimaFiltro.isEmpty() &&
                         notaMaximaFiltro.isEmpty()
                 ) {
@@ -213,16 +206,44 @@ public class JanelaTodasSalasController {
 
                 if (!localizacaoFiltro.isEmpty()) {match &= sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);}
 
-                if (!capacidadeFiltro.isEmpty()) { match &= (Integer.toString(sala.getCapacidade()).contains(capacidadeFiltro));}
-
-                // data início → deve ser >= campo
-                if (notaMinimaFiltro != null && Double.toString(sala.getNota()) != null) {
-                    match &= !(sala.getNota() < Double.parseDouble(notaMinimaFiltro));   // >=
+                // FILTRO DE CAPACIDADE MÍNIMA
+                if (!capacidadeMinimaFiltro.isEmpty()) {
+                    try {
+                        int min = Integer.parseInt(capacidadeMinimaFiltro);
+                        match &= sala.getCapacidade() >= min;
+                    } catch (NumberFormatException e) {
+                        return false; // evita quebrar
+                    }
                 }
 
-                // data fim → deve ser <= campo
-                if (notaMaximaFiltro != null && Double.toString(sala.getNota()) != null) {
-                    match &= !(sala.getNota() > Double.parseDouble(notaMaximaFiltro));   // >=
+                // FILTRO DE CAPACIDADE MAXIMA
+                if (!capacidadeMaximaFiltro.isEmpty()) {
+                    try {
+                        int max = Integer.parseInt(capacidadeMaximaFiltro);
+                        match &= sala.getCapacidade() <= max;
+                    } catch (NumberFormatException e) {
+                        return false; // evita quebrar
+                    }
+                }
+
+                // FILTRO DE NOTA MÍNIMA
+                if (!notaMinimaFiltro.isEmpty()) {
+                    try {
+                        double min = Double.parseDouble(notaMinimaFiltro);
+                        match &= sala.getNota() >= min;
+                    } catch (NumberFormatException e) {
+                        return false; // evita quebrar
+                    }
+                }
+
+                // FILTRO DE NOTA MÁXIMA
+                if (!notaMaximaFiltro.isEmpty()) {
+                    try {
+                        double max = Double.parseDouble(notaMaximaFiltro);
+                        match &= sala.getNota() <= max;
+                    } catch (NumberFormatException e) {
+                        return false; // evita quebrar
+                    }
                 }
 
                 return match;
@@ -232,8 +253,10 @@ public class JanelaTodasSalasController {
         // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoLocalizacao.textProperty().addListener(filtroListener);
-        campoCapacidade.textProperty().addListener(filtroListener);
+        campoCapacidadeMinima.textProperty().addListener(filtroListener);
+        campoCapacidadeMaxima.textProperty().addListener(filtroListener);
         campoNotaMinima.textProperty().addListener(filtroListener);
+        campoNotaMaxima.textProperty().addListener(filtroListener);
     }
 
     SalaDAO salaDAO = new SalaDAO();
@@ -292,28 +315,37 @@ public class JanelaTodasSalasController {
                 botaoAbrir.setOnAction(event -> {
                     Sala sala = getTableView().getItems().get(getIndex());
 
-                    /*
+
                     try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaSala/novo/janelaEditarSala.fxml"));
+                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroSala.fxml"));
 
-                        JanelaEditarSalaController janelaEditarSalaController = new JanelaEditarSalaController(stage,evento);
-                        appLoader.setController(janelaEditarSalaController);
-                        janelaEditarSalaController.janelaEditarSalaController = janelaEditarSalaController;
-
-                        janelaEditarSalaController.stage = stage;
+                        CadastroSalaController cadastroSalaController = new CadastroSalaController(sala);
+                        cadastroSalaController.janelaTodasSalasController = janelaTodasSalasController;
+                        appLoader.setController(cadastroSalaController);
 
                         Parent app = appLoader.load();
 
-                        Scene scene = new Scene(app);
+                        Stage modal = new Stage();
+                        modal.setTitle("Cadastrar nova sala");
+                        modal.setScene(new Scene(app));
 
-                        stage.setScene(scene);
+                        // Modal bloqueia interação com a janela principal
+                        modal.initModality(Modality.WINDOW_MODAL);
+
+                        // Define que a janela principal é a "dona" do modal
+                        modal.initOwner(stage);
+
+                        modal.setResizable(true);
+
+                        // Abre o modal e bloqueia até fechar
+                        modal.showAndWait();
 
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                     */
+
                 });
             }
 

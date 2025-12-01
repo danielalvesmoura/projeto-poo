@@ -72,6 +72,7 @@ public class MenuPrincipalController {
             FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodasSalas.fxml"));
 
             JanelaTodasSalasController janelaTodasSalasController = new JanelaTodasSalasController();
+            janelaTodasSalasController.janelaTodasSalasController = janelaTodasSalasController;
 
             tabelaLoader.setController(janelaTodasSalasController);
 

@@ -10,7 +10,7 @@
    <center>
       <HBox fx:id="hboxPrincipal" minWidth="0.0" style="-fx-background-color: black;">
          <children>
-            <VBox prefWidth="267.0">
+            <VBox minWidth="267.0" prefWidth="267.0">
                <children>
                   <Label style="-fx-text-fill: white;" text="Portal X">
                      <font>
