@@ -12,11 +12,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
 import model.Evento;
 import servico.EventoServico;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -110,6 +112,21 @@ public class JanelaTodosEventosController {
         tableView.setItems(observableList);
         atualizaTabela();
     }
+
+
+    @FXML
+    public void exportarCSV() {
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+        File arquivo = fc.showSaveDialog(null);
+
+        if (arquivo != null) {
+            List<Evento> lista = sessaoDAO.buscarPorEvento(eventoAberto);
+            RelatorioSessoes.gerarCSV(lista, arquivo);
+            Global.mostraInfo("Relatório CSV exportado com sucesso!");
+        }
+    }
+
 
     EventoDAO eventoDAO = new EventoDAO();
     EventoServico eventoServico = new EventoServico();
