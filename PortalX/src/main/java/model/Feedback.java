@@ -13,6 +13,10 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name = "sala_id")
+    private Sala sala;
+
     @Column(length = 100)
     private int nota;
     private String comentario;

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import main.controller.menuPrincipal.tabelas.TabelaPessoasController;
@@ -19,15 +20,10 @@ public class MenuPrincipalController {
     }
 
     @FXML
-    public Pane paneConteudo;
+    public BorderPane borderPaneConteudo;
 
     @FXML
     public PieChart pieChart;
-
-    @FXML
-    public void initialize() {
-        pieChart.getData().add(new PieChart.Data("Maçã", 30));
-    }
 
     @FXML
     public void abreTabelaEventos() {
@@ -64,6 +60,24 @@ public class MenuPrincipalController {
             Scene cenaTodasPessoas = new Scene(janela);
 
             stage.setScene(cenaTodasPessoas);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void abreJanelaSalas() {
+        try {
+            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodasSalas.fxml"));
+
+            JanelaTodasSalasController janelaTodasSalasController = new JanelaTodasSalasController();
+
+            tabelaLoader.setController(janelaTodasSalasController);
+
+            Parent janela = tabelaLoader.load();
+
+            borderPaneConteudo.setCenter(janela);
 
         } catch (Exception e) {
             e.printStackTrace();
