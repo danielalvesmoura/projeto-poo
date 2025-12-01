@@ -13,8 +13,11 @@ public class Sala {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    //@OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Feedback> feedbacks;
+
     @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Feedback> feedbacks;
+    private List<Sessao> sessoes;
 
     @Column(length = 100)
     private double nota;
@@ -28,6 +31,14 @@ public class Sala {
         this.nome = nome;
         this.capacidade = capacidade;
         this.localizacao = localizacao;
+    }
+
+    public List<Sessao> getSessoes() {
+        return sessoes;
+    }
+
+    public void setSessoes(List<Sessao> sessoes) {
+        this.sessoes = sessoes;
     }
 
     public double getNota() {

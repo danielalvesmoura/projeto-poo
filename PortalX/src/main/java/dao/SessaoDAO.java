@@ -1,6 +1,7 @@
 package dao;
 
 import model.Evento;
+import model.Sala;
 import model.Sessao;
 
 import javax.persistence.EntityManager;
@@ -30,13 +31,16 @@ public class SessaoDAO extends DAOImplementacao<Sessao, Long> {
         em.close();
     }
 
-    public void inserirSessao(Evento evento, Sessao sessao) {
+    public void inserirSessao(Sala sala, Evento evento, Sessao sessao) {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
 
         evento = em.merge(evento); // Reanexa o evento à sessão
         evento.getSessoes().add(sessao);
+
+        sala = em.merge(sala); // Reanexa o evento à sessão
+        sala.getSessoes().add(sessao);
 
         em.persist(sessao);
         em.getTransaction().commit();

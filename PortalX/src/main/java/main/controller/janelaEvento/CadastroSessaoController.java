@@ -107,7 +107,7 @@ public class CadastroSessaoController {
         LocalTime horaFim = LocalTime.parse("01:00");
 
         if(modo == "Adicionar") {
-            sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim);
+            //sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim);
         } else {
             //sessaoServico.alterar(sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), horaFim, statusSessao);
         }

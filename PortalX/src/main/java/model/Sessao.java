@@ -20,6 +20,10 @@ public class Sessao {
     @JoinColumn(name = "evento_id")
     private Evento evento;
 
+    @ManyToOne
+    @JoinColumn(name = "sala_id")
+    private Sala sala;
+
     @Column(length = 100)
     private String titulo;
     private String descricao;
@@ -35,7 +39,8 @@ public class Sessao {
     @Enumerated(EnumType.STRING)
     private StatusSessao status;
 
-    public Sessao(Evento evento, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim, StatusSessao status) {
+    public Sessao(Sala sala, Evento evento, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim, StatusSessao status) {
+        this.sala = sala;
         this.evento = evento;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -123,5 +128,17 @@ public class Sessao {
 
     public void setEvento(Evento evento) {
         this.evento = evento;
+    }
+
+    public Sala getSala() {
+        return sala;
+    }
+
+    public String getSalaNome() {
+        return sala.getNome();
+    }
+
+    public void setSala(Sala sala) {
+        this.sala = sala;
     }
 }

@@ -7,6 +7,7 @@ import model.ArvoreSessoesTeste;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
 import model.Evento;
+import model.Sala;
 import model.Sessao;
 
 import java.time.LocalDate;
@@ -16,11 +17,10 @@ import java.util.List;
 
 public class SessaoServico {
     SessaoDAO sessaoDAO = new SessaoDAO();
-    EventoDAO eventoDAO = new EventoDAO();
 
     ArvoreSessoesTeste arvore = new ArvoreSessoesTeste();
 
-    public ArvoreSessoesTeste carregaArvore(Evento eventoAberto) {
+    public ArvoreSessoesTeste carregaArvoreEvento(Evento eventoAberto) {
         List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
         for(Sessao s : sessoes) {
@@ -33,14 +33,38 @@ public class SessaoServico {
         return this.arvore;
     }
 
-    public void cadastrar(Evento eventoAberto, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
-        Sessao sessao = new Sessao(eventoAberto, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
-        if(!temSobreposicaoInserir(eventoAberto, sessao)) {
-            sessaoDAO.inserirSessao(eventoAberto,sessao);
-        } else {
-            Global.mostraErro("Sobreposição de horários!");
+    public ArvoreSessoesTeste carregaArvoreSala(Sala salaAberta) {
+        List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
+
+        for(Sessao s : sessoes) {
+
+            try {
+                if(s.getSala().getId() == salaAberta.getId()) {
+                    arvore.add(s);
+                }
+            } catch (IllegalArgumentException e) {
+
+            }
+
         }
 
+        return this.arvore;
+    }
+
+    public void cadastrar(Sala salaSelecionada, Evento eventoAberto, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
+        Sessao sessao = new Sessao(salaSelecionada,eventoAberto, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
+
+        if(!temSobreposicaoSalaInserir(salaSelecionada, sessao)) {
+
+            if(!temSobreposicaoEventoInserir(eventoAberto, sessao)) {
+                sessaoDAO.inserirSessao(salaSelecionada,eventoAberto,sessao);
+            } else {
+                Global.mostraErro("Sobreposição de horários com outros sessões do evento ou da sala!");
+            }
+
+        } else {
+            Global.mostraErro("Sobreposição de horários com outros sessões do evento ou da sala!");
+        }
 
     }
 
@@ -48,14 +72,19 @@ public class SessaoServico {
         sessaoDAO.removerSessao(eventoAberto.getId(),sessao.getId());
     }
 
-    public void alterar(Evento eventoAberto, Sessao sessaoAntiga,String titulo, String descricao, TipoSessao tipo,LocalDate dataInicio, LocalTime horaInicio,LocalDate dataFim, LocalTime horaFim, StatusSessao status) {
+    public void alterar(Sala salaSelecionada, Evento eventoAberto, Sessao sessaoAntiga,String titulo, String descricao, TipoSessao tipo,LocalDate dataInicio, LocalTime horaInicio,LocalDate dataFim, LocalTime horaFim, StatusSessao status) {
 
         // Criar sessão temporária apenas para teste
-        Sessao sessaoNova = new Sessao(eventoAberto,titulo,descricao,tipo,dataInicio,horaInicio,dataFim,horaFim,status);
+        Sessao sessaoNova = new Sessao(salaSelecionada,eventoAberto,titulo,descricao,tipo,dataInicio,horaInicio,dataFim,horaFim,status);
 
         // Testar sobreposição sem modificar a sessão antiga ainda
-        if (temSobreposicaoAlterar(eventoAberto, sessaoAntiga, sessaoNova)) {
-            Global.mostraErro("Sobreposição de horários!");
+        if (temSobreposicaoEventoAlterar(eventoAberto, sessaoAntiga, sessaoNova)) {
+            Global.mostraErro("Sobreposição com os outros horários do evento!");
+            return;
+        }
+
+        if (temSobreposicaoSalaAlterar(salaSelecionada, sessaoAntiga, sessaoNova)) {
+            Global.mostraErro("Sobreposição com os outros horários da sala!");
             return;
         }
 
@@ -68,13 +97,14 @@ public class SessaoServico {
         sessaoAntiga.setDataFim(dataFim);
         sessaoAntiga.setHoraFim(horaFim);
         sessaoAntiga.setStatus(status);
+        sessaoAntiga.setSala(salaSelecionada);
 
         // Agora sim: atualizar a sessão ORIGINAL no banco
         sessaoDAO.alterar(sessaoAntiga);
     }
 
-    public boolean temSobreposicaoAlterar(Evento eventoAberto, Sessao sessaoAntiga, Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvore(eventoAberto);
+    public boolean temSobreposicaoEventoAlterar(Evento eventoAberto, Sessao sessaoAntiga, Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvoreEvento(eventoAberto);
 
         arvoreAux.remove(sessaoAntiga);
 
@@ -86,8 +116,32 @@ public class SessaoServico {
         }
     }
 
-    public boolean temSobreposicaoInserir(Evento eventoAberto, Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvore(eventoAberto);
+    public boolean temSobreposicaoEventoInserir(Evento eventoAberto, Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvoreEvento(eventoAberto);
+
+        try {
+            arvoreAux.add(sessaoNova);
+            return false; // sem sobreposição
+        } catch (IllegalArgumentException e) {
+            return true; // sobreposição detectada
+        }
+    }
+
+    public boolean temSobreposicaoSalaAlterar(Sala salaSelecionada, Sessao sessaoAntiga, Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvoreSala(salaSelecionada);
+
+        arvoreAux.remove(sessaoAntiga);
+
+        try {
+            arvoreAux.add(sessaoNova);
+            return false; // sem sobreposição
+        } catch (IllegalArgumentException e) {
+            return true; // sobreposição detectada
+        }
+    }
+
+    public boolean temSobreposicaoSalaInserir(Sala salaSelecionada, Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvoreSala(salaSelecionada);
 
         try {
             arvoreAux.add(sessaoNova);

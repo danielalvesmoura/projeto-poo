@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.controller.Global;
 import main.controller.menuPrincipal.novo.CadastroSalaController;
+import model.Inscricao;
 import model.Sala;
 import servico.SalaServico;
 
@@ -34,7 +35,14 @@ public class ModalSalasController {
     }
 
     @FXML
-    public void cancelar(){}
+    public void cancelar(){
+        fechar();
+    }
+
+    public void fechar() {
+        Stage stage = (Stage) tableView.getScene().getWindow();
+        stage.close();
+    }
 
     @FXML
     public TableView<Sala> tableView;
@@ -251,15 +259,22 @@ public class ModalSalasController {
         col5.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
 
 
-        // BOTÃO DE REMOVER ITEM
 
-        col6.setCellFactory(col -> new TableCell<Sala, Void>() {
+
+        col7.setCellFactory(col -> new TableCell<Sala, Void>() {
 
             private final Button botaoSelecionar = new Button("Selecionar");
 
             {
                 botaoSelecionar.setOnAction(event -> {
+                    Sala salaAberta = getTableView().getItems().get(getIndex());
 
+                    secaoCadastraSessaoController.salaSelecionada = salaAberta;
+                    secaoCadastraSessaoController.botaoSala.setText(salaAberta.getNome());
+
+                    System.out.println("Sala selecionada: " + salaAberta.getId());
+
+                    fechar();
                 });
             }
 
@@ -278,11 +293,38 @@ public class ModalSalasController {
 
         col6.setCellFactory(col -> new TableCell<Sala, Void>() {
 
-            private final Button botaoCronograma = new Button("Ver Cronograma");
+            private final Button botaoCronograma = new Button("Cronograma");
 
             {
                 botaoCronograma.setOnAction(event -> {
+                    Sala salaAberta = getTableView().getItems().get(getIndex());
 
+                    FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalCronogramaSala.fxml"));
+
+                    ModalCronogramaSala modalCronogramaSala = new ModalCronogramaSala(salaAberta);
+                    appLoader.setController(modalCronogramaSala);
+
+                    Parent app = null;
+                    try {
+                        app = appLoader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    Stage modal = new Stage();
+                    modal.setTitle("Seleção de sala");
+                    modal.setScene(new Scene(app));
+
+                    // Modal bloqueia interação com a janela principal
+                    modal.initModality(Modality.WINDOW_MODAL);
+
+                    // Define que a janela principal é a "dona" do modal
+                    modal.initOwner(stage);
+
+                    modal.setResizable(true);
+
+                    // Abre o modal e bloqueia até fechar
+                    modal.showAndWait();
                 });
             }
 

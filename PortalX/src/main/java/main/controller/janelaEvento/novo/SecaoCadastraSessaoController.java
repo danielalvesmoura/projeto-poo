@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.controller.Global;
@@ -16,6 +13,7 @@ import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
 import model.Evento;
+import model.Sala;
 import model.Sessao;
 import servico.EventoServico;
 import servico.SessaoServico;
@@ -31,6 +29,7 @@ public class SecaoCadastraSessaoController {
     public Stage stage;
     public Evento eventoAberto;
     public Sessao sessaoAberta;
+    public SecaoCadastraSessaoController secaoCadastraSessaoController;
 
     public SecaoCadastraSessaoController(Stage stage, Evento eventoAberto, Sessao sessaoAberta) {
         this.stage = stage;
@@ -80,6 +79,9 @@ public class SecaoCadastraSessaoController {
             campoHoraFim.setText(sessaoAberta.getHoraFim().toString());
             campoTipo.setValue(sessaoAberta.getTipo());
             campoStatus.setValue(sessaoAberta.getStatus());
+
+            salaSelecionada = sessaoAberta.getSala();
+            botaoSala.setText(sessaoAberta.getSalaNome());
         } else {
             campoDataInicio.setValue(eventoAberto.getDataInicio());
             campoDataFim.setValue(eventoAberto.getDataFim());
@@ -90,10 +92,17 @@ public class SecaoCadastraSessaoController {
     }
 
     @FXML
+    public Button botaoSala;
+
+    public Sala salaSelecionada;
+
+    @FXML
     public void trocarSala() throws IOException {
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml"));
 
         ModalSalasController modalSalasController = new ModalSalasController(stage);
+        modalSalasController.secaoCadastraSessaoController = secaoCadastraSessaoController;
+
         appLoader.setController(modalSalasController);
 
         Parent app = appLoader.load();
@@ -180,11 +189,11 @@ public class SecaoCadastraSessaoController {
         } else {
 
             if(sessaoAberta == null) {
-                System.out.println("sessao nula. Cadastrar nova");
-                sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()));
+                System.out.println("sessao nula. Cadastrar nova com sala " + salaSelecionada.getNome());
+                sessaoServico.cadastrar(salaSelecionada,eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()));
             } else {
-                System.out.println("sessao aberta. Alterar");
-                sessaoServico.alterar(eventoAberto, sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
+                System.out.println("sessao aberta. Alterar com sala" + salaSelecionada.getNome());
+                sessaoServico.alterar(salaSelecionada,eventoAberto, sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
             }
             janelaEditarEventoController.abreAbaSessoes();
         }

@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.controller.menuPrincipal.novo.MenuPrincipalController;
 import model.Evento;
@@ -65,6 +66,8 @@ public class JanelaTodasInscricoesController {
         Parent app = appLoader.load();
 
         Scene inscrever = new Scene(app);
+
+
 
         stage.setScene(inscrever);
 
@@ -279,25 +282,36 @@ public class JanelaTodasInscricoesController {
                 botaoAbrir.setOnAction(event -> {
                     Inscricao inscricaoAberta = getTableView().getItems().get(getIndex());
 
-                    /*
+
                     try {
                         FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalEditarInscricao.fxml"));
 
-                        CadastroInscricaoController cadastroInscricaoController = new CadastroInscricaoController(stage,janelaTodasInscricoesController,inscricaoAberta);
-                        appLoader.setController(cadastroInscricaoController);
+                        ModalInscricaoController modalInscricaoController = new ModalInscricaoController(stage,janelaTodasInscricoesController,inscricaoAberta);
+                        appLoader.setController(modalInscricaoController);
 
                         Parent app = appLoader.load();
 
-                        Scene inscrever = new Scene(app);
+                        Stage modal = new Stage();
+                        modal.setTitle("Editar inscrição");
+                        modal.setScene(new Scene(app));
 
-                        stage.setScene(inscrever);
+                        // Modal bloqueia interação com a janela principal
+                        modal.initModality(Modality.WINDOW_MODAL);
+
+                        // Define que a janela principal é a "dona" do modal
+                        modal.initOwner(stage);
+
+                        modal.setResizable(true);
+
+                        // Abre o modal e bloqueia até fechar
+                        modal.showAndWait();
 
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                     */
+
 
                 });
             }

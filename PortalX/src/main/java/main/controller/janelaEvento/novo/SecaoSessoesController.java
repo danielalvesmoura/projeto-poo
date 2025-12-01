@@ -41,6 +41,7 @@ public class SecaoSessoesController {
         SecaoCadastraSessaoController secaoCadastraSessaoController = new SecaoCadastraSessaoController(stage,eventoAberto);
         appLoader.setController(secaoCadastraSessaoController);
         secaoCadastraSessaoController.janelaEditarEventoController = janelaEditarEventoController;
+        secaoCadastraSessaoController.secaoCadastraSessaoController = secaoCadastraSessaoController;
 
         Parent app = appLoader.load();
 
@@ -54,14 +55,15 @@ public class SecaoSessoesController {
     @FXML
     public TableColumn<Sessao,String> colId;
     public TableColumn<Sessao,String> col2;
-    public TableColumn<Sessao,Integer> col3;
-    public TableColumn<Sessao,String> col4;
-    public TableColumn<Sessao, LocalDate> col5;
-    public TableColumn<Sessao,LocalTime> col6;
-    public TableColumn<Sessao,LocalDate> col7;
-    public TableColumn<Sessao, LocalTime> col8;
-    public TableColumn<Sessao,Void> col9;
+    public TableColumn<Sessao,String> col3;
+    public TableColumn<Sessao,Integer> col4;
+    public TableColumn<Sessao, String> col5;
+    public TableColumn<Sessao,LocalDate> col6;
+    public TableColumn<Sessao,LocalTime> col7;
+    public TableColumn<Sessao, LocalDate> col8;
+    public TableColumn<Sessao,LocalTime> col9;
     public TableColumn<Sessao,Void> col10;
+    public TableColumn<Sessao,Void> col11;
 
     ObservableList<Sessao> observableList = FXCollections.observableArrayList();
 
@@ -82,7 +84,7 @@ public class SecaoSessoesController {
 
         //List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
-        ArvoreSessoesTeste sessoes = sessaoServico.carregaArvore(eventoAberto);
+        ArvoreSessoesTeste sessoes = sessaoServico.carregaArvoreEvento(eventoAberto);
 
         sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
 
@@ -96,18 +98,19 @@ public class SecaoSessoesController {
          */
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Titulo"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("Status"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
-        col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
-        col7.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
-        col8.setCellValueFactory(new PropertyValueFactory<>("HoraFim"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("SalaNome"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Titulo"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("Tipo"));
+        col5.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        col6.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
+        col7.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
+        col8.setCellValueFactory(new PropertyValueFactory<>("DataFim"));
+        col9.setCellValueFactory(new PropertyValueFactory<>("HoraFim"));
 
 
         // BOTÃO DE REMOVER ITEM
 
-        col9.setCellFactory(col -> new TableCell<Sessao, Void>() {
+        col10.setCellFactory(col -> new TableCell<Sessao, Void>() {
 
             private final Button botaoRemover = new Button("Remover");
 
@@ -140,7 +143,7 @@ public class SecaoSessoesController {
 
         // BOTÃO PARA ABRIR EVENTO
 
-        col10.setCellFactory(col -> new TableCell<Sessao, Void>() {
+        col11.setCellFactory(col -> new TableCell<Sessao, Void>() {
 
             private final Button botaoAbrir = new Button("Abrir");
 
@@ -156,6 +159,7 @@ public class SecaoSessoesController {
                         SecaoCadastraSessaoController secaoCadastraSessaoController = new SecaoCadastraSessaoController(stage,eventoAberto,sessaoAberta);
                         appLoader.setController(secaoCadastraSessaoController);
                         secaoCadastraSessaoController.janelaEditarEventoController = janelaEditarEventoController;
+                        secaoCadastraSessaoController.secaoCadastraSessaoController = secaoCadastraSessaoController;
 
                         Parent app = appLoader.load();
 
@@ -184,26 +188,28 @@ public class SecaoSessoesController {
         });
 
         colId.setText("ID");
-        col2.setText("Título");
-        col3.setText("Tipo");
-        col4.setText("Status");
-        col5.setText("Data do Início");
-        col6.setText("Hora do Início");
-        col7.setText("Data do Fim");
-        col8.setText("Hora do Fim");
-        col9.setText("");
+        col2.setText("Sala");
+        col3.setText("Título");
+        col4.setText("Tipo");
+        col5.setText("Status");
+        col6.setText("Data do Início");
+        col7.setText("Hora do Início");
+        col8.setText("Data do Fim");
+        col9.setText("Hora do Fim");
         col10.setText("");
+        col11.setText("");
 
 
-        col2.setPrefWidth(400);
+        col2.setPrefWidth(200);
         col3.setPrefWidth(200);
-        col4.setPrefWidth(300);
-        col5.setPrefWidth(150);
-        col6.setPrefWidth(150);
-        col7.setPrefWidth(100);
-        col8.setPrefWidth(100);
-        col9.setPrefWidth(100); // BOTÃO REMOVER
-        col10.setPrefWidth(80); // BOTÃO ABRIR
+        col4.setPrefWidth(100);
+        col5.setPrefWidth(100);
+        col6.setPrefWidth(90);
+        col7.setPrefWidth(90);
+        col8.setPrefWidth(90);
+        col9.setPrefWidth(90);
+        col10.setPrefWidth(80); // BOTÃO REMOVER
+        col11.setPrefWidth(60); // BOTÃO ABRIR
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 

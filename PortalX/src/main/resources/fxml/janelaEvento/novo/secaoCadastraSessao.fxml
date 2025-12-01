@@ -15,13 +15,13 @@
       <VBox VBox.vgrow="ALWAYS">
          <children>
       
-                      <Label minHeight="0.0" minWidth="0.0" text="Título">
+                      <Label minHeight="0.0" minWidth="0.0" prefHeight="34.0" prefWidth="40.0" text="Título" VBox.vgrow="ALWAYS">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
       
-                      <TextField fx:id="campoTitulo" minHeight="0.0" minWidth="0.0" prefHeight="34.0" prefWidth="213.0" VBox.vgrow="ALWAYS">
+                      <TextField fx:id="campoTitulo" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="742.0" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="24.0" />
                </font>
@@ -37,7 +37,7 @@
                     </font>
                 </Label>
       
-                            <TextArea fx:id="campoDescricao" minHeight="0.0" minWidth="0.0" prefHeight="116.0" prefWidth="659.0">
+                            <TextArea fx:id="campoDescricao" minHeight="116.0" minWidth="0.0" prefHeight="116.0" prefWidth="659.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -55,18 +55,18 @@
                                   <Font size="16.0" />
                               </font>
                           </Label>
-                          <DatePicker fx:id="campoDataInicio" minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
+                          <DatePicker fx:id="campoDataInicio" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
                       </children>
                   </VBox>
 
                         <VBox layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                       <children>
-                          <Label minHeight="0.0" minWidth="0.0" text="Hora do Início">
+                          <Label minHeight="0.0" minWidth="0.0" text="Hora do Início" VBox.vgrow="ALWAYS">
                               <font>
                                   <Font size="16.0" />
                               </font>
                           </Label>
-                          <TextField fx:id="campoHoraInicio" minHeight="0.0" minWidth="0.0" prefHeight="34.0" prefWidth="897.0">
+                          <TextField fx:id="campoHoraInicio" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="897.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -83,7 +83,7 @@
                                   <Font size="16.0" />
                               </font>
                           </Label>
-                          <DatePicker fx:id="campoDataFim" minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
+                          <DatePicker fx:id="campoDataFim" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
                       </children>
                   </VBox>
 
@@ -94,7 +94,7 @@
                                   <Font size="16.0" />
                               </font>
                           </Label>
-                          <TextField fx:id="campoHoraFim" minHeight="0.0" minWidth="0.0" prefHeight="34.0" prefWidth="897.0">
+                          <TextField fx:id="campoHoraFim" minHeight="20.0" minWidth="0.0" prefHeight="34.0" prefWidth="897.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -113,7 +113,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="campoTipo" prefHeight="35.0" prefWidth="219.0" VBox.vgrow="ALWAYS" />
+                  <ChoiceBox fx:id="campoTipo" minHeight="20.0" prefHeight="35.0" prefWidth="219.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <Region prefHeight="64.0" prefWidth="16.0" />
@@ -124,7 +124,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="campoStatus" prefHeight="35.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+                  <ChoiceBox fx:id="campoStatus" minHeight="20.0" prefHeight="35.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <Region layoutX="229.0" layoutY="10.0" prefHeight="64.0" prefWidth="16.0" />
@@ -137,13 +137,13 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#trocarSala" prefHeight="35.0" text="Nome da sala" VBox.vgrow="ALWAYS" />
+            <Button fx:id="botaoSala" maxWidth="1.7976931348623157E308" minHeight="20.0" mnemonicParsing="false" onAction="#trocarSala" prefHeight="35.0" text="Selecione uma sala" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
 
                 <HBox alignment="CENTER" minHeight="0.0" minWidth="0.0">
               <children>
-                  <Button minHeight="0.0" minWidth="0.0" mnemonicParsing="false" onAction="#salvar" text="Salvar">
+                  <Button minHeight="20.0" minWidth="0.0" mnemonicParsing="false" onAction="#salvar" prefHeight="45.0" prefWidth="83.0" text="Salvar">
                       <font>
                           <Font size="21.0" />
                       </font>
