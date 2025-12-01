@@ -164,6 +164,8 @@ public class SecaoSessoesController {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
+                    System.out.println("clicou em alterar");
                 });
             }
 

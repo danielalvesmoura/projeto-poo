@@ -153,8 +153,10 @@ public class SecaoCadastraSessaoController {
         } else {
 
             if(sessaoAberta == null) {
+                System.out.println("sessao nula. Cadastrar nova");
                 sessaoServico.cadastrar(eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()));
             } else {
+                System.out.println("sessao aberta. Alterar");
                 sessaoServico.alterar(eventoAberto, sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
             }
             janelaEditarEventoController.abreAbaSessoes();

@@ -32,7 +32,7 @@ public class SessaoServico {
 
     public void cadastrar(Evento eventoAberto, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
         Sessao sessao = new Sessao(eventoAberto, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
-        if(!temSobreposicao(sessao)) {
+        if(!temSobreposicaoInserir(sessao)) {
             sessaoDAO.inserirSessao(eventoAberto,sessao);
         } else {
             Global.mostraErro("Sobreposição de horários!");
@@ -45,32 +45,52 @@ public class SessaoServico {
         sessaoDAO.removerSessao(eventoAberto.getId(),sessao.getId());
     }
 
-    public void alterar(Evento eventoAberto, Sessao sessao, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim, StatusSessao status) {
+    public void alterar(Evento eventoAberto, Sessao sessaoAntiga,String titulo, String descricao, TipoSessao tipo,LocalDate dataInicio, LocalTime horaInicio,LocalDate dataFim, LocalTime horaFim, StatusSessao status) {
 
-        sessao.setTitulo(titulo);
-        sessao.setDescricao(descricao);
-        sessao.setTipo(tipo);
-        sessao.setDataInicio(dataInicio);
-        sessao.setHoraInicio(horaInicio);
-        sessao.setDataFim(dataFim);
-        sessao.setHoraFim(horaFim);
-        sessao.setStatus(status);
+        // Criar sessão temporária apenas para teste
+        Sessao sessaoNova = new Sessao(eventoAberto,titulo,descricao,tipo,dataInicio,horaInicio,dataFim,horaFim,status);
 
-        if(!temSobreposicao(sessao)) {
-            sessaoDAO.alterar(sessao);
-        } else {
+        // Testar sobreposição sem modificar a sessão antiga ainda
+        if (temSobreposicaoAlterar(sessaoAntiga, sessaoNova)) {
             Global.mostraErro("Sobreposição de horários!");
+            return;
+        }
+
+        // SÓ AQUI altera os campos da sessão original
+        sessaoAntiga.setTitulo(titulo);
+        sessaoAntiga.setDescricao(descricao);
+        sessaoAntiga.setTipo(tipo);
+        sessaoAntiga.setDataInicio(dataInicio);
+        sessaoAntiga.setHoraInicio(horaInicio);
+        sessaoAntiga.setDataFim(dataFim);
+        sessaoAntiga.setHoraFim(horaFim);
+        sessaoAntiga.setStatus(status);
+
+        // Agora sim: atualizar a sessão ORIGINAL no banco
+        sessaoDAO.alterar(sessaoAntiga);
+    }
+
+    public boolean temSobreposicaoAlterar(Sessao sessaoAntiga, Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvore();
+
+        arvoreAux.remove(sessaoAntiga);
+
+        try {
+            arvoreAux.add(sessaoNova);
+            return false; // sem sobreposição
+        } catch (IllegalArgumentException e) {
+            return true; // sobreposição detectada
         }
     }
 
-    public boolean temSobreposicao(Sessao sessao) {
-        ArvoreSessoesTeste arvoreSessoesTeste = carregaArvore();
+    public boolean temSobreposicaoInserir(Sessao sessaoNova) {
+        ArvoreSessoesTeste arvoreAux = carregaArvore();
 
         try {
-            arvoreSessoesTeste.add(sessao);
-            return false;
+            arvoreAux.add(sessaoNova);
+            return false; // sem sobreposição
         } catch (IllegalArgumentException e) {
-            return true;
+            return true; // sobreposição detectada
         }
     }
 }
