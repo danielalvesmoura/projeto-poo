@@ -14,8 +14,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import main.controller.Global;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
 import model.Evento;
+import model.Relatorio;
 import servico.EventoServico;
 
 import java.io.File;
@@ -113,17 +115,32 @@ public class JanelaTodosEventosController {
         atualizaTabela();
     }
 
+    SortedList<Evento> sortedData;
 
     @FXML
-    public void exportarCSV() {
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
-        File arquivo = fc.showSaveDialog(null);
+    public ChoiceBox campoTipoRelatorio;
 
-        if (arquivo != null) {
-            List<Evento> lista = sessaoDAO.buscarPorEvento(eventoAberto);
-            RelatorioSessoes.gerarCSV(lista, arquivo);
-            Global.mostraInfo("Relatório CSV exportado com sucesso!");
+    @FXML
+    public void gerarRelatorio() {
+        if(campoTipoRelatorio.getValue().toString().equals("CSV")) {
+            FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+            File arquivo = fc.showSaveDialog(null);
+
+            if (arquivo != null) {
+                eventoServico.gerarCSV(sortedData, arquivo);
+                Global.mostraMensagem("Portal X","Relatório CSV exportado com sucesso!");
+            }
+        } else {
+
+            FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel", "*.xlsx"));
+            File arquivo = fc.showSaveDialog(null);
+
+            if (arquivo != null) {
+                eventoServico.gerarExcel(sortedData, arquivo);
+                Global.mostraMensagem("Portal X","Relatório Excel exportado com sucesso!");
+            }
         }
     }
 
@@ -132,6 +149,9 @@ public class JanelaTodosEventosController {
     EventoServico eventoServico = new EventoServico();
 
     public void configuraTabela() {
+        campoTipoRelatorio.getItems().addAll("CSV","Excel");
+        campoTipoRelatorio.setValue("Excel");
+
         colId.setText("ID");
         col2.setText("Nome");
         col3.setText("Capacidade");
@@ -357,7 +377,7 @@ public class JanelaTodosEventosController {
 
 
         // Lista ordenável
-        SortedList<Evento> sortedData = new SortedList<>(filteredList);
+        sortedData = new SortedList<>(filteredList);
 
         // Liga a ordenação da tabela com a lista ordenada
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="839.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="839.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="722.0" prefWidth="800.0" spacing="20.0" BorderPane.alignment="CENTER">
          <padding>
@@ -23,6 +23,13 @@
                         <Font size="39.0" />
                      </font></Label>
                   <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
+                  <ChoiceBox fx:id="campoTipoRelatorio" prefHeight="30.0" prefWidth="122.0" />
+                  <Button mnemonicParsing="false" onAction="#gerarRelatorio" text="Gerar relatório">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Region layoutX="311.0" layoutY="10.0" minWidth="0.0" HBox.hgrow="ALWAYS" />
                   <Button minWidth="0.0" mnemonicParsing="false" onAction="#adicionar" text="+ Adicionar novo evento" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />

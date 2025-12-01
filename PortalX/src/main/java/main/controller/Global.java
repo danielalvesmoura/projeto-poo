@@ -12,4 +12,13 @@ public class Global {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.showAndWait();
     }
+
+    public static void mostraMensagem(String titulo,String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.showAndWait();
+    }
 }
