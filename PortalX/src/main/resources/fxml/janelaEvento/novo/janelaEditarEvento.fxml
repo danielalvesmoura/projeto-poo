@@ -28,17 +28,17 @@
                      </graphic>
                   </Label>
                   <Region prefHeight="27.0" prefWidth="152.0" />
-                  <Button alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaDetalhes" styleClass="botaoEventos" text="    Detalhes" VBox.vgrow="ALWAYS">
+                  <Button alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaDetalhes" styleClass="botaoLateral" text="    Detalhes" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="botaoSessoes" alignment="TOP_LEFT" layoutX="30.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaSessoes" styleClass="botaoPessoas" text="    Sessões">
+                  <Button fx:id="botaoSessoes" alignment="TOP_LEFT" layoutX="30.0" layoutY="97.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreAbaSessoes" styleClass="botaoLateral" text="    Sessões">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="botaoInscricoes" alignment="TOP_LEFT" layoutX="30.0" layoutY="147.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaInscricoes" styleClass="botaoPessoas" text="    Inscrições">
+                  <Button fx:id="botaoInscricoes" alignment="TOP_LEFT" layoutX="30.0" layoutY="147.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaInscricoes" styleClass="botaoLateral" text="    Inscrições">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -53,13 +53,13 @@
                <children>
                   <HBox alignment="CENTER" minWidth="0.0">
                      <children>
-                        <Label text="Título do Evento Aberto" textFill="WHITE">
+                        <Label fx:id="tituloJanelaEvento" text="Título do Evento Aberto" textFill="WHITE">
                            <font>
                               <Font size="31.0" />
                            </font>
                         </Label>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#fechar" text="Fechar">
+                        <Button mnemonicParsing="false" onAction="#fechar" styleClass="botaoFechar" text="Fechar">
                            <font>
                               <Font size="20.0" />
                            </font>

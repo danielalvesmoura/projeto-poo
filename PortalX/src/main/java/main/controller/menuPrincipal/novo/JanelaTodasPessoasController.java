@@ -50,6 +50,7 @@ public class JanelaTodasPessoasController {
         Scene menuPrincipal = new Scene(app);
 
         stage.setScene(menuPrincipal);
+        stage.setFullScreen(true);
 
 
     }

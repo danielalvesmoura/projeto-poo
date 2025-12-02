@@ -38,7 +38,7 @@
                         <Font size="23.0" />
                      </font>
                   </Button>
-                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="147.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaSalas" styleClass="botaoPessoas" text="    Salas">
+                  <Button alignment="TOP_LEFT" layoutX="30.0" layoutY="147.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#abreJanelaSalas" styleClass="botaoSalas" text="    Salas">
                      <font>
                         <Font size="23.0" />
                      </font>

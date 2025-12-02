@@ -29,7 +29,7 @@ public class JavaFX extends Application {
         Scene scene = new Scene(app);
 
         stage.setScene(scene);
-        //stage.setFullScreen(true);
+        stage.setFullScreen(true);
 
         stage.show();
     }

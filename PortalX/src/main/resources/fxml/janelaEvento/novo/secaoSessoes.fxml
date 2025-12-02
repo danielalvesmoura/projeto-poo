@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="722.0" prefWidth="800.0" spacing="20.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox stylesheets="/fxml/estilos/global.css" alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="722.0" prefWidth="800.0" spacing="20.0" style="-fx-border-color: grey;" styleClass="vBox" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <padding>
       <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
    </padding>
@@ -18,7 +18,7 @@
                </font>
             </Label>
             <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
-            <Button minWidth="0.0" mnemonicParsing="false" onAction="#adicionar" text="+ Adicionar nova sessão" HBox.hgrow="ALWAYS">
+            <Button minWidth="0.0" mnemonicParsing="false" onAction="#adicionar" styleClass="botaoAdicionar" text="+ Adicionar nova sessão" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="18.0" />
                </font>

@@ -48,7 +48,7 @@ public class JanelaEditarEventoController {
         Scene cenaTodosEventos = new Scene(janela);
 
         stage.setScene(cenaTodosEventos);
-
+        stage.setFullScreen(true);
 
     }
 
@@ -64,6 +64,9 @@ public class JanelaEditarEventoController {
         if(eventoAberto == null) {
             botaoSessoes.setVisible(false);
             botaoInscricoes.setVisible(false);
+            tituloJanelaEvento.setText("Cadastrar novo evento");
+        } else {
+            tituloJanelaEvento.setText(eventoAberto.getNome());
         }
     }
 
@@ -125,6 +128,7 @@ public class JanelaEditarEventoController {
             Scene cenaTodasInscricoes = new Scene(janela);
 
             stage.setScene(cenaTodasInscricoes);
+            stage.setFullScreen(true);
         }
     }
 }

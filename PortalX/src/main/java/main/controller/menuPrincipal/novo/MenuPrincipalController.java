@@ -6,10 +6,9 @@ import javafx.scene.Parent;
 
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import main.controller.menuPrincipal.tabelas.TabelaPessoasController;
 
 public class MenuPrincipalController {
 
@@ -39,6 +38,7 @@ public class MenuPrincipalController {
             Scene cenaTodosEventos = new Scene(janela);
 
             stage.setScene(cenaTodosEventos);
+            stage.setFullScreen(true);
 
 
         } catch (Exception e) {
@@ -60,6 +60,7 @@ public class MenuPrincipalController {
             Scene cenaTodasPessoas = new Scene(janela);
 
             stage.setScene(cenaTodasPessoas);
+            stage.setFullScreen(true);
 
         } catch (Exception e) {
             e.printStackTrace();

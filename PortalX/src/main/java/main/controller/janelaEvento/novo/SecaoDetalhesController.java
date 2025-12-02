@@ -143,7 +143,7 @@ public class SecaoDetalhesController {
                 Scene cenaTodosEventos = new Scene(janela);
 
                 stage.setScene(cenaTodosEventos);
-
+                stage.setFullScreen(true);
 
 
             } catch (Exception e) {

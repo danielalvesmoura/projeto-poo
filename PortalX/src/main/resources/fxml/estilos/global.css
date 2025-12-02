@@ -1,0 +1,361 @@
+/*=================================== HEADER TABLE VIEW ========================================*/
+
+/* Fundo do header inteiro */
+.table-view .column-header-background {
+    -fx-background-color: transparent !important;
+}
+
+/* Fundo INDIVIDUAL de cada coluna */
+.table-view .column-header {
+    -fx-background-color: transparent !important;
+}
+
+/* Texto do header */
+.table-view .column-header .label {
+    -fx-text-fill: white !important;
+}
+
+/* ChoiceBox fechada */
+.choice-box {
+    -fx-background-color: black;
+    -fx-mark-color: white;    /* cor da setinha */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+
+/*=================================== CHOICE BOX ========================================*/
+
+.choice-box {
+    -fx-border-color: white;
+}
+
+/* Texto interno da ChoiceBox */
+.choice-box > .label {
+    -fx-text-fill: white;
+}
+
+/* Popup (lista que abre) */
+.choice-box .context-menu {
+    -fx-background-color: black;
+}
+
+/* Itens da lista */
+.choice-box .menu-item > .label {
+    -fx-text-fill: white;
+}
+
+/* Hover nos itens */
+.choice-box .menu-item:focused {
+    -fx-background-color: #333;
+}
+
+
+/*=================================== GERAL ========================================*/
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #737373;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+
+.borderPane {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.vBox {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.botaoPadrao {
+    -fx-text-fill: #7800ff;
+    -fx-border-color: #7800ff;
+    -fx-font-size: 16px;
+}
+
+.botaoPadrao:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+    -fx-text-fill: #7800ff;
+    -fx-font-size: 16px;
+}
+
+.botaoFechar {
+    -fx-text-fill: red;
+    -fx-border-color: red;
+    -fx-font-size: 16px;
+}
+
+.botaoFechar:hover {
+    -fx-background-color: rgba(63, 0, 0, 0.8);
+    -fx-font-size: 16px;
+}
+
+/*=================================== BOTÕES PRINCIPAIS ========================================*/
+
+.botaoPrincipal {
+    -fx-font-size: 20px !important;
+    -fx-background-color: #7800ff;
+    -fx-text-fill: white;
+}
+
+.botaoPrincipal:hover {
+    -fx-background-color: #8212ff;
+}
+
+.botaoPrincipal:pressed {
+    -fx-background-color: #6a00e1;
+}
+
+
+
+
+
+.botaoAdicionar {
+    -fx-font-size: 25px;
+    -fx-background-color: #7800ff;
+    -fx-text-fill: white;
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
+}
+
+.botaoAdicionar:hover {
+    -fx-background-color: #8212ff;
+}
+
+.botaoAdicionar:pressed {
+    -fx-background-color: #6a00e1;
+}
+
+
+.botaoLateral {
+    -fx-background-color: transparent !important;
+    -fx-background-size: 40px !important;
+    -fx-text-fill: white !important;
+}
+
+.botaoLateral:hover {
+    -fx-background-color: rgba(120, 0, 255, .3) !important;
+    -fx-text-fill: #7800ff !important;
+}
+
+
+
+
+.botaoConfirmar {
+    -fx-font-size: 16px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #7800ff;
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
+    -fx-border-color: #7800ff;
+}
+
+.botaoConfirmar:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+}
+
+.botaoConfirmar:pressed {
+    -fx-background-color: rgba(120, 0, 255, .1);
+}
+
+
+
+
+
+
+/*=================================== TABLE VIEW ========================================*/
+
+
+.table-view {
+    -fx-background-color: black;
+    -fx-border-color: #322c39;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
+    -fx-border-color: #1e1a22;
+}
+.table-view .table-row-cell:even {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
+    -fx-border-color: #1e1a22;
+}
+
+.coluna {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+
+.titulo {
+    -fx-text-fill: white;
+    -fx-font-size: 70px;
+    src: url("/fonts/Roboto_ExtraBold.ttf");
+    -fx-font-family: "Roboto ExtraBold";
+}
+
+
+.campoFiltro {
+    -fx-background-image: url("imagens/lupa.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left center;
+    -fx-background-size: 26px;
+    -fx-padding: 0 50 0 0;
+}
+
+/*=================================== BOTÃO NA TABLE VIEW ========================================*/
+
+.button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+
+/*===================================BARRA DE SCROLL========================================*/
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: grey;
+}
+
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: black;
+}
+
+/* Barra de rolagem horizontal */
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: black;
+}
+
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: grey;
+}
+
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: black;
+}
+
+* {
+    -src: url("/fonts/Roboto-Bold.ttf");
+    -fx-font-family: "Roboto Bold";
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #737373;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.text-area .content {
+    -fx-background-color: black;
+    -fx-border-color: #737373;
+}
+
+.text-area {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.date-picker {
+    -fx-background-color: transparent;
+    -fx-border-color: #737373;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+
+
+
+
+
+/*===================================TABLEVIEW========================================*/
+
+.table-view .table-cell {
+    -fx-text-fill: white !important;
+    -fx-font-size: 12px !important;
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #737373;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
+    -fx-border-color: #1e1a22;
+}
+.table-row-cell:even {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
+    -fx-border-color: #1e1a22;
+}
+
+.coluna {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 6px 6px 0 0;
+    -fx-border-color: transparent;
+}
+
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-background-radius: 6px 6px 0 0;
+}
+
+.titulo {
+    -fx-text-fill: white;
+    -fx-font-size: 70px;
+    src: url("/fonts/Roboto_ExtraBold.ttf");
+    -fx-font-family: "Roboto ExtraBold";
+}
+
+.botaoAdicionar {
+    -fx-font-size: 25px;
+    -fx-background-color: #7800ff;
+    -fx-text-fill: white;
+    src: url("/fonts/Roboto-Black.ttf");
+    -fx-font-family: "Roboto Black";
+}
+
+.botaoAdicionar:hover {
+    -fx-background-color: #8212ff;
+}
+
+.botaoAdicionar:pressed {
+    -fx-background-color: #6a00e1;
+}
+
+.campoFiltro {
+    -fx-background-image: url("imagens/lupa.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left center;
+    -fx-background-size: 26px;
+    -fx-padding: 0 50 0 0;
+}

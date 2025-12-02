@@ -55,6 +55,7 @@ public class JanelaInscreverController {
         Scene cenaTodasInscricoes = new Scene(janela);
 
         stage.setScene(cenaTodasInscricoes);
+        stage.setFullScreen(true);
 
 
     }

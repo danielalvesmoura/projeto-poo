@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="516.0" styleClass="borderPane" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
          <children>
@@ -44,11 +44,11 @@
                </font>
             </Label>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#cancelar" text="Cancelar">
+            <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#cancelar" styleClass="botaoFechar" text="Cancelar">
                <font>
                   <Font size="19.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#confirmar" text="Confirmar">
+            <Button mnemonicParsing="false" onAction="#confirmar" styleClass="botaoConfirmar" text="Confirmar">
                <font>
                   <Font size="19.0" />
                </font></Button>

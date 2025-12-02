@@ -50,6 +50,7 @@ public class JanelaTodasInscricoesController {
         Scene scene = new Scene(app);
 
         stage.setScene(scene);
+        stage.setFullScreen(true);
     }
 
 
@@ -70,7 +71,7 @@ public class JanelaTodasInscricoesController {
 
 
         stage.setScene(inscrever);
-
+        stage.setFullScreen(true);
 
 
     }

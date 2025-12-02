@@ -48,6 +48,7 @@ public class JanelaTodosEventosController {
         Scene menuPrincipal = new Scene(app);
 
         stage.setScene(menuPrincipal);
+        stage.setFullScreen(true);
 
 
     }
@@ -67,6 +68,7 @@ public class JanelaTodosEventosController {
         Scene scene = new Scene(app);
 
         stage.setScene(scene);
+        stage.setFullScreen(true);
 
 
     }
@@ -165,11 +167,11 @@ public class JanelaTodosEventosController {
 
 
         colId.setPrefWidth(100);
-        col2.setPrefWidth(400);
-        col3.setPrefWidth(200);
-        col4.setPrefWidth(300);
+        col2.setPrefWidth(150);
+        col3.setPrefWidth(80);
+        col4.setPrefWidth(250);
         col5.setPrefWidth(150);
-        col6.setPrefWidth(150);
+        col6.setPrefWidth(100);
         col7.setPrefWidth(100);
         col8.setPrefWidth(100);
         col9.setPrefWidth(100); // BOTÃO REMOVER
@@ -351,6 +353,7 @@ public class JanelaTodosEventosController {
                         Scene scene = new Scene(app);
 
                         stage.setScene(scene);
+                        stage.setFullScreen(true);
 
 
                     } catch (Exception e) {

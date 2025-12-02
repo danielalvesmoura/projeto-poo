@@ -5,39 +5,39 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="raiz" alignment="BOTTOM_LEFT" minHeight="0.0" minWidth="0.0" prefHeight="592.0" prefWidth="824.0" spacing="20.0" style="-fx-border-color: grey;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="raiz" alignment="BOTTOM_LEFT" minHeight="0.0" minWidth="0.0" prefHeight="701.0" prefWidth="841.0" spacing="20.0" style="-fx-border-color: grey;" styleClass="vBox" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
 
             <padding>
           <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
       </padding>
 
             <children>
-      <VBox VBox.vgrow="ALWAYS">
+      <VBox minHeight="0.0" minWidth="0.0">
          <children>
       
-                      <Label minHeight="0.0" minWidth="0.0" prefHeight="34.0" prefWidth="40.0" text="Título" VBox.vgrow="ALWAYS">
+                      <Label minHeight="0.0" minWidth="0.0" prefHeight="30.0" prefWidth="63.0" text="Título" VBox.vgrow="ALWAYS">
                     <font>
-                        <Font size="16.0" />
+                        <Font size="20.0" />
                     </font>
                 </Label>
       
-                      <TextField fx:id="campoTitulo" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="742.0" VBox.vgrow="ALWAYS">
+                      <TextField fx:id="campoTitulo" maxHeight="45.0" minHeight="20.0" minWidth="0.0" prefWidth="742.0" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="24.0" />
                </font>
             </TextField>
          </children>
       </VBox>
-      <VBox VBox.vgrow="ALWAYS">
+      <VBox minHeight="0.0" minWidth="0.0">
          <children>
       
                             <Label minHeight="0.0" minWidth="0.0" text="Descrição">
                     <font>
-                        <Font size="16.0" />
+                        <Font size="20.0" />
                     </font>
                 </Label>
       
-                            <TextArea fx:id="campoDescricao" minHeight="116.0" minWidth="0.0" prefHeight="116.0" prefWidth="659.0">
+                            <TextArea fx:id="campoDescricao" maxHeight="200.0" minHeight="116.0" minWidth="0.0" prefWidth="659.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -52,10 +52,10 @@
                       <children>
                           <Label minHeight="0.0" minWidth="0.0" text="Data do Início">
                               <font>
-                                  <Font size="16.0" />
+                                  <Font size="20.0" />
                               </font>
                           </Label>
-                          <DatePicker fx:id="campoDataInicio" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
+                          <DatePicker fx:id="campoDataInicio" maxHeight="45.0" maxWidth="200.0" minHeight="20.0" minWidth="40.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
                       </children>
                   </VBox>
 
@@ -63,10 +63,10 @@
                       <children>
                           <Label minHeight="0.0" minWidth="0.0" text="Hora do Início" VBox.vgrow="ALWAYS">
                               <font>
-                                  <Font size="16.0" />
+                                  <Font size="20.0" />
                               </font>
                           </Label>
-                          <TextField fx:id="campoHoraInicio" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="897.0">
+                          <TextField fx:id="campoHoraInicio" maxHeight="45.0" minHeight="20.0" minWidth="0.0" prefWidth="897.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -80,10 +80,10 @@
                       <children>
                           <Label minHeight="0.0" minWidth="0.0" text="Data do Fim">
                               <font>
-                                  <Font size="16.0" />
+                                  <Font size="20.0" />
                               </font>
                           </Label>
-                          <DatePicker fx:id="campoDataFim" minHeight="20.0" minWidth="0.0" prefHeight="35.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
+                          <DatePicker fx:id="campoDataFim" maxHeight="45.0" maxWidth="200.0" minHeight="20.0" minWidth="40.0" prefWidth="146.0" VBox.vgrow="ALWAYS" />
                       </children>
                   </VBox>
 
@@ -91,10 +91,10 @@
                       <children>
                           <Label minHeight="0.0" minWidth="0.0" text="Hora do Fim">
                               <font>
-                                  <Font size="16.0" />
+                                  <Font size="20.0" />
                               </font>
                           </Label>
-                          <TextField fx:id="campoHoraFim" minHeight="20.0" minWidth="0.0" prefHeight="34.0" prefWidth="897.0">
+                          <TextField fx:id="campoHoraFim" maxHeight="45.0" minHeight="20.0" minWidth="0.0" prefWidth="897.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -110,10 +110,10 @@
                <children>
                   <Label minHeight="0.0" minWidth="0.0" text="Tipo da Sessão">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="campoTipo" minHeight="20.0" prefHeight="35.0" prefWidth="219.0" VBox.vgrow="ALWAYS" />
+                  <ChoiceBox fx:id="campoTipo" maxHeight="45.0" minHeight="20.0" prefWidth="219.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <Region prefHeight="64.0" prefWidth="16.0" />
@@ -121,10 +121,10 @@
                <children>
                   <Label minHeight="0.0" minWidth="0.0" text="Status">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="campoStatus" minHeight="20.0" prefHeight="35.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+                  <ChoiceBox fx:id="campoStatus" maxHeight="45.0" minHeight="20.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <Region layoutX="229.0" layoutY="10.0" prefHeight="64.0" prefWidth="16.0" />
@@ -134,16 +134,19 @@
          <children>
             <Label minHeight="0.0" minWidth="0.0" text="Sala">
                <font>
-                  <Font size="16.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="botaoSala" maxWidth="1.7976931348623157E308" minHeight="20.0" mnemonicParsing="false" onAction="#trocarSala" prefHeight="35.0" text="Selecione uma sala" VBox.vgrow="ALWAYS" />
+            <Button fx:id="botaoSala" maxHeight="45.0" minHeight="20.0" mnemonicParsing="false" onAction="#trocarSala" prefHeight="35.0" styleClass="botaoConfirmar" text="Selecione uma sala" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
          </children>
       </VBox>
 
                 <HBox alignment="CENTER" minHeight="0.0" minWidth="0.0">
               <children>
-                  <Button minHeight="20.0" minWidth="0.0" mnemonicParsing="false" onAction="#salvar" prefHeight="45.0" prefWidth="83.0" text="Salvar">
+                  <Button maxHeight="80.0" maxWidth="200.0" minHeight="20.0" minWidth="0.0" mnemonicParsing="false" onAction="#salvar" prefHeight="45.0" prefWidth="83.0" styleClass="botaoAdicionar" text="Salvar" HBox.hgrow="ALWAYS">
                       <font>
                           <Font size="21.0" />
                       </font>

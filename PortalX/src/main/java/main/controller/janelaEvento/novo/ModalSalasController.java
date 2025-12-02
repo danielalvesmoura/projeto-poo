@@ -335,6 +335,7 @@ public class ModalSalasController {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    botaoCronograma.setStyle("-fx-text-fill: yellow;");
                     setGraphic(botaoCronograma);
                 }
             }
