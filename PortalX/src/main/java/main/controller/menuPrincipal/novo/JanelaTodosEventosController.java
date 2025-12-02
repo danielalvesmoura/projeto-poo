@@ -12,16 +12,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import main.controller.Global;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
 import model.Evento;
 import model.Exportavel;
 import servico.EventoServico;
 import servico.ExportarServico;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -1,7 +1,7 @@
 package servico;
 
 import dao.SessaoDAO;
-import main.controller.Global;
+import util.Global;
 import model.ArvoreSessoes;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;

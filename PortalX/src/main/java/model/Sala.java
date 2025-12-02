@@ -22,7 +22,6 @@ public class Sala implements Exportavel {
     private List<Sessao> sessoes;
 
     @Column(length = 100)
-    private double nota;
     private String nome;
     private int capacidade;
     private String localizacao;
@@ -43,7 +42,7 @@ public class Sala implements Exportavel {
 
     @Override
     public String getCorpo() {
-        return id + ", " + nota + ", " + nome + ", " +capacidade + ", " +localizacao;
+        return id + ", " + nome + ", " +capacidade + ", " +localizacao;
     }
 
     @Override
@@ -65,14 +64,6 @@ public class Sala implements Exportavel {
 
     public void setSessoes(List<Sessao> sessoes) {
         this.sessoes = sessoes;
-    }
-
-    public double getNota() {
-        return nota;
-    }
-
-    public void setNota(double nota) {
-        this.nota = nota;
     }
 
     public long getId() {

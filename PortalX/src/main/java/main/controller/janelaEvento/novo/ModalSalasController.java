@@ -15,9 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.controller.Global;
-import main.controller.menuPrincipal.novo.CadastroSalaController;
-import model.Inscricao;
+import util.Global;
 import model.Sala;
 import servico.SalaServico;
 
@@ -55,10 +53,6 @@ public class ModalSalasController {
     public TextField campoCapacidadeMinima;
     @FXML
     public TextField campoCapacidadeMaxima;
-    @FXML
-    public TextField campoNotaMinima;
-    @FXML
-    public TextField campoNotaMaxima;
 
 
     @FXML
@@ -120,10 +114,10 @@ public class ModalSalasController {
     public void configuraTabela() {
 
         colId.setText("ID");
-        col2.setText("Nota");
-        col3.setText("Nome");
-        col4.setText("Localização");
-        col5.setText("Capacidade");
+        col2.setText("Nome");
+        col3.setText("Localização");
+        col4.setText("Capacidade");
+        col5.setText("");
         col6.setText("");
         col7.setText("");
 
@@ -132,7 +126,7 @@ public class ModalSalasController {
         col2.setPrefWidth(50);
         col3.setPrefWidth(200);
         col4.setPrefWidth(300);
-        col5.setPrefWidth(50);
+        col5.setPrefWidth(0);
         col6.setPrefWidth(100); // BOTÃO SELECIONAR
         col7.setPrefWidth(100); // BOTÃO CRONOGRAMA
         col8.setPrefWidth(0);
@@ -164,17 +158,12 @@ public class ModalSalasController {
                 String capacidadeMinimaFiltro = campoCapacidadeMinima.getText().toLowerCase();
                 String capacidadeMaximaFiltro = campoCapacidadeMaxima.getText().toLowerCase();
 
-                // Horas (strings vindas dos TextFields)
-                String notaMinimaFiltro = campoNotaMinima.getText().toLowerCase();
-                String notaMaximaFiltro = campoNotaMaxima.getText().toLowerCase();
 
                 // Se tudo estiver vazio → mostra tudo
                 if (nomeFiltro.isEmpty() &&
                         localizacaoFiltro.isEmpty() &&
                         capacidadeMinimaFiltro.isEmpty() &&
-                        capacidadeMaximaFiltro.isEmpty() &&
-                        notaMinimaFiltro.isEmpty() &&
-                        notaMaximaFiltro.isEmpty()
+                        capacidadeMaximaFiltro.isEmpty()
                 ) {
                     return true;
                 }
@@ -208,25 +197,6 @@ public class ModalSalasController {
                     }
                 }
 
-                // FILTRO DE NOTA MÍNIMA
-                if (!notaMinimaFiltro.isEmpty()) {
-                    try {
-                        double min = Double.parseDouble(notaMinimaFiltro);
-                        match &= sala.getNota() >= min;
-                    } catch (NumberFormatException e) {
-                        return false; // evita quebrar
-                    }
-                }
-
-                // FILTRO DE NOTA MÁXIMA
-                if (!notaMaximaFiltro.isEmpty()) {
-                    try {
-                        double max = Double.parseDouble(notaMaximaFiltro);
-                        match &= sala.getNota() <= max;
-                    } catch (NumberFormatException e) {
-                        return false; // evita quebrar
-                    }
-                }
 
                 return match;
             });
@@ -237,8 +207,6 @@ public class ModalSalasController {
         campoLocalizacao.textProperty().addListener(filtroListener);
         campoCapacidadeMinima.textProperty().addListener(filtroListener);
         campoCapacidadeMaxima.textProperty().addListener(filtroListener);
-        campoNotaMinima.textProperty().addListener(filtroListener);
-        campoNotaMaxima.textProperty().addListener(filtroListener);
     }
 
     SalaDAO salaDAO = new SalaDAO();
@@ -253,10 +221,9 @@ public class ModalSalasController {
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nota"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col4.setCellValueFactory(new PropertyValueFactory<>("Localizacao"));
-        col5.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
+        col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Localizacao"));
+        col4.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
 
 
 

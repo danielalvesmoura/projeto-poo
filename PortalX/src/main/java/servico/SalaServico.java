@@ -78,7 +78,6 @@ public class SalaServico {
 
             row.createCell(0).setCellValue(sala.getNome());
             row.createCell(1).setCellValue(sala.getLocalizacao());
-            row.createCell(2).setCellValue(String.valueOf(sala.getNota()));
             row.createCell(7).setCellValue(String.valueOf(sala.getCapacidade()));
         }
 

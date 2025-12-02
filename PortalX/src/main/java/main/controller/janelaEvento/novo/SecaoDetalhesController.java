@@ -8,7 +8,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.controller.Global;
+import util.Global;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Evento;
 import servico.EventoServico;
@@ -16,8 +16,6 @@ import servico.EventoServico;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 public class SecaoDetalhesController {
 

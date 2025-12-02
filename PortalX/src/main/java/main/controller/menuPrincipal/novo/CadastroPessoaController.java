@@ -3,7 +3,7 @@ package main.controller.menuPrincipal.novo;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.controller.Global;
+import util.Global;
 import model.Pessoa;
 import servico.PessoaServico;
 

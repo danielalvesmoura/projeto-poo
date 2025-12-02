@@ -7,9 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.controller.Global;
-import main.controller.menuPrincipal.novo.CadastroPessoaController;
-import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
+import util.Global;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
 import model.Evento;
@@ -20,7 +18,6 @@ import servico.SessaoServico;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 

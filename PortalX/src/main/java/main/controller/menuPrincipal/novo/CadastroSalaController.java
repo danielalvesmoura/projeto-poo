@@ -3,14 +3,11 @@ package main.controller.menuPrincipal.novo;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.controller.Global;
-import model.Pessoa;
+import util.Global;
 import model.Sala;
-import servico.PessoaServico;
 import servico.SalaServico;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class CadastroSalaController {
 

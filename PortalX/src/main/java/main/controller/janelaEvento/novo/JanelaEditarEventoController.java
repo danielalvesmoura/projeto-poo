@@ -8,13 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import main.controller.Global;
-import main.controller.menuPrincipal.novo.JanelaTodasPessoasController;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Evento;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class JanelaEditarEventoController {
 

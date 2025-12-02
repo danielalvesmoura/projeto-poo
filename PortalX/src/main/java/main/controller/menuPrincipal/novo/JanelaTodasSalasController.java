@@ -12,20 +12,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.controller.Global;
 import model.Exportavel;
-import model.Sala;
 import model.Sala;
 import servico.ExportarServico;
 import servico.SalaServico;
 
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,26 +209,6 @@ public class JanelaTodasSalasController {
                     }
                 }
 
-                // FILTRO DE NOTA MÍNIMA
-                if (!notaMinimaFiltro.isEmpty()) {
-                    try {
-                        double min = Double.parseDouble(notaMinimaFiltro);
-                        match &= sala.getNota() >= min;
-                    } catch (NumberFormatException e) {
-                        return false; // evita quebrar
-                    }
-                }
-
-                // FILTRO DE NOTA MÁXIMA
-                if (!notaMaximaFiltro.isEmpty()) {
-                    try {
-                        double max = Double.parseDouble(notaMaximaFiltro);
-                        match &= sala.getNota() <= max;
-                    } catch (NumberFormatException e) {
-                        return false; // evita quebrar
-                    }
-                }
-
                 return match;
             });
         };
@@ -244,8 +218,7 @@ public class JanelaTodasSalasController {
         campoLocalizacao.textProperty().addListener(filtroListener);
         campoCapacidadeMinima.textProperty().addListener(filtroListener);
         campoCapacidadeMaxima.textProperty().addListener(filtroListener);
-        campoNotaMinima.textProperty().addListener(filtroListener);
-        campoNotaMaxima.textProperty().addListener(filtroListener);
+
     }
 
     SalaDAO salaDAO = new SalaDAO();
