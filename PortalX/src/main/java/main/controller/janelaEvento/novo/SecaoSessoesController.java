@@ -11,7 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.ArvoreSessoesTeste;
+import model.ArvoreSessoes;
 import model.Evento;
 import model.Sessao;
 import servico.SessaoServico;
@@ -84,7 +84,7 @@ public class SecaoSessoesController {
 
         //List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
-        ArvoreSessoesTeste sessoes = sessaoServico.carregaArvoreEvento(eventoAberto);
+        ArvoreSessoes sessoes = sessaoServico.carregaArvoreEvento(eventoAberto);
 
         sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
 

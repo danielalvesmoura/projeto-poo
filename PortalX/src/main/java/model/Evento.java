@@ -6,11 +6,12 @@ import javax.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "evento")
-public class Evento {
+public class Evento implements Exportavel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +39,28 @@ public class Evento {
         setHoraFim(LocalTime.parse(horaFim));
         setHoraInicio(LocalTime.parse(horaInicio));
         setCapacidade(capacidade);
+    }
+
+    @Override
+    public String getCabecalho() {
+        return "ID, NOME, DESCRICAO, ENDERECO, DATA INICIO, HORA INICIO, DATA FIM, HORA FIM, CAPACIDADE";
+    }
+
+    @Override
+    public String getCorpo() {
+        return id + ", " + nome + ", " + descricao + ", " +endereco + ", " +dataInicio + ", " +horaInicio + ", " +dataFim + ", " +horaFim + ", " +capacidade;
+    }
+
+    @Override
+    public String[] getCorpoVetor() {
+        String[] corpo = {Long.toString(id),nome,descricao,endereco,dataInicio.toString(),horaInicio.toString(),dataFim.toString(),horaFim.toString(),Integer.toString(capacidade)};
+        return corpo;
+    }
+
+    @Override
+    public String[] getCabecalhoVetor() {
+        String[] cabecalho = {"ID", "Nome", "Descrição", "Endereço", "Data Início", "Hora Início", "Data Fim", "Hora Fim", "Capacidade"};
+        return cabecalho;
     }
 
     public void setSessoes(List<Sessao> sessoes) {

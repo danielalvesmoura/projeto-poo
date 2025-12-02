@@ -22,7 +22,14 @@
                      <font>
                         <Font size="39.0" />
                      </font></Label>
-                  <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
+                  <Region fx:id="aaa" minWidth="0.0" HBox.hgrow="ALWAYS" />
+                   <ChoiceBox fx:id="campoTipoRelatorio" prefHeight="30.0" prefWidth="122.0" />
+                   <Button fx:id="aaa" mnemonicParsing="false" onAction="#exportarTabela" styleClass="botaoPadrao" text="Exportar tabela">
+                       <font>
+                           <Font size="15.0" />
+                       </font>
+                   </Button>
+                   <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
                   <Button minWidth="0.0" mnemonicParsing="false" onAction="#inscrever" styleClass="botaoAdicionar" text="+ Inscrever" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />

@@ -1,9 +1,8 @@
 package servico;
 
-import dao.EventoDAO;
 import dao.SessaoDAO;
 import main.controller.Global;
-import model.ArvoreSessoesTeste;
+import model.ArvoreSessoes;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
 import model.Evento;
@@ -18,36 +17,28 @@ import java.util.List;
 public class SessaoServico {
     SessaoDAO sessaoDAO = new SessaoDAO();
 
-    ArvoreSessoesTeste arvore = new ArvoreSessoesTeste();
+    ArvoreSessoes arvore = new ArvoreSessoes();
 
-    public ArvoreSessoesTeste carregaArvoreEvento(Evento eventoAberto) {
+    public ArvoreSessoes carregaArvoreEvento(Evento eventoAberto) {
         List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
-
         for(Sessao s : sessoes) {
-
             if(s.getEvento().getId() == eventoAberto.getId()) {
                 arvore.add(s);
             }
         }
-
         return this.arvore;
     }
 
-    public ArvoreSessoesTeste carregaArvoreSala(Sala salaAberta) {
+    public ArvoreSessoes carregaArvoreSala(Sala salaAberta) {
         List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
-
         for(Sessao s : sessoes) {
-
             try {
                 if(s.getSala().getId() == salaAberta.getId()) {
                     arvore.add(s);
                 }
             } catch (IllegalArgumentException e) {
-
             }
-
         }
-
         return this.arvore;
     }
 
@@ -88,7 +79,7 @@ public class SessaoServico {
             return;
         }
 
-        // SÓ AQUI altera os campos da sessão original
+        // altera os campos da sessão original
         sessaoAntiga.setTitulo(titulo);
         sessaoAntiga.setDescricao(descricao);
         sessaoAntiga.setTipo(tipo);
@@ -99,55 +90,38 @@ public class SessaoServico {
         sessaoAntiga.setStatus(status);
         sessaoAntiga.setSala(salaSelecionada);
 
-        // Agora sim: atualizar a sessão ORIGINAL no banco
+        //  atualizar a sessão ORIGINAL no banco
         sessaoDAO.alterar(sessaoAntiga);
     }
 
-    public boolean temSobreposicaoEventoAlterar(Evento eventoAberto, Sessao sessaoAntiga, Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvoreEvento(eventoAberto);
-
-        arvoreAux.remove(sessaoAntiga);
+    private boolean temSobreposicao(ArvoreSessoes arvore, Sessao sessaoAntiga, Sessao sessaoNova) {
+        if (sessaoAntiga != null) {
+            arvore.remove(sessaoAntiga);
+        }
 
         try {
-            arvoreAux.add(sessaoNova);
-            return false; // sem sobreposição
+            arvore.add(sessaoNova);
+            return false;  // sem sobreposição
         } catch (IllegalArgumentException e) {
-            return true; // sobreposição detectada
+            return true;   // sobreposição detectada
         }
+    }
+
+    public boolean temSobreposicaoEventoAlterar(Evento eventoAberto, Sessao sessaoAntiga, Sessao sessaoNova) {
+        return temSobreposicao(carregaArvoreEvento(eventoAberto), sessaoAntiga, sessaoNova);
     }
 
     public boolean temSobreposicaoEventoInserir(Evento eventoAberto, Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvoreEvento(eventoAberto);
-
-        try {
-            arvoreAux.add(sessaoNova);
-            return false; // sem sobreposição
-        } catch (IllegalArgumentException e) {
-            return true; // sobreposição detectada
-        }
+        return temSobreposicao(carregaArvoreEvento(eventoAberto), null, sessaoNova);
     }
 
     public boolean temSobreposicaoSalaAlterar(Sala salaSelecionada, Sessao sessaoAntiga, Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvoreSala(salaSelecionada);
-
-        arvoreAux.remove(sessaoAntiga);
-
-        try {
-            arvoreAux.add(sessaoNova);
-            return false; // sem sobreposição
-        } catch (IllegalArgumentException e) {
-            return true; // sobreposição detectada
-        }
+        return temSobreposicao(carregaArvoreSala(salaSelecionada), sessaoAntiga, sessaoNova);
     }
 
     public boolean temSobreposicaoSalaInserir(Sala salaSelecionada, Sessao sessaoNova) {
-        ArvoreSessoesTeste arvoreAux = carregaArvoreSala(salaSelecionada);
-
-        try {
-            arvoreAux.add(sessaoNova);
-            return false; // sem sobreposição
-        } catch (IllegalArgumentException e) {
-            return true; // sobreposição detectada
-        }
+        return temSobreposicao(carregaArvoreSala(salaSelecionada), null, sessaoNova);
     }
+
+
 }

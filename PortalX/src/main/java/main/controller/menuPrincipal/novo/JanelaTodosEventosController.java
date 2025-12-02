@@ -17,13 +17,15 @@ import javafx.stage.Stage;
 import main.controller.Global;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
 import model.Evento;
-import model.Relatorio;
+import model.Exportavel;
 import servico.EventoServico;
+import servico.ExportarServico;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JanelaTodosEventosController {
@@ -124,26 +126,12 @@ public class JanelaTodosEventosController {
 
     @FXML
     public void exportarTabela() {
-        if(campoTipoRelatorio.getValue().toString().equals("CSV")) {
-            FileChooser fc = new FileChooser();
-            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
-            File arquivo = fc.showSaveDialog(null);
+        List<Exportavel> lista = new ArrayList<>();
 
-            if (arquivo != null) {
-                eventoServico.gerarCSV(sortedData, arquivo);
-                Global.mostraMensagem("Portal X","Relatório CSV exportado com sucesso!");
-            }
-        } else {
+        lista.addAll(sortedData);
 
-            FileChooser fc = new FileChooser();
-            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel", "*.xlsx"));
-            File arquivo = fc.showSaveDialog(null);
-
-            if (arquivo != null) {
-                eventoServico.gerarExcel(sortedData, arquivo);
-                Global.mostraMensagem("Portal X","Relatório Excel exportado com sucesso!");
-            }
-        }
+        ExportarServico exportarServico = new ExportarServico();
+        exportarServico.escolheTipo(lista, campoTipoRelatorio.getValue().toString());
     }
 
 

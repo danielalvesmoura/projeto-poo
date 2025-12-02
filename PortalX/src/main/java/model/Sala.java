@@ -1,5 +1,7 @@
 package model;
 
+import org.apache.commons.math3.analysis.function.Exp;
+
 import javax.persistence.*;
 
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "sala")
-public class Sala {
+public class Sala implements Exportavel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,30 @@ public class Sala {
         this.capacidade = capacidade;
         this.localizacao = localizacao;
     }
+
+
+    @Override
+    public String getCabecalho() {
+        return "ID, NOTA, NOME, CAPACIDADE, LOCALIZAÇÃO";
+    }
+
+    @Override
+    public String getCorpo() {
+        return id + ", " + nota + ", " + nome + ", " +capacidade + ", " +localizacao;
+    }
+
+    @Override
+    public String[] getCorpoVetor() {
+        String[] corpo = {Long.toString(id),nome,Integer.toString(capacidade),localizacao};
+        return corpo;
+    }
+
+    @Override
+    public String[] getCabecalhoVetor() {
+        String[] cabecalho = {"ID", "Nome", "Nota", "Capacidade", "Localização"};
+        return cabecalho;
+    }
+
 
     public List<Sessao> getSessoes() {
         return sessoes;

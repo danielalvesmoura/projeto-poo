@@ -1,27 +1,19 @@
 package main.controller.janelaEvento.novo;
 
-import dao.SessaoDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.ArvoreSessoesTeste;
-import model.Evento;
+import model.ArvoreSessoes;
 import model.Sala;
 import model.Sessao;
-import servico.SalaServico;
 import servico.SessaoServico;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -74,7 +66,7 @@ public class ModalCronogramaSala {
 
         //List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
-        ArvoreSessoesTeste sessoes = sessaoServico.carregaArvoreSala(salaAberta);
+        ArvoreSessoes sessoes = sessaoServico.carregaArvoreSala(salaAberta);
 
         sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
 

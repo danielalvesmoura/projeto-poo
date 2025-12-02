@@ -16,11 +16,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.controller.menuPrincipal.novo.MenuPrincipalController;
 import model.Evento;
+import model.Exportavel;
 import model.Inscricao;
+import servico.ExportarServico;
 import servico.InscricaoServico;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JanelaTodasInscricoesController {
@@ -97,6 +100,8 @@ public class JanelaTodasInscricoesController {
     public DatePicker campoDataInscricaoMinima;
     @FXML
     public DatePicker campoDataInscricaoMaxima;
+    @FXML
+    public ChoiceBox campoTipoRelatorio;
 
     @FXML
     public TableColumn<Inscricao,String> colId;
@@ -110,6 +115,18 @@ public class JanelaTodasInscricoesController {
     public TableColumn<Inscricao,Void> col9;
     public TableColumn<Inscricao, Void> col10;
 
+    SortedList<Inscricao> sortedData;
+
+    @FXML
+    public void exportarTabela() {
+        List<Exportavel> lista = new ArrayList<>();
+
+        lista.addAll(sortedData);
+
+        ExportarServico exportarServico = new ExportarServico();
+        exportarServico.escolheTipo(lista, campoTipoRelatorio.getValue().toString());
+    }
+
 
     ObservableList<Inscricao> observableList = FXCollections.observableArrayList();
 
@@ -118,6 +135,9 @@ public class JanelaTodasInscricoesController {
 
     @FXML
     public void initialize() {
+        campoTipoRelatorio.getItems().addAll("CSV","Excel");
+        campoTipoRelatorio.setValue("Excel");
+
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
         col3.setCellValueFactory(new PropertyValueFactory<>("Email"));
@@ -382,7 +402,7 @@ public class JanelaTodasInscricoesController {
         col8.setStyle("-fx-alignment: CENTER;");
 
         // Lista ordenável
-        SortedList<Inscricao> sortedData = new SortedList<>(filteredList);
+        sortedData = new SortedList<>(filteredList);
 
         // Liga a ordenação da tabela com a lista ordenada
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());

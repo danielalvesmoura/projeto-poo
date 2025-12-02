@@ -10,7 +10,7 @@ import model.Enum.TipoIngresso;
 
 @Entity
 @Table(name = "inscricao")
-public class Inscricao {
+public class Inscricao implements Exportavel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,27 @@ public class Inscricao {
         this.dataCriacao = LocalDate.now();
     }
 
+    @Override
+    public String getCabecalho() {
+        return "ID, NOME, EMAIL, TELEFONE, DATA DE NASCIMENTO, TIPO DE INGRESSO, STATUS";
+    }
 
+    @Override
+    public String getCorpo() {
+        return id + ", " + pessoa.getNome() + ", " + pessoa.getEmail() + ", " +pessoa.getTelefone() + ", " +pessoa.getDataNascimento() + ", " +tipoIngresso + ", " +status;
+    }
+
+    @Override
+    public String[] getCorpoVetor() {
+        String[] corpo = {Long.toString(id),pessoa.getNome(),pessoa.getEmail(),pessoa.getTelefone(),pessoa.getDataNascimento().toString(),tipoIngresso.toString(),status.toString()};
+        return corpo;
+    }
+
+    @Override
+    public String[] getCabecalhoVetor() {
+        String[] cabecalho = {"ID", "Nome", "Email", "Telefone", "Data de Nascimento", "Tipo de Ingresso", "Status"};
+        return cabecalho;
+    }
 
     public long getEventoId() {
         return evento.getId();

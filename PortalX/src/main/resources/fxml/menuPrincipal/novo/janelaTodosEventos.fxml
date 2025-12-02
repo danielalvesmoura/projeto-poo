@@ -24,7 +24,7 @@
                      </font></Label>
                   <Region minWidth="0.0" HBox.hgrow="ALWAYS" />
                   <ChoiceBox fx:id="campoTipoRelatorio" prefHeight="30.0" prefWidth="122.0" />
-                  <Button mnemonicParsing="false" onAction="#exportarTabela" styleClass="botaoPadrao" text="Exportar tabela">
+                  <Button fx:id="aaa" mnemonicParsing="false" onAction="#exportarTabela" styleClass="botaoPadrao" text="Exportar tabela">
                      <font>
                         <Font size="15.0" />
                      </font>

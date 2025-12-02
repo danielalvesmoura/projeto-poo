@@ -1,12 +1,11 @@
 package model;
 
 import javafx.collections.ObservableList;
-import main.controller.Global;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ArvoreSessoesTeste {
+public class ArvoreSessoes {
     No sessaoRaiz;
 
     public No getSessaoRaiz() {
