@@ -13,7 +13,6 @@ import java.util.Locale;
 public class Debugg {
     public static void main(String[] args) {
         EventoServico eventoServico = new EventoServico();
-        FeedbackServico feedbackServico = new FeedbackServico();
         PessoaServico pessoaServico = new PessoaServico();
 
         /*
