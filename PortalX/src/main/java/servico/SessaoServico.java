@@ -21,6 +21,8 @@ public class SessaoServico {
 
     public ArvoreSessoes carregaArvoreEvento(Evento eventoAberto) {
         List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
+        arvore = new ArvoreSessoes();
+
         for(Sessao s : sessoes) {
             if(s.getEvento().getId() == eventoAberto.getId()) {
                 arvore.add(s);
@@ -31,14 +33,18 @@ public class SessaoServico {
 
     public ArvoreSessoes carregaArvoreSala(Sala salaAberta) {
         List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
+        arvore = new ArvoreSessoes();
+
         for(Sessao s : sessoes) {
             try {
+
                 if(s.getSala().getId() == salaAberta.getId()) {
                     arvore.add(s);
                 }
             } catch (IllegalArgumentException e) {
             }
         }
+
         return this.arvore;
     }
 
@@ -120,6 +126,8 @@ public class SessaoServico {
     }
 
     public boolean temSobreposicaoSalaInserir(Sala salaSelecionada, Sessao sessaoNova) {
+
+
         return temSobreposicao(carregaArvoreSala(salaSelecionada), null, sessaoNova);
     }
 
