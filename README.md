@@ -12,6 +12,7 @@ Para iniciar o app, abra o projeto como Maven em uma IDE, de preferência Intell
 javafx:run
 ```
 
+No Intellij, vá para "Edit Configurations...", depois adicione uma configuração Maven, depois cole o comando no campo "Command Line" na aba "Run". Aplique e execute.
 
 ## Gerador de Dados
 
