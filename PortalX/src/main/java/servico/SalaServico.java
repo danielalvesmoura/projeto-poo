@@ -41,7 +41,7 @@ public class SalaServico {
         try (PrintWriter writer = new PrintWriter(destino)) {
 
             // Cabeçalho
-            writer.println("Nota;Nome;Tipo;Capacidade;Localização");
+            writer.println("Nome;Tipo;Capacidade;Localização");
 
             // Linhas
             for (Sala sala : lista) {
@@ -63,8 +63,7 @@ public class SalaServico {
 
         // Cabeçalho
         Row header = sheet.createRow(0);
-        String[] colunas = {
-                "Nota", "Nome", "Capacidade", "Localização"
+        String[] colunas = {"Nome", "Capacidade", "Localização"
         };
 
         for (int i = 0; i < colunas.length; i++) {

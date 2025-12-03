@@ -78,7 +78,7 @@ public class SecaoCadastraSessaoController {
             campoStatus.setValue(sessaoAberta.getStatus());
 
             salaSelecionada = sessaoAberta.getSala();
-            botaoSala.setText(sessaoAberta.getSalaNome());
+            botaoSala.setText("ID: " + sessaoAberta.getId() + " - " + sessaoAberta.getSalaNome());
         } else {
             campoDataInicio.setValue(eventoAberto.getDataInicio());
             campoDataFim.setValue(eventoAberto.getDataFim());

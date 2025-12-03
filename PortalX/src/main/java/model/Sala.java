@@ -37,7 +37,7 @@ public class Sala implements Exportavel {
 
     @Override
     public String getCabecalho() {
-        return "ID, NOTA, NOME, CAPACIDADE, LOCALIZAÇÃO";
+        return "ID, NOME, CAPACIDADE, LOCALIZAÇÃO";
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Sala implements Exportavel {
 
     @Override
     public String[] getCabecalhoVetor() {
-        String[] cabecalho = {"ID", "Nome", "Nota", "Capacidade", "Localização"};
+        String[] cabecalho = {"ID", "Nome", "Capacidade", "Localização"};
         return cabecalho;
     }
 

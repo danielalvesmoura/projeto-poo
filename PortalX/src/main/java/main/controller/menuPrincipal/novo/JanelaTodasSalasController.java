@@ -68,10 +68,6 @@ public class JanelaTodasSalasController {
     public TextField campoCapacidadeMinima;
     @FXML
     public TextField campoCapacidadeMaxima;
-    @FXML
-    public TextField campoNotaMinima;
-    @FXML
-    public TextField campoNotaMaxima;
 
 
     @FXML
@@ -165,17 +161,11 @@ public class JanelaTodasSalasController {
                 String capacidadeMinimaFiltro = campoCapacidadeMinima.getText().toLowerCase();
                 String capacidadeMaximaFiltro = campoCapacidadeMaxima.getText().toLowerCase();
 
-                // Horas (strings vindas dos TextFields)
-                String notaMinimaFiltro = campoNotaMinima.getText().toLowerCase();
-                String notaMaximaFiltro = campoNotaMaxima.getText().toLowerCase();
-
                 // Se tudo estiver vazio → mostra tudo
                 if (nomeFiltro.isEmpty() &&
                         localizacaoFiltro.isEmpty() &&
                         capacidadeMinimaFiltro.isEmpty() &&
-                        capacidadeMaximaFiltro.isEmpty() &&
-                        notaMinimaFiltro.isEmpty() &&
-                        notaMaximaFiltro.isEmpty()
+                        capacidadeMaximaFiltro.isEmpty()
                 ) {
                     return true;
                 }

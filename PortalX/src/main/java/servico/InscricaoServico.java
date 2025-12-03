@@ -2,9 +2,11 @@ package servico;
 
 import dao.InscricaoDAO;
 import dao.PessoaDAO;
+import dao.SalaDAO;
 import model.*;
 import model.Enum.StatusInscricao;
 import model.Enum.TipoIngresso;
+import util.Global;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,20 +40,50 @@ public class InscricaoServico {
             tipoIngressoEnum = TipoIngresso.PALESTRANTE;
         }
 
-        for(Pessoa pessoa : pessoasSelecionadas) {
-            /*
-            if(pessoa instanceof Palestrante) {
-                tipoIngresso = TipoIngresso.PALESTRANTE;
-            } else {
-                tipoIngresso = TipoIngresso.PARTICIPANTE;
-            }
 
-             */
+        int vagasDisponiveis = vagasDisponiveis(evento);
+
+        System.out.println("Vagas disponiveis antes do inscrição: " + vagasDisponiveis);
+
+        for(Pessoa pessoa : pessoasSelecionadas) {
+
+            if(vagasDisponiveis == 0) {
+                Global.mostraErro("Salas cheias. Inscreva mais salas.");
+                return;
+            }
 
             Pessoa pessoaPesquisada = pessoaDAO.find(Pessoa.class,pessoa.getId());
 
             inscricaoDAO.inserir(new Inscricao(pessoaPesquisada, evento, StatusInscricao.PENDENTE, tipoIngressoEnum));
+
+            vagasDisponiveis--;
         }
 
+        System.out.println("Vagas disponiveis depois da inscrição: " + vagasDisponiveis);
+
     }
+
+    public int vagasDisponiveis(Evento evento) {
+        List<Sessao> sessoes = evento.getSessoes();
+        int vagasTotais = 0;
+        for(Sessao s : sessoes) {
+            vagasTotais += s.getSala().getCapacidade();
+            System.out.println("Sala encontrada: " + s.getSala().getNome());
+        }
+
+        System.out.println("\nvagas totais: " + vagasTotais);
+
+        int vagasPreenchidas = 0;
+        List<Inscricao> inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
+        for(Inscricao i : inscricoes) {
+            if(i.getEventoId() == evento.getId()) {
+                vagasPreenchidas++;
+            }
+        }
+
+        System.out.println("vagas preenchidas: " + vagasPreenchidas);
+
+        return vagasTotais - vagasPreenchidas;
+    }
+
 }
