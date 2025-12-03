@@ -1,6 +1,7 @@
 package main.controller.janelaEvento.novo;
 
 import dao.SalaDAO;
+import dao.SessaoDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,21 +16,28 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Evento;
+import model.Inscricao;
+import model.Sessao;
+import servico.InscricaoServico;
 import util.Global;
 import model.Sala;
 import servico.SalaServico;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModalSalasController {
 
     public Stage stage;
     public SecaoCadastraSessaoController secaoCadastraSessaoController;
+    public Evento eventoAberto;
 
-    public ModalSalasController(Stage stage) {
+    public ModalSalasController(Stage stage, Evento eventoAberto) {
         this.stage = stage;
+        this.eventoAberto = eventoAberto;
     }
 
     @FXML
@@ -236,12 +244,23 @@ public class ModalSalasController {
                 botaoSelecionar.setOnAction(event -> {
                     Sala salaAberta = getTableView().getItems().get(getIndex());
 
-                    secaoCadastraSessaoController.salaSelecionada = salaAberta;
-                    secaoCadastraSessaoController.botaoSala.setText(salaAberta.getNome());
+                    InscricaoServico inscricaoServico = new InscricaoServico();
+                    int vagasTotais = inscricaoServico.vagasTotais(eventoAberto);
 
-                    System.out.println("Sala selecionada: " + salaAberta.getId());
+                    int vagasDoEvento = Integer.parseInt(eventoAberto.getCapacidade());
 
-                    fechar();
+                    if(salaAberta.getCapacidade() + vagasTotais > vagasDoEvento) {
+                        Global.mostraErro("A capacidade desta sala ultrapassa o limite de vagas do evento.\nCapacidade do evento: "
+                        + vagasDoEvento + "\nVagas das salas já cadastradas: " + vagasTotais + "\nVagas da sala: " + salaAberta.getCapacidade());
+                    } else {
+                        secaoCadastraSessaoController.salaSelecionada = salaAberta;
+                        secaoCadastraSessaoController.botaoSala.setText(salaAberta.getNome());
+
+                        System.out.println("Sala selecionada: " + salaAberta.getId());
+
+                        fechar();
+                    }
+
                 });
             }
 

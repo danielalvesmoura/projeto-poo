@@ -97,7 +97,7 @@ public class SecaoCadastraSessaoController {
     public void trocarSala() throws IOException {
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml"));
 
-        ModalSalasController modalSalasController = new ModalSalasController(stage);
+        ModalSalasController modalSalasController = new ModalSalasController(stage,eventoAberto);
         modalSalasController.secaoCadastraSessaoController = secaoCadastraSessaoController;
 
         appLoader.setController(modalSalasController);
@@ -112,7 +112,7 @@ public class SecaoCadastraSessaoController {
         modal.initModality(Modality.WINDOW_MODAL);
 
         // Define que a janela principal é a "dona" do modal
-        modal.initOwner(stage);
+
 
         modal.setResizable(true);
 
