@@ -78,6 +78,9 @@ public class JanelaInscreverController {
     public DatePicker campoDataNascimentoMaximo;
 
     @FXML
+    public Label labelVagasDisponiveis;
+
+    @FXML
     public TableColumn<Pessoa,String> colId;
     public TableColumn<Pessoa,String> col2;
     public TableColumn<Pessoa,String> col3;
@@ -269,6 +272,8 @@ public class JanelaInscreverController {
         tableView.setItems(sortedData);
 
 
+        labelVagasDisponiveis.setText(inscricaoServico.vagasDisponiveis(eventoAberto) + " / " +
+                inscricaoServico.vagasTotais(eventoAberto) + " vagas disponíveis");
     }
 
 

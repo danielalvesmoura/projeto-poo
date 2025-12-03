@@ -12,10 +12,20 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#fechar" styleClass="botaoFechar" text="X">
-               <font>
-                  <Font size="15.0" />
-               </font></Button>
+            <HBox>
+               <children>
+                   <Label fx:id="labelVagasDisponiveis" text="0/100 vagas disponíveis">
+                       <font>
+                           <Font size="32.0" />
+                       </font></Label>
+                   <Region HBox.hgrow="ALWAYS" />
+                  <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#fechar" styleClass="botaoFechar" text="X">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" minWidth="0.0">
                <children>
                   <Label minWidth="0.0" text="Inscrever" HBox.hgrow="ALWAYS">

@@ -64,6 +64,19 @@ public class InscricaoServico {
     }
 
     public int vagasDisponiveis(Evento evento) {
+        int vagasTotais = vagasTotais(evento);
+        System.out.println("\nvagas totais: " + vagasTotais);
+
+        int vagasPreenchidas = vagasPreenchidas(evento);
+        System.out.println("vagas preenchidas: " + vagasPreenchidas);
+
+        return vagasTotais - vagasPreenchidas;
+    }
+
+    public int vagasTotais(Evento evento) {
+
+        System.out.println("ID do evento: " + evento.getId());
+
         List<Sessao> sessoes = evento.getSessoes();
         int vagasTotais = 0;
         for(Sessao s : sessoes) {
@@ -71,8 +84,10 @@ public class InscricaoServico {
             System.out.println("Sala encontrada: " + s.getSala().getNome());
         }
 
-        System.out.println("\nvagas totais: " + vagasTotais);
+        return vagasTotais;
+    }
 
+    public int vagasPreenchidas(Evento evento) {
         int vagasPreenchidas = 0;
         List<Inscricao> inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
         for(Inscricao i : inscricoes) {
@@ -81,9 +96,7 @@ public class InscricaoServico {
             }
         }
 
-        System.out.println("vagas preenchidas: " + vagasPreenchidas);
-
-        return vagasTotais - vagasPreenchidas;
+        return vagasPreenchidas;
     }
 
 }

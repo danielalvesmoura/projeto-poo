@@ -104,6 +104,9 @@ public class JanelaTodasInscricoesController {
     public ChoiceBox campoTipoRelatorio;
 
     @FXML
+    public Label labelVagasDisponiveis;
+
+    @FXML
     public TableColumn<Inscricao,String> colId;
     public TableColumn<Inscricao,String> col2;
     public TableColumn<Inscricao,String> col3;
@@ -410,6 +413,7 @@ public class JanelaTodasInscricoesController {
         // Adiciona os dados filtrados e ordenados à tabela
         tableView.setItems(sortedData);
 
-
+        labelVagasDisponiveis.setText(inscricaoServico.vagasDisponiveis(eventoAberto) + " / " +
+                inscricaoServico.vagasTotais(eventoAberto) + " vagas disponíveis");
     }
 }

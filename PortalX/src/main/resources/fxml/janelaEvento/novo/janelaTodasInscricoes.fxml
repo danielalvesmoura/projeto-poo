@@ -5,17 +5,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="865.0" prefWidth="800.0" styleClass="borderPane" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="865.0" prefWidth="994.0" styleClass="borderPane" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="876.0" prefWidth="800.0" spacing="20.0" styleClass="vBox" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="876.0" prefWidth="800.0" spacing="10.0" styleClass="vBox" BorderPane.alignment="CENTER">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#fechar" styleClass="botaoFechar" text="X">
-               <font>
-                  <Font size="15.0" />
-               </font></Button>
+            <HBox>
+               <children>
+                  <Label fx:id="labelVagasDisponiveis" text="0/100 vagas disponíveis">
+                     <font>
+                        <Font size="32.0" />
+                     </font></Label>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#fechar" styleClass="botaoFechar" text="X">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" minWidth="0.0">
                <children>
                   <Label minWidth="0.0" text="Todos as inscrições" HBox.hgrow="ALWAYS">
