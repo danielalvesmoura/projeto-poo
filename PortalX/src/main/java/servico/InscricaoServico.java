@@ -54,9 +54,13 @@ public class InscricaoServico {
 
             Pessoa pessoaPesquisada = pessoaDAO.find(Pessoa.class,pessoa.getId());
 
-            inscricaoDAO.inserir(new Inscricao(pessoaPesquisada, evento, StatusInscricao.PENDENTE, tipoIngressoEnum));
+            Inscricao inscricao = new Inscricao(pessoaPesquisada, evento, StatusInscricao.PENDENTE, tipoIngressoEnum);
+
+            inscricaoDAO.inserir(inscricao);
 
             vagasDisponiveis--;
+
+            evento.getInscricoes().adicionar(inscricao.getId());
         }
 
         System.out.println("Vagas disponiveis depois da inscrição: " + vagasDisponiveis);

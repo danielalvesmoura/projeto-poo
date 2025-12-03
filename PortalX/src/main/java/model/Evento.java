@@ -1,6 +1,7 @@
 package model;
 
 import servico.EventoServico;
+import servico.InscricaoServico;
 
 import javax.persistence.*;
 
@@ -19,6 +20,9 @@ public class Evento implements Exportavel {
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Sessao> sessoes;
+
+    @Transient
+    private ListaEncadeadaInscricoes inscricoes = new ListaEncadeadaInscricoes();
 
     @Column(length = 100)
     private LocalDate dataFim;
@@ -61,6 +65,14 @@ public class Evento implements Exportavel {
     public String[] getCabecalhoVetor() {
         String[] cabecalho = {"ID", "Nome", "Descrição", "Endereço", "Data Início", "Hora Início", "Data Fim", "Hora Fim", "Capacidade"};
         return cabecalho;
+    }
+
+    public ListaEncadeadaInscricoes getInscricoes() {
+        return inscricoes;
+    }
+
+    public void setInscricoes(ListaEncadeadaInscricoes inscricoes) {
+        this.inscricoes = inscricoes;
     }
 
     public void setSessoes(List<Sessao> sessoes) {
@@ -139,5 +151,9 @@ public class Evento implements Exportavel {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getCapacidadeView() {
+        return inscricoes.getTamanho() + " / " + capacidade;
     }
 }

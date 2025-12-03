@@ -15,13 +15,15 @@ public class Teste {
 
         GeraEventos.geraEventos(100);
 
-        //GeraPessoas.geraPessoas(500);
+        GeraPessoas.geraPessoas(1000);
 
-        //GeraInscricoes.geraInscricoes(1000);
+        GeraSalas.geraSalas(1000);
 
-        //GeraSalas.geraSalas(1000);
+        GeraSessoes.geraSessoes(1000);
 
-        GeraSessoes.geraSessoes(500);
+        GeraInscricoes.geraInscricoes(1000);
+
+
 
     }
 }

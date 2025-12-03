@@ -93,7 +93,7 @@ public class JanelaTodosEventosController {
     @FXML
     public TableColumn<Evento,String> colId;
     public TableColumn<Evento,String> col2;
-    public TableColumn<Evento,Integer> col3;
+    public TableColumn<Evento,String> col3;
     public TableColumn<Evento,String> col4;
     public TableColumn<Evento, LocalDate> col5;
     public TableColumn<Evento,LocalTime> col6;
@@ -272,13 +272,16 @@ public class JanelaTodosEventosController {
 
         List<Evento> eventos = eventoDAO.buscarTodos(Evento.class);
 
+        // CARREGA LISTAS DE INSCRICOES DOS EVENTOS
         for (Evento e : eventos) {
+            eventoServico.carregaListaInscricoes(e);
+
             observableList.add(e);
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("CapacidadeView"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
         col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));
