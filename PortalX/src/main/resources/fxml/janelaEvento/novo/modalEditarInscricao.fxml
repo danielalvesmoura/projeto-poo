@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="516.0" styleClass="borderPane" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="conteudo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="516.0" styleClass="borderPane" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.janelaEvento.novo.ModalInscricaoController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
          <children>

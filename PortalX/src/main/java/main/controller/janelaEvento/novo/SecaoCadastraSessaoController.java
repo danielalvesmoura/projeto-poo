@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import util.Global;
 import model.Enum.StatusSessao;
 import model.Enum.TipoSessao;
@@ -21,22 +23,46 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class SecaoCadastraSessaoController {
+public class SecaoCadastraSessaoController extends GlobalController<Sessao, Evento, Object> {
 
-    public Stage stage;
-    public Evento eventoAberto;
-    public Sessao sessaoAberta;
-    public SecaoCadastraSessaoController secaoCadastraSessaoController;
+    @Override
+    protected void colocarT(Evento evento, Object controller) {
+        if(controller instanceof ModalSalasController c) {
+            c.eventoAberto = evento;
+            c.posCarregamento();
+            modalController = c;
+        }
+        if(controller instanceof SecaoSessoesController c) {
+            c.eventoAberto = evento;
+            c.posCarregamento();
+            c.setConteudo(super.conteudo);
+            c.setBorderpaneMenor(super.borderpaneMenor);
+        }
+    }
+    @Override
+    protected void colocarA(Sessao objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {};
 
-    public SecaoCadastraSessaoController(Stage stage, Evento eventoAberto, Sessao sessaoAberta) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
-        this.sessaoAberta = sessaoAberta;
+    @Override
+    public void setConteudo(BorderPane conteudo) {
+        super.setConteudo(conteudo);
+    }
+    @Override
+    public void setBorderpaneMenor(BorderPane borderpaneMenor) {
+        super.setBorderpaneMenor(borderpaneMenor);
     }
 
-    public SecaoCadastraSessaoController(Stage stage, Evento eventoAberto) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
+    @FXML
+    public Button botaoSala;
+
+    public Sala salaSelecionada;
+    ModalSalasController modalController;
+    @FXML
+    public void trocarSala() throws Exception {
+        modal("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml",eventoAberto);
+        salaSelecionada = modalController.retornaSalaSelecionada();
+        botaoSala.setText(salaSelecionada.getNome());
     }
 
 
@@ -59,8 +85,10 @@ public class SecaoCadastraSessaoController {
     @FXML
     public ChoiceBox campoStatus;
 
-    @FXML
-    public void initialize() {
+    public Evento eventoAberto;
+    public Sessao sessaoAberta;
+
+    public void posCarregamento() {
         campoTipo.getItems().addAll("Palestra","Painel", "Treinamento");
         campoTipo.setValue("Treinamento");
 
@@ -85,45 +113,15 @@ public class SecaoCadastraSessaoController {
             campoHoraInicio.setText(eventoAberto.getHoraInicio().toString());
             campoHoraFim.setText(eventoAberto.getHoraFim().toString());
         }
-
     }
 
-    @FXML
-    public Button botaoSala;
-
-    public Sala salaSelecionada;
-
-    @FXML
-    public void trocarSala() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml"));
-
-        ModalSalasController modalSalasController = new ModalSalasController(stage,eventoAberto);
-        modalSalasController.secaoCadastraSessaoController = secaoCadastraSessaoController;
-
-        appLoader.setController(modalSalasController);
-
-        Parent app = appLoader.load();
-
-        Stage modal = new Stage();
-        modal.setTitle("Seleção de sala");
-        modal.setScene(new Scene(app));
-
-        // Modal bloqueia interação com a janela principal
-        modal.initModality(Modality.WINDOW_MODAL);
-
-        // Define que a janela principal é a "dona" do modal
 
 
-        modal.setResizable(true);
-
-        // Abre o modal e bloqueia até fechar
-        modal.showAndWait();
-    }
 
     SessaoServico sessaoServico = new SessaoServico();
 
     @FXML
-    public void salvar() throws IOException {
+    public void salvar() throws Exception {
         TipoSessao tipoSessao;
         if(campoTipo.getValue() == "Palestra") {
             tipoSessao = TipoSessao.PALESTRA;
@@ -186,17 +184,19 @@ public class SecaoCadastraSessaoController {
         } else {
 
             if(sessaoAberta == null) {
-                System.out.println("sessao nula. Cadastrar nova com sala " + salaSelecionada.getNome());
+                System.out.println("\nsessao nula. Cadastrar nova com sala " + salaSelecionada.getNome());
                 sessaoServico.cadastrar(salaSelecionada,eventoAberto, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), horaInicio, campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()));
             } else {
-                System.out.println("sessao aberta. Alterar com sala" + salaSelecionada.getNome());
+                System.out.println("\nsessao aberta. Alterar com sala" + salaSelecionada.getNome());
                 sessaoServico.alterar(salaSelecionada,eventoAberto, sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
             }
-            janelaEditarEventoController.abreAbaSessoes();
+
+            trocaBorderPane("/fxml/janelaEvento/novo/secaoSessoes.fxml", eventoAberto, null);
         }
 
     }
 
     JanelaEditarEventoController janelaEditarEventoController;
+
 
 }

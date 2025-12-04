@@ -7,7 +7,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import util.Global;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Evento;
@@ -17,14 +19,39 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class SecaoDetalhesController {
+public class SecaoDetalhesController extends GlobalController {
 
-    public Stage stage;
+    @Override
+    protected void colocarT(Object objeto, Object controller) {}
+    @Override
+    protected void colocarA(Object objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {};
+
+
+    @Override
+    public void setConteudo(BorderPane conteudo) {
+        super.setConteudo(conteudo);
+    }
+    @Override
+    public void setBorderpaneMenor(BorderPane borderpaneMenor) {
+        super.setBorderpaneMenor(borderpaneMenor);
+    }
+
     public Evento eventoAberto;
 
-    public SecaoDetalhesController(Stage stage, Evento eventoAberto) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
+    public void posCarregamento() {
+
+        if(eventoAberto != null) {
+            campoNome.setText(eventoAberto.getNome());
+            campoDescricao.setText(eventoAberto.getDescricao());
+            campoDataInicio.setValue(eventoAberto.getDataInicio());
+            campoHoraInicio.setText(eventoAberto.getHoraInicio().toString());
+            campoDataFim.setValue(eventoAberto.getDataFim());
+            campoHoraFim.setText(eventoAberto.getHoraFim().toString());
+            campoEndereco.setText(eventoAberto.getEndereco());
+            campoCapacidade.setText(eventoAberto.getCapacidade());
+        }
     }
 
     EventoServico eventoServico = new EventoServico();
@@ -45,21 +72,6 @@ public class SecaoDetalhesController {
     public TextField campoEndereco;
     @FXML
     public TextField campoCapacidade;
-
-    @FXML
-    public void initialize() {
-        if(eventoAberto != null) {
-            campoNome.setText(eventoAberto.getNome());
-            campoDescricao.setText(eventoAberto.getDescricao());
-            campoDataInicio.setValue(eventoAberto.getDataInicio());
-            campoHoraInicio.setText(eventoAberto.getHoraInicio().toString());
-            campoDataFim.setValue(eventoAberto.getDataFim());
-            campoHoraFim.setText(eventoAberto.getHoraFim().toString());
-            campoEndereco.setText(eventoAberto.getEndereco());
-            campoCapacidade.setText(eventoAberto.getCapacidade());
-        }
-
-    }
 
 
     @FXML
@@ -131,19 +143,7 @@ public class SecaoDetalhesController {
             eventoServico.cadastrar(campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(), campoHoraInicio.getText(),campoDataFim.getValue(), campoHoraFim.getText(), Integer.parseInt(campoCapacidade.getText()));
 
             try {
-                FXMLLoader janelaTodosEventosLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml"));
-
-                JanelaTodosEventosController janelaTodosEventosController = new JanelaTodosEventosController(stage);
-                janelaTodosEventosLoader.setController(janelaTodosEventosController);
-
-                Parent janela = janelaTodosEventosLoader.load();
-
-                Scene cenaTodosEventos = new Scene(janela);
-
-                stage.setScene(cenaTodosEventos);
-                stage.setFullScreen(true);
-
-
+                trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -152,5 +152,6 @@ public class SecaoDetalhesController {
             eventoServico.alterar(eventoAberto,campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), Integer.parseInt(campoCapacidade.getText()));
         }
     }
+
 
 }

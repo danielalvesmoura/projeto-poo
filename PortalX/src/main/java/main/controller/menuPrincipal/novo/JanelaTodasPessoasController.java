@@ -1,85 +1,43 @@
 package main.controller.menuPrincipal.novo;
 
-import dao.EventoDAO;
 import dao.PessoaDAO;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import main.controller.janelaEvento.novo.JanelaEditarEventoController;
-import model.Evento;
+import javafx.scene.layout.BorderPane;
+import main.controller.GlobalController;
 import model.Pessoa;
-import servico.EventoServico;
 import servico.PessoaServico;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
 
-public class JanelaTodasPessoasController {
+public class JanelaTodasPessoasController extends GlobalController<Pessoa, Pessoa, CadastroPessoaController> {
 
-    public Stage stage;
-    JanelaTodasPessoasController janelaTodasPessoasController;
-
-    public JanelaTodasPessoasController(Stage stage) {
-        this.stage = stage;;
+    @Override
+    protected void colocarT(Pessoa pessoa, Object controller) {
+        if(controller instanceof CadastroPessoaController c) {
+            c.pessoaAberta = pessoa;
+        }
     }
+    @Override
+    protected void colocarA(Pessoa pessoa, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {};
 
     @FXML
-    public void fechar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
-
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
-        appLoader.setController(menuPrincipalController);
-
-        menuPrincipalController.stage = stage;
-
-        Parent app = appLoader.load();
-
-        Scene menuPrincipal = new Scene(app);
-
-        stage.setScene(menuPrincipal);
-        stage.setFullScreen(true);
-
-
+    public void fechar() throws Exception {
+        trocaTela("/fxml/menuPrincipal/novo/menuPrincipal.fxml");
     }
 
 
     @FXML
-    public void adicionar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml"));
-
-        CadastroPessoaController cadastroPessoaController = new CadastroPessoaController(stage,janelaTodasPessoasController);
-        appLoader.setController(cadastroPessoaController);
-
-        Parent app = appLoader.load();
-
-        Stage modal = new Stage();
-        modal.setTitle("Cadastrar nova pessoa");
-        modal.setScene(new Scene(app));
-
-        // Modal bloqueia interação com a janela principal
-        modal.initModality(Modality.WINDOW_MODAL);
-
-        // Define que a janela principal é a "dona" do modal
-        modal.initOwner(stage);
-
-        modal.setResizable(true);
-
-        // Abre o modal e bloqueia até fechar
-        modal.showAndWait();
-
+    public void adicionar() throws Exception {
+        modal("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml");
     }
 
     @FXML
@@ -170,49 +128,29 @@ public class JanelaTodasPessoasController {
         col7.setStyle("-fx-alignment: CENTER;");
         col8.setStyle("-fx-alignment: CENTER;");
 
-        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
-            filteredList.setPredicate(pessoa -> {
+        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {filteredList.setPredicate(pessoa -> {
 
-                // Strings
-                String nomeFiltro       = campoNome.getText().toLowerCase();
-                String emailFiltro   = campoEmail.getText().toLowerCase();
+                String nomeFiltro = campoNome.getText().toLowerCase();
+                String emailFiltro = campoEmail.getText().toLowerCase();
                 String telefoneFiltro = campoTelefone.getText().toLowerCase();
-
-                // Datas (LocalDate)
                 LocalDate dataIniFiltro = campoDataNascimentoMinimo.getValue();
                 LocalDate dataFimFiltro = campoDataNascimentoMaximo.getValue();
 
-                // Se tudo estiver vazio → mostra tudo
-                if (nomeFiltro.isEmpty() &&
-                        emailFiltro.isEmpty() &&
-                        telefoneFiltro.isEmpty() &&
-                        dataIniFiltro == null &&
-                        dataFimFiltro == null) {
-
+                if (nomeFiltro.isEmpty() && emailFiltro.isEmpty() && telefoneFiltro.isEmpty() && dataIniFiltro == null && dataFimFiltro == null) {
                     return true;
                 }
-
                 boolean match = true;
 
-                // -------------------------------------------------------------
-                // 1) FILTROS DE STRING SIMPLES
-                // -------------------------------------------------------------
                 if (!nomeFiltro.isEmpty()) {match &= pessoa.getNome().toLowerCase().contains(nomeFiltro);}
                 if (!emailFiltro.isEmpty()) {match &= pessoa.getEmail().toLowerCase().contains(emailFiltro);}
                 if (!telefoneFiltro.isEmpty()) { match &= (pessoa.getTelefone().contains(telefoneFiltro));}
 
-
-                // -------------------------------------------------------------
-                // 2) FILTROS DE DATA COM >= e <=
-                // -------------------------------------------------------------
                 LocalDate dataNascimento = pessoa.getDataNascimento();
 
-                // data início → deve ser >= campo
                 if (dataIniFiltro != null && dataNascimento != null) {
                     match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
                 }
 
-                // data fim → deve ser <= campo
                 if (dataFimFiltro != null && dataNascimento != null) {
                     match &= !dataNascimento.isAfter(dataFimFiltro);       // <=
                 }
@@ -221,12 +159,9 @@ public class JanelaTodasPessoasController {
             });
         };
 
-        // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoEmail.textProperty().addListener(filtroListener);
         campoTelefone.textProperty().addListener(filtroListener);
-
-        // Datas
         campoDataNascimentoMaximo.valueProperty().addListener(filtroListener);
         campoDataNascimentoMinimo.valueProperty().addListener(filtroListener);
     }
@@ -263,7 +198,6 @@ public class JanelaTodasPessoasController {
             }
         });
 
-
         // BOTÃO PARA ABRIR Pessoa
 
         col8.setCellFactory(col -> new TableCell<Pessoa, Void>() {
@@ -275,29 +209,7 @@ public class JanelaTodasPessoasController {
                     Pessoa pessoa = getTableView().getItems().get(getIndex());
 
                     try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml"));
-
-                        CadastroPessoaController cadastroPessoaController = new CadastroPessoaController(stage,janelaTodasPessoasController,pessoa);
-                        appLoader.setController(cadastroPessoaController);
-
-                        Parent app = appLoader.load();
-
-                        Stage modal = new Stage();
-                        modal.setTitle("Editar pessoa");
-                        modal.setScene(new Scene(app));
-
-                        // Modal bloqueia interação com a janela principal
-                        modal.initModality(Modality.WINDOW_MODAL);
-
-                        // Define que a janela principal é a "dona" do modal
-                        modal.initOwner(stage);
-
-                        modal.setResizable(true);
-
-                        // Abre o modal e bloqueia até fechar
-                        modal.showAndWait();
-
-
+                        modal("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml", pessoa);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -320,15 +232,13 @@ public class JanelaTodasPessoasController {
 
 
 
-        // Lista ordenável
         SortedList<Pessoa> sortedData = new SortedList<>(filteredList);
-
-        // Liga a ordenação da tabela com a lista ordenada
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-
-        // Adiciona os dados filtrados e ordenados à tabela
         tableView.setItems(sortedData);
 
 
     }
+
+
+
 }

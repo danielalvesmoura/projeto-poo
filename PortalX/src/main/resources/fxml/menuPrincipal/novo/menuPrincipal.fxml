@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane minWidth="0.0" prefHeight="500.0" prefWidth="800.0" stylesheets="/fxml/estilos/menuPrincipal.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="conteudo" minWidth="0.0" prefHeight="500.0" prefWidth="800.0" stylesheets="/fxml/estilos/global.css" fx:controller="main.controller.menuPrincipal.novo.MenuPrincipalController" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <HBox fx:id="hboxPrincipal" minWidth="0.0" style="-fx-background-color: black;">
          <children>

@@ -12,8 +12,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import main.controller.menuPrincipal.novo.MenuPrincipalController;
 import model.Evento;
 import model.Exportavel;
@@ -26,57 +28,25 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaTodasInscricoesController {
+public class JanelaTodasInscricoesController extends GlobalController {
 
-    public Stage stage;
-    JanelaTodasInscricoesController janelaTodasInscricoesController;
-    JanelaEditarEventoController janelaEditarEventoController;
+    @Override
+    protected void colocarT(Object objeto, Object controller) {}
+    @Override
+    protected void colocarA(Object objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {};
+
     public Evento eventoAberto;
 
-    public JanelaTodasInscricoesController(Stage stage, Evento eventoAberto) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
+    @FXML
+    public void fechar() throws Exception {
+        trocaTela("/fxml/janelaEvento/novo/janelaEditarEvento.fxml",eventoAberto);
     }
 
     @FXML
-    public void fechar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
-
-        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage,eventoAberto);
-        appLoader.setController(janelaEditarEventoController);
-        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
-
-        janelaEditarEventoController.stage = stage;
-
-        Parent app = appLoader.load();
-
-        Scene scene = new Scene(app);
-
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-    }
-
-
-    @FXML
-    public void inscrever() throws IOException {
-
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaInscreverPessoas.fxml"));
-
-        JanelaInscreverController janelaInscreverController = new JanelaInscreverController(stage,eventoAberto);
-        appLoader.setController(janelaInscreverController);
-
-        janelaInscreverController.janelaEditarEventoController = janelaEditarEventoController;
-
-        Parent app = appLoader.load();
-
-        Scene inscrever = new Scene(app);
-
-
-
-        stage.setScene(inscrever);
-        stage.setFullScreen(true);
-
-
+    public void inscrever() throws Exception {
+        trocaTela("/fxml/janelaEvento/novo/janelaInscreverPessoas.fxml", eventoAberto);
     }
 
     @FXML
@@ -163,43 +133,24 @@ public class JanelaTodasInscricoesController {
     ChangeListener<Object> filtroListener;
 
     public void defineListerners() {
-        filtroListener = (obs, oldValue, newValue) -> {
-            filteredList.setPredicate(inscricao -> {
+        filtroListener = (obs, oldValue, newValue) -> {filteredList.setPredicate(inscricao -> {
 
-                // Strings
-                String nomeFiltro       = campoNome.getText().toLowerCase();
-                String emailFiltro   = campoEmail.getText().toLowerCase();
+                String nomeFiltro = campoNome.getText().toLowerCase();
+                String emailFiltro = campoEmail.getText().toLowerCase();
                 String telefoneFiltro = campoTelefone.getText().toLowerCase();
-
-                // Datas (LocalDate)
                 LocalDate dataIniFiltro = campoDataNascimentoMinimo.getValue();
                 LocalDate dataFimFiltro = campoDataNascimentoMaximo.getValue();
-
                 String tipoFiltro = campoTipo.getValue() == null ? "" : campoTipo.getValue().toString();
                 String statusFiltro = campoStatus.getValue() == null ? "" : campoStatus.getValue().toString();
-
                 LocalDate dataInscricaoMaximaFiltro = campoDataInscricaoMaxima.getValue();
                 LocalDate dataInscricaoMinimaFiltro = campoDataInscricaoMinima.getValue();
 
-                // Se tudo estiver vazio → mostra tudo
-                if (nomeFiltro.isEmpty() &&
-                        emailFiltro.isEmpty() &&
-                        telefoneFiltro.isEmpty() &&
-                        tipoFiltro.isEmpty() &&
-                        statusFiltro.isEmpty() &&
-                        dataIniFiltro == null &&
-                        dataFimFiltro == null &&
-                        dataInscricaoMaximaFiltro == null &&
-                        dataInscricaoMinimaFiltro == null) {
-
+                if (nomeFiltro.isEmpty() && emailFiltro.isEmpty() && telefoneFiltro.isEmpty() && tipoFiltro.isEmpty() && statusFiltro.isEmpty() &&
+                        dataIniFiltro == null && dataFimFiltro == null && dataInscricaoMaximaFiltro == null && dataInscricaoMinimaFiltro == null) {
                     return true;
                 }
 
                 boolean match = true;
-
-                // -------------------------------------------------------------
-                // 1) FILTROS DE STRING SIMPLES
-                // -------------------------------------------------------------
                 if (!nomeFiltro.isEmpty()) {match &= inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);}
                 if (!emailFiltro.isEmpty()) {match &= inscricao.getPessoa().getEmail().toLowerCase().contains(emailFiltro);}
                 if (!telefoneFiltro.isEmpty()) { match &= (inscricao.getPessoa().getTelefone().contains(telefoneFiltro));}
@@ -211,14 +162,8 @@ public class JanelaTodasInscricoesController {
                 if (statusFiltro != null && !statusFiltro.isEmpty()) {
                     match &= inscricao.getStatus().equalsIgnoreCase(statusFiltro);
                 }
-
-
-                // -------------------------------------------------------------
-                // 2) FILTROS DE DATA COM >= e <=
-                // -------------------------------------------------------------
                 LocalDate dataNascimento = inscricao.getPessoa().getDataNascimento();
 
-                // data início → deve ser >= campo
                 if (dataIniFiltro != null && dataNascimento != null) {
                     match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
                 }
@@ -227,12 +172,10 @@ public class JanelaTodasInscricoesController {
                     match &= !dataNascimento.isAfter(dataFimFiltro);   // >=
                 }
 
-                // data fim → deve ser <= campo
                 if (dataInscricaoMaximaFiltro != null && inscricao.getDataCriacao() != null) {
                     match &= !inscricao.getDataCriacao().isBefore(dataInscricaoMaximaFiltro);       // <=
                 }
 
-                // data início → deve ser <= campo
                 if (dataInscricaoMinimaFiltro != null && inscricao.getDataCriacao() != null) {
                     match &= !inscricao.getDataCriacao().isAfter(dataInscricaoMinimaFiltro);       // <=
                 }
@@ -241,18 +184,13 @@ public class JanelaTodasInscricoesController {
             });
         };
 
-        // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoEmail.textProperty().addListener(filtroListener);
         campoTelefone.textProperty().addListener(filtroListener);
-
         campoTipo.valueProperty().addListener(filtroListener);
         campoStatus.valueProperty().addListener(filtroListener);
-
-        // Datas
         campoDataNascimentoMaximo.valueProperty().addListener(filtroListener);
         campoDataNascimentoMinimo.valueProperty().addListener(filtroListener);
-
         campoDataInscricaoMinima.valueProperty().addListener(filtroListener);
         campoDataInscricaoMaxima.valueProperty().addListener(filtroListener);
     }
@@ -306,36 +244,12 @@ public class JanelaTodasInscricoesController {
                 botaoAbrir.setOnAction(event -> {
                     Inscricao inscricaoAberta = getTableView().getItems().get(getIndex());
 
-
                     try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalEditarInscricao.fxml"));
-
-                        ModalInscricaoController modalInscricaoController = new ModalInscricaoController(stage,janelaTodasInscricoesController,inscricaoAberta);
-                        appLoader.setController(modalInscricaoController);
-
-                        Parent app = appLoader.load();
-
-                        Stage modal = new Stage();
-                        modal.setTitle("Editar inscrição");
-                        modal.setScene(new Scene(app));
-
-                        // Modal bloqueia interação com a janela principal
-                        modal.initModality(Modality.WINDOW_MODAL);
-
-                        // Define que a janela principal é a "dona" do modal
-                        modal.initOwner(stage);
-
-                        modal.setResizable(true);
-
-                        // Abre o modal e bloqueia até fechar
-                        modal.showAndWait();
-
+                        modal("/fxml/janelaEvento/novo/modalEditarInscricao.fxml",inscricaoAberta);
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
 
                 });
             }
@@ -416,4 +330,6 @@ public class JanelaTodasInscricoesController {
         labelVagasDisponiveis.setText(inscricaoServico.vagasDisponiveis(eventoAberto) + " / " +
                 inscricaoServico.vagasTotais(eventoAberto) + " vagas disponíveis");
     }
+
+
 }

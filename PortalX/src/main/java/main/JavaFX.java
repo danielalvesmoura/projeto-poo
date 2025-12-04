@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class JavaFX extends Application {
 
-    private Stage stage;
+    private static Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -20,9 +20,6 @@ public class JavaFX extends Application {
         stage.setTitle("Portal X");
 
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
-
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
-        appLoader.setController(menuPrincipalController);
 
         Parent app = appLoader.load();
 
@@ -34,4 +31,7 @@ public class JavaFX extends Application {
         stage.show();
     }
 
+    public static Stage getStage() {
+        return stage;
+    }
 }

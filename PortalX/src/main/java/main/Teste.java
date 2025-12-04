@@ -19,9 +19,9 @@ public class Teste {
 
         GeraSalas.geraSalas(1000);
 
-        GeraSessoes.geraSessoes(1000);
+        //GeraSessoes.geraSessoes(1000);
 
-        GeraInscricoes.geraInscricoes(1000);
+        //GeraInscricoes.geraInscricoes(1000);
 
 
 

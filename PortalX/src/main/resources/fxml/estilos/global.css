@@ -1,3 +1,80 @@
+/*=================================== BOTOES LATERAIS ========================================*/
+
+.label {
+    -fx-text-fill: white;
+}
+
+.botaoEventos {
+    -fx-background-color: transparent;
+    -fx-background-image: url("imagens/iconeCalendarioBranco.png");
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-text-fill: white;
+}
+
+.botaoEventos:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+    -fx-background-image: url("imagens/iconeCalendarioRoxo.png");
+    -fx-text-fill: #7800ff;
+}
+
+
+.botaoPessoas {
+    -fx-background-color: transparent;
+    -fx-background-image: url("imagens/pessoaBranco.png");
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-text-fill: white;
+}
+
+.botaoPessoas:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+    -fx-background-image: url("imagens/pessoaRoxo.png");
+    -fx-text-fill: #7800ff;
+}
+
+.botaoSalas {
+    -fx-background-color: transparent;
+    -fx-background-image: url("imagens/iconeSalaBranco.png");
+    -fx-background-size: 40px;
+    -fx-background-repeat: no-repeat;
+    -fx-text-fill: white;
+}
+
+.botaoSalas:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+    -fx-background-image: url("imagens/iconeSalaRoxo.png");
+    -fx-text-fill: #7800ff;
+}
+
+
+.botaoLateral {
+    -fx-background-color: transparent;
+    -fx-background-size: 40px;
+    -fx-text-fill: white;
+}
+
+.botaoLateral:hover {
+    -fx-background-color: rgba(120, 0, 255, .3);
+    -fx-text-fill: #7800ff;
+}
+
+
+.botaoFechar {
+    -fx-text-fill: red;
+    -fx-border-color: red;
+    -fx-font-size: 16px;
+    -fx-background-color: black;
+}
+
+.botaoFechar:hover {
+    -fx-background-color: rgba(63, 0, 0, 0.8);
+    -fx-font-size: 16px;
+}
+
+
+
+
 /*=================================== HEADER TABLE VIEW ========================================*/
 
 /* Fundo do header inteiro */
@@ -21,6 +98,10 @@
     -fx-mark-color: white;    /* cor da setinha */
     -fx-text-fill: white;
     -fx-font-size: 16px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: black;
 }
 
 
@@ -73,6 +154,7 @@
     -fx-text-fill: white;
 }
 
+
 .botaoPadrao {
     -fx-text-fill: #7800ff;
     -fx-border-color: #7800ff;
@@ -85,6 +167,7 @@
     -fx-font-size: 16px;
 }
 
+
 .botaoFechar {
     -fx-text-fill: red;
     -fx-border-color: red;
@@ -95,6 +178,7 @@
     -fx-background-color: rgba(63, 0, 0, 0.8);
     -fx-font-size: 16px;
 }
+
 
 /*=================================== BOTÕES PRINCIPAIS ========================================*/
 
@@ -130,18 +214,6 @@
 
 .botaoAdicionar:pressed {
     -fx-background-color: #6a00e1;
-}
-
-
-.botaoLateral {
-    -fx-background-color: transparent !important;
-    -fx-background-size: 40px !important;
-    -fx-text-fill: white !important;
-}
-
-.botaoLateral:hover {
-    -fx-background-color: rgba(120, 0, 255, .3) !important;
-    -fx-text-fill: #7800ff !important;
 }
 
 
@@ -248,10 +320,6 @@
     -fx-background-color: black;
 }
 
-* {
-    -src: url("/fonts/Roboto-Bold.ttf");
-    -fx-font-family: "Roboto Bold";
-}
 
 .text-field {
     -fx-background-color: transparent;

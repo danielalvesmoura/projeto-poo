@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox stylesheets="/fxml/estilos/global.css" alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="722.0" prefWidth="800.0" spacing="20.0" style="-fx-border-color: grey;" styleClass="vBox" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="722.0" prefWidth="800.0" spacing="20.0" style="-fx-border-color: grey;" styleClass="vBox" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.janelaEvento.novo.SecaoSessoesController">
    <padding>
       <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
    </padding>

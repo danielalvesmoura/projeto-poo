@@ -12,8 +12,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
+import main.controller.janelaEvento.novo.SecaoDetalhesController;
 import model.Evento;
 import model.Exportavel;
 import servico.EventoServico;
@@ -25,52 +28,36 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaTodosEventosController {
+public class JanelaTodosEventosController extends GlobalController<Evento, Evento, JanelaEditarEventoController> {
 
-    public Stage stage;
+    @Override
+    protected void colocarT(Evento evento, Object controller) {
+        if(controller instanceof JanelaEditarEventoController c) {
+            c.eventoAberto = evento;
 
-    public JanelaTodosEventosController(Stage stage) {
-        this.stage = stage;
+            try {
+                c.posCarregamento();
+            } catch (Exception e) {
+                System.out.println("Erro ao tentar carregar JanelaEditarEventoController");
+            }
+
+        }
+    }
+    @Override
+    protected void colocarA(Evento objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {};
+
+    @FXML
+    public void fechar() throws Exception {
+        trocaTela("/fxml/menuPrincipal/novo/menuPrincipal.fxml");
     }
 
     @FXML
-    public void fechar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
-
-        MenuPrincipalController menuPrincipalController = new MenuPrincipalController(stage);
-        appLoader.setController(menuPrincipalController);
-
-        menuPrincipalController.stage = stage;
-
-        Parent app = appLoader.load();
-
-        Scene menuPrincipal = new Scene(app);
-
-        stage.setScene(menuPrincipal);
-        stage.setFullScreen(true);
-
-
+    public void adicionar() throws Exception {
+        trocaTela("/fxml/janelaEvento/novo/janelaEditarEvento.fxml",null);
     }
 
-    @FXML
-    public void adicionar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
-
-        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage);
-        appLoader.setController(janelaEditarEventoController);
-        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
-
-        janelaEditarEventoController.stage = stage;
-
-        Parent app = appLoader.load();
-
-        Scene scene = new Scene(app);
-
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-
-
-    }
 
     @FXML
     public TableView<Evento> tableView;
@@ -107,8 +94,10 @@ public class JanelaTodosEventosController {
     // LISTA FILTRADA
     FilteredList<Evento> filteredList = new FilteredList<>(observableList, p -> true);
 
+
     @FXML
     public void initialize() {
+
         configuraTabela();
 
         atualizaTabela();
@@ -176,65 +165,37 @@ public class JanelaTodosEventosController {
 
         // FILTRO
 
-        // Listener genérico para atualizar o filtro
-        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
-            filteredList.setPredicate(evento -> {
+        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {filteredList.setPredicate(evento -> {
 
-                // Strings
-                String nomeFiltro       = campoNome.getText().toLowerCase();
-                String enderecoFiltro   = campoEndereco.getText().toLowerCase();
+                String nomeFiltro = campoNome.getText().toLowerCase();
+                String enderecoFiltro = campoEndereco.getText().toLowerCase();
                 String capacidadeFiltro = campoCapacidade.getText().toLowerCase();
-
-                // Horas (strings vindas dos TextFields)
                 String horaIniFiltroStr = campoHoraInicio.getText().toLowerCase();
                 String horaFimFiltroStr = campoHoraFim.getText().toLowerCase();
-
-                // Datas (LocalDate)
                 LocalDate dataIniFiltro = campoDataInicio.getValue();
                 LocalDate dataFimFiltro = campoDataFim.getValue();
 
-                // Se tudo estiver vazio → mostra tudo
-                if (nomeFiltro.isEmpty() &&
-                        enderecoFiltro.isEmpty() &&
-                        capacidadeFiltro.isEmpty() &&
-                        horaIniFiltroStr.isEmpty() &&
-                        horaFimFiltroStr.isEmpty() &&
-                        dataIniFiltro == null &&
-                        dataFimFiltro == null) {
-
+                // se tive vazio mostra tudo
+                if (nomeFiltro.isEmpty() && enderecoFiltro.isEmpty() && capacidadeFiltro.isEmpty() && horaIniFiltroStr.isEmpty() && horaFimFiltroStr.isEmpty() && dataIniFiltro == null && dataFimFiltro == null) {
                     return true;
                 }
 
                 boolean match = true;
 
-                // -------------------------------------------------------------
-                // 1) FILTROS DE STRING SIMPLES
-                // -------------------------------------------------------------
                 if (!nomeFiltro.isEmpty()) {match &= evento.getNome().toLowerCase().contains(nomeFiltro);}
-
                 if (!enderecoFiltro.isEmpty()) {match &= evento.getEndereco().toLowerCase().contains(enderecoFiltro);}
-
                 if (!capacidadeFiltro.isEmpty()) { match &= (evento.getCapacidade().contains(capacidadeFiltro));}
 
-                // -------------------------------------------------------------
-                // 2) FILTROS DE DATA COM >= e <=
-                // -------------------------------------------------------------
                 LocalDate dataInicioEvento = evento.getDataInicio();
                 LocalDate dataFimEvento    = evento.getDataFim();
 
-                // data início → deve ser >= campo
                 if (dataIniFiltro != null && dataInicioEvento != null) {
                     match &= !dataInicioEvento.isBefore(dataIniFiltro);   // >=
                 }
-
-                // data fim → deve ser <= campo
                 if (dataFimFiltro != null && dataFimEvento != null) {
                     match &= !dataFimEvento.isAfter(dataFimFiltro);       // <=
                 }
 
-                // -------------------------------------------------------------
-                // 3) FILTROS DE HORÁRIO COM >= e <=
-                // -------------------------------------------------------------
                 try {
                     // Converte somente se o usuário digitou
                     if (!horaIniFiltroStr.isEmpty()) {
@@ -255,14 +216,11 @@ public class JanelaTodosEventosController {
             });
         };
 
-        // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoEndereco.textProperty().addListener(filtroListener);
         campoCapacidade.textProperty().addListener(filtroListener);
         campoHoraInicio.textProperty().addListener(filtroListener);
         campoHoraFim.textProperty().addListener(filtroListener);
-
-        // Datas
         campoDataInicio.valueProperty().addListener(filtroListener);
         campoDataFim.valueProperty().addListener(filtroListener);
     }
@@ -328,22 +286,7 @@ public class JanelaTodosEventosController {
                     Evento evento = getTableView().getItems().get(getIndex());
 
                     try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaEditarEvento.fxml"));
-
-                        JanelaEditarEventoController janelaEditarEventoController = new JanelaEditarEventoController(stage,evento);
-                        appLoader.setController(janelaEditarEventoController);
-                        janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
-
-                        janelaEditarEventoController.stage = stage;
-
-                        Parent app = appLoader.load();
-
-                        Scene scene = new Scene(app);
-
-                        stage.setScene(scene);
-                        stage.setFullScreen(true);
-
-
+                        trocaTela("/fxml/janelaEvento/novo/janelaEditarEvento.fxml",evento);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -377,4 +320,6 @@ public class JanelaTodosEventosController {
         tableView.setItems(sortedData);
 
     }
+
+
 }

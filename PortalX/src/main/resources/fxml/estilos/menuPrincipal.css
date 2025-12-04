@@ -16,6 +16,7 @@
     -fx-text-fill: #7800ff;
 }
 
+
 .botaoPessoas {
     -fx-background-color: transparent;
     -fx-background-image: url("imagens/pessoaBranco.png");
@@ -44,6 +45,7 @@
     -fx-text-fill: #7800ff;
 }
 
+
 .botaoLateral {
     -fx-background-color: transparent;
     -fx-background-size: 40px;
@@ -54,7 +56,6 @@
     -fx-background-color: rgba(120, 0, 255, .3);
     -fx-text-fill: #7800ff;
 }
-
 
 
 .botaoFechar {

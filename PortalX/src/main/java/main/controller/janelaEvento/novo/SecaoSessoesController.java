@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import model.ArvoreSessoes;
 import model.Evento;
 import model.Sessao;
@@ -20,32 +21,48 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class SecaoSessoesController {
+public class SecaoSessoesController extends GlobalController<Sessao, Evento, JanelaEditarEventoController> {
 
-    public Stage stage;
+    @Override
+    protected void colocarT(Evento evento, Object controller) {
+        if(controller instanceof SecaoCadastraSessaoController c) {
+            c.eventoAberto = evento;
+        }
+    }
+    @Override
+    protected void colocarA(Sessao sessao, Object controller) {
+        if(controller instanceof SecaoCadastraSessaoController c) {
+            c.sessaoAberta = sessao;
+            c.posCarregamento();
+        }
+    }
+    @Override
+    protected void defineBorderPane(Object controller) {
+        if (controller instanceof SecaoCadastraSessaoController c) {
+            c.setConteudo(super.conteudo);
+            c.setBorderpaneMenor(super.borderpaneMenor);
+        }
+    };
+
+    @Override
+    public void setConteudo(BorderPane conteudo) {
+        super.setConteudo(conteudo);
+    }
+    @Override
+    public void setBorderpaneMenor(BorderPane borderpaneMenor) {
+        super.setBorderpaneMenor(borderpaneMenor);
+    }
+
     public Evento eventoAberto;
-    public BorderPane borderpaneConteudo;
-    JanelaEditarEventoController janelaEditarEventoController;
 
-    public SecaoSessoesController(Stage stage, Evento eventoAberto) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
+    public void posCarregamento() {
+        atualizaTabela();
+        tableView.setItems(observableList);
     }
 
     @FXML
-    public void adicionar() throws IOException {
-        borderpaneConteudo.getChildren().clear();
-
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoCadastraSessao.fxml"));
-
-        SecaoCadastraSessaoController secaoCadastraSessaoController = new SecaoCadastraSessaoController(stage,eventoAberto);
-        appLoader.setController(secaoCadastraSessaoController);
-        secaoCadastraSessaoController.janelaEditarEventoController = janelaEditarEventoController;
-        secaoCadastraSessaoController.secaoCadastraSessaoController = secaoCadastraSessaoController;
-
-        Parent app = appLoader.load();
-
-        borderpaneConteudo.setCenter(app);
+    public void adicionar() throws Exception {
+        trocaBorderPane("/fxml/janelaEvento/novo/secaoCadastraSessao.fxml",eventoAberto, null);
 
     }
 
@@ -70,11 +87,6 @@ public class SecaoSessoesController {
     // LISTA FILTRADA
     FilteredList<Sessao> filteredList = new FilteredList<>(observableList, p -> true);
 
-    @FXML
-    public void initialize() {
-        atualizaTabela();
-        tableView.setItems(observableList);
-    }
 
     SessaoDAO sessaoDAO = new SessaoDAO();
     SessaoServico sessaoServico = new SessaoServico();
@@ -119,11 +131,7 @@ public class SecaoSessoesController {
                     Sessao sessao = getTableView().getItems().get(getIndex());
                     sessaoServico.remover(sessao, eventoAberto);
 
-                    try {
-                        janelaEditarEventoController.abreAbaSessoes();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    atualizaTabela();
                 });
             }
 
@@ -152,19 +160,7 @@ public class SecaoSessoesController {
                     Sessao sessaoAberta = getTableView().getItems().get(getIndex());
 
                     try {
-                        borderpaneConteudo.getChildren().clear();
-
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoCadastraSessao.fxml"));
-
-                        SecaoCadastraSessaoController secaoCadastraSessaoController = new SecaoCadastraSessaoController(stage,eventoAberto,sessaoAberta);
-                        appLoader.setController(secaoCadastraSessaoController);
-                        secaoCadastraSessaoController.janelaEditarEventoController = janelaEditarEventoController;
-                        secaoCadastraSessaoController.secaoCadastraSessaoController = secaoCadastraSessaoController;
-
-                        Parent app = appLoader.load();
-
-                        borderpaneConteudo.setCenter(app);
-
+                        trocaBorderPane("/fxml/janelaEvento/novo/secaoCadastraSessao.fxml", eventoAberto, sessaoAberta);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -224,4 +220,7 @@ public class SecaoSessoesController {
 
 
     }
+
+
+
 }

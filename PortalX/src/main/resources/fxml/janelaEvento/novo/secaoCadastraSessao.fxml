@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="raiz" alignment="BOTTOM_LEFT" minHeight="0.0" minWidth="0.0" prefHeight="701.0" prefWidth="841.0" spacing="20.0" style="-fx-border-color: grey;" styleClass="vBox" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="BOTTOM_LEFT" minHeight="0.0" minWidth="0.0" prefHeight="701.0" prefWidth="841.0" spacing="20.0" style="-fx-border-color: grey;" styleClass="vBox" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.janelaEvento.novo.SecaoCadastraSessaoController">
 
             <padding>
           <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />

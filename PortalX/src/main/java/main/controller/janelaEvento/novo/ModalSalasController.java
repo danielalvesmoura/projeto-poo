@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import model.Evento;
 import model.Inscricao;
 import model.Sessao;
@@ -29,16 +30,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModalSalasController {
+public class ModalSalasController extends GlobalController {
 
-    public Stage stage;
-    public SecaoCadastraSessaoController secaoCadastraSessaoController;
+    @Override
+    protected void colocarT(Object objeto, Object controller) throws Exception {}
+    @Override
+    protected void colocarA(Object objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {}
+
     public Evento eventoAberto;
-
-    public ModalSalasController(Stage stage, Evento eventoAberto) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
-    }
 
     @FXML
     public void cancelar(){
@@ -80,11 +81,16 @@ public class ModalSalasController {
     // LISTA FILTRADA
     FilteredList<Sala> filteredList = new FilteredList<>(observableList, p -> true);
 
-    @FXML
-    public void initialize() {
+    public void posCarregamento() {
         configuraTabela();
 
         atualizaTabela();
+    }
+
+    private Sala salaSelecionada;
+
+    public Sala retornaSalaSelecionada() {
+        return this.salaSelecionada;
     }
 
     SortedList<Sala> sortedData;
@@ -253,8 +259,8 @@ public class ModalSalasController {
                         Global.mostraErro("A capacidade desta sala ultrapassa o limite de vagas do evento.\nCapacidade do evento: "
                         + vagasDoEvento + "\nVagas das salas já cadastradas: " + vagasTotais + "\nVagas da sala: " + salaAberta.getCapacidade());
                     } else {
-                        secaoCadastraSessaoController.salaSelecionada = salaAberta;
-                        secaoCadastraSessaoController.botaoSala.setText(salaAberta.getNome());
+
+                        salaSelecionada = salaAberta;
 
                         System.out.println("Sala selecionada: " + salaAberta.getId());
 
@@ -283,34 +289,9 @@ public class ModalSalasController {
 
             {
                 botaoCronograma.setOnAction(event -> {
-                    Sala salaAberta = getTableView().getItems().get(getIndex());
-
-                    FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/modalCronogramaSala.fxml"));
-
-                    ModalCronogramaSala modalCronogramaSala = new ModalCronogramaSala(salaAberta);
-                    appLoader.setController(modalCronogramaSala);
-
-                    Parent app = null;
                     try {
-                        app = appLoader.load();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    Stage modal = new Stage();
-                    modal.setTitle("Seleção de sala");
-                    modal.setScene(new Scene(app));
-
-                    // Modal bloqueia interação com a janela principal
-                    modal.initModality(Modality.WINDOW_MODAL);
-
-                    // Define que a janela principal é a "dona" do modal
-                    modal.initOwner(stage);
-
-                    modal.setResizable(true);
-
-                    // Abre o modal e bloqueia até fechar
-                    modal.showAndWait();
+                        modal("/fxml/janelaEvento/novo/modalCronogramaSala.fxml");
+                    } catch (Exception e) {}
                 });
             }
 
@@ -339,6 +320,7 @@ public class ModalSalasController {
         tableView.setItems(sortedData);
 
     }
+
 
 
 }

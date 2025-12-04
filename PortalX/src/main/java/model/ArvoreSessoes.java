@@ -78,6 +78,12 @@ public class ArvoreSessoes {
             return new No(sessao);
         }
 
+        System.out.println("Inicio da sessão nova: " + inicio);
+        System.out.println("Fim da sessão nova: " + fim);
+
+        System.out.println("\nInicio da raiz: " + raiz.inicio);
+        System.out.println("Fim da raiz: " + raiz.fim);
+
         // Confere se a nova sessão termina antes da sessão atual
         if (fim.isBefore(raiz.inicio) || fim.isEqual(raiz.inicio)) {
             raiz.esquerda = add(raiz.esquerda, sessao);
@@ -86,7 +92,7 @@ public class ArvoreSessoes {
         else if (inicio.isAfter(raiz.fim) || inicio.isEqual(raiz.fim)) {
             raiz.direita = add(raiz.direita, sessao);
         }
-        // Caso contrário, há sobreposição
+        // se nao tem sobreposição
         else {
             throw new IllegalArgumentException("Sobreposicao de horarios");
         }

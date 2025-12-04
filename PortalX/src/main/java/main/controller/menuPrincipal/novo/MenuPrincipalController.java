@@ -9,83 +9,34 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 
-public class MenuPrincipalController {
+public class MenuPrincipalController extends GlobalController {
 
-    public Stage stage;
+    @Override
+    protected void colocarT(Object objeto, Object controller) {}
+    @Override
+    protected void colocarA(Object objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {};
 
-    public MenuPrincipalController(Stage stage) {
-        this.stage = stage;
+    @FXML
+    public void initialize() {
+        super.conteudo.setStyle("/fxml/estilos/a.css");
     }
 
     @FXML
-    public BorderPane borderPaneConteudo;
-
-    @FXML
-    public PieChart pieChart;
-
-    @FXML
-    public void abreTabelaEventos() {
-
-        try {
-            FXMLLoader janelaTodosEventosLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml"));
-
-            JanelaTodosEventosController janelaTodosEventosController = new JanelaTodosEventosController(stage);
-            janelaTodosEventosLoader.setController(janelaTodosEventosController);
-
-            Parent janela = janelaTodosEventosLoader.load();
-
-            Scene cenaTodosEventos = new Scene(janela);
-
-            stage.setScene(cenaTodosEventos);
-            stage.setFullScreen(true);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void abreTabelaEventos() throws Exception {
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml");
     }
 
-    public void abreJanelaPessoas() {
-        try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodasPessoas.fxml"));
-
-            JanelaTodasPessoasController janelaTodasPessoasController = new JanelaTodasPessoasController(stage);
-            janelaTodasPessoasController.janelaTodasPessoasController = janelaTodasPessoasController;
-
-            tabelaLoader.setController(janelaTodasPessoasController);
-
-            Parent janela = tabelaLoader.load();
-
-            Scene cenaTodasPessoas = new Scene(janela);
-
-            stage.setScene(cenaTodasPessoas);
-            stage.setFullScreen(true);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void abreJanelaPessoas() throws Exception {
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodasPessoas.fxml");
     }
 
     @FXML
-    public void abreJanelaSalas() {
-        try {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodasSalas.fxml"));
-
-            JanelaTodasSalasController janelaTodasSalasController = new JanelaTodasSalasController();
-            janelaTodasSalasController.janelaTodasSalasController = janelaTodasSalasController;
-
-            tabelaLoader.setController(janelaTodasSalasController);
-
-            Parent janela = tabelaLoader.load();
-
-            borderPaneConteudo.setCenter(janela);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void abreJanelaSalas() throws Exception {
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodasSalas.fxml");
     }
-
-
 
 }

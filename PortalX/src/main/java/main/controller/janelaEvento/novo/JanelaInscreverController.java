@@ -14,8 +14,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import main.controller.menuPrincipal.novo.CadastroPessoaController;
 import main.controller.menuPrincipal.novo.MenuPrincipalController;
 import model.Evento;
@@ -29,35 +31,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaInscreverController {
+public class JanelaInscreverController extends GlobalController<Object,Evento,Object> {
 
-    public Stage stage;
-    JanelaEditarEventoController janelaEditarEventoController;
-    public Evento eventoAberto;
-
-    public JanelaInscreverController(Stage stage, Evento eventoAberto) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
+    @Override
+    protected void colocarT(Evento evento, Object controller) {
+        if(controller instanceof JanelaTodasInscricoesController c) {
+            c.eventoAberto = evento;
+        }
     }
 
+    @Override
+    protected void colocarA(Object objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {};
+
+    public Evento eventoAberto;
+
     @FXML
-    public void fechar() throws IOException {
-        FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaTodasInscricoes.fxml"));
+    public void fechar() throws Exception {
 
-        JanelaTodasInscricoesController janelaTodasInscricoesController = new JanelaTodasInscricoesController(stage,eventoAberto);
-        janelaTodasInscricoesController.janelaTodasInscricoesController = janelaTodasInscricoesController;
-        janelaTodasInscricoesController.janelaEditarEventoController = janelaEditarEventoController;
-
-        tabelaLoader.setController(janelaTodasInscricoesController);
-
-        Parent janela = tabelaLoader.load();
-
-        Scene cenaTodasInscricoes = new Scene(janela);
-
-        stage.setScene(cenaTodasInscricoes);
-        stage.setFullScreen(true);
-
-
+        trocaTela("/fxml/janelaEvento/novo/janelaTodasInscricoes.fxml", eventoAberto);
     }
 
 
@@ -123,7 +116,7 @@ public class JanelaInscreverController {
     InscricaoServico inscricaoServico = new InscricaoServico();
 
     @FXML
-    public void confirmar() throws IOException {
+    public void confirmar() throws Exception {
         List<Pessoa> pessoasSelecionadas = tableView.getItems().stream().filter(Pessoa::isSelecionado).toList();
 
         inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas,campoTipo.toString());
@@ -275,6 +268,7 @@ public class JanelaInscreverController {
         labelVagasDisponiveis.setText(inscricaoServico.vagasDisponiveis(eventoAberto) + " / " +
                 inscricaoServico.vagasTotais(eventoAberto) + " vagas disponíveis");
     }
+
 
 
 }

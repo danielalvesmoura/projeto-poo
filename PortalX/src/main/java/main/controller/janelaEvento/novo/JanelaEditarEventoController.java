@@ -8,25 +8,41 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import main.controller.menuPrincipal.novo.JanelaTodosEventosController;
 import model.Evento;
 
 import java.io.IOException;
 
-public class JanelaEditarEventoController {
+public class JanelaEditarEventoController extends GlobalController<Evento, Evento, JanelaEditarEventoController> {
 
-    public Stage stage;
+    @Override
+    protected void colocarT(Evento evento, Object controller) throws Exception {
+        if(controller instanceof SecaoDetalhesController cD) {
+            cD.eventoAberto = evento;
+            cD.posCarregamento();
+        }
+        if(controller instanceof SecaoSessoesController cS) {
+            cS.eventoAberto = evento;
+            cS.posCarregamento();
+        }
+    }
+    @Override
+    protected void colocarA(Evento evento, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {
+        if (controller instanceof SecaoDetalhesController c) {
+            c.setConteudo(super.conteudo);
+            c.setBorderpaneMenor(super.borderpaneMenor);
+        }
+        if (controller instanceof SecaoSessoesController c) {
+            c.setConteudo(super.conteudo);
+            c.setBorderpaneMenor(super.borderpaneMenor);
+        }
+    };
+
+
     public Evento eventoAberto;
-    public JanelaEditarEventoController janelaEditarEventoController;
-
-    public JanelaEditarEventoController(Stage stage, Evento eventoAberto) {
-        this.stage = stage;
-        this.eventoAberto = eventoAberto;
-    }
-
-    public JanelaEditarEventoController(Stage stage) {
-        this.stage = stage;
-    }
 
     @FXML
     public Label tituloJanelaEvento;
@@ -34,19 +50,8 @@ public class JanelaEditarEventoController {
     public VBox vboxConteudo;
 
     @FXML
-    public void fechar() throws IOException {
-        FXMLLoader janelaTodosEventosLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml"));
-
-        JanelaTodosEventosController janelaTodosEventosController = new JanelaTodosEventosController(stage);
-        janelaTodosEventosLoader.setController(janelaTodosEventosController);
-
-        Parent janela = janelaTodosEventosLoader.load();
-
-        Scene cenaTodosEventos = new Scene(janela);
-
-        stage.setScene(cenaTodosEventos);
-        stage.setFullScreen(true);
-
+    public void fechar() throws Exception {
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml");
     }
 
     @FXML
@@ -55,7 +60,13 @@ public class JanelaEditarEventoController {
     public Button botaoInscricoes;
 
     @FXML
-    public void initialize() throws IOException {
+    private BorderPane conteudo;          // ← INJETADO DO FXML DO PAI
+    @FXML
+    private BorderPane borderpaneMenor;   // ← também do pai
+
+    public void posCarregamento() throws Exception {
+        setConteudo(conteudo);
+        setBorderpaneMenor(borderpaneMenor);
         abreAbaDetalhes();
 
         if(eventoAberto == null) {
@@ -67,65 +78,25 @@ public class JanelaEditarEventoController {
         }
     }
 
-    @FXML
-    public BorderPane borderpaneConteudo;
-
 
     @FXML
-    public void abreAbaDetalhes() throws IOException {
-        borderpaneConteudo.getChildren().clear();
-
-        FXMLLoader secaoDetalhesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoDetalhes.fxml"));
-
-        SecaoDetalhesController secaoDetalhesController = new SecaoDetalhesController(stage,eventoAberto);
-        secaoDetalhesLoader.setController(secaoDetalhesController);
-
-        Parent janela = secaoDetalhesLoader.load();
-
-        VBox.setVgrow(janela, Priority.ALWAYS);
-
-        borderpaneConteudo.setCenter(janela);
-
+    public void abreAbaDetalhes() throws Exception {
+        trocaBorderPane("/fxml/janelaEvento/novo/secaoDetalhes.fxml",eventoAberto, null);
     }
 
     @FXML
-    public void abreAbaSessoes() throws IOException {
+    public void abreAbaSessoes() throws Exception {
         if(eventoAberto != null) {
-            borderpaneConteudo.getChildren().clear();
 
-            FXMLLoader secaoDetalhesLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/secaoSessoes.fxml"));
-
-            SecaoSessoesController secaoSessoesController = new SecaoSessoesController(stage,eventoAberto);
-            secaoDetalhesLoader.setController(secaoSessoesController);
-            secaoSessoesController.borderpaneConteudo = borderpaneConteudo;
-            secaoSessoesController.janelaEditarEventoController = janelaEditarEventoController;
-
-            Parent janela = secaoDetalhesLoader.load();
-
-            VBox.setVgrow(janela, Priority.ALWAYS);
-
-            borderpaneConteudo.setCenter(janela);
+            trocaBorderPane("/fxml/janelaEvento/novo/secaoSessoes.fxml", eventoAberto, null);
 
         }
     }
 
     @FXML
-    public void abreJanelaInscricoes() throws IOException {
+    public void abreJanelaInscricoes() throws Exception {
         if(eventoAberto != null) {
-            FXMLLoader tabelaLoader = new FXMLLoader(getClass().getResource("/fxml/janelaEvento/novo/janelaTodasInscricoes.fxml"));
-
-            JanelaTodasInscricoesController janelaTodasInscricoesController = new JanelaTodasInscricoesController(stage,eventoAberto);
-            janelaTodasInscricoesController.janelaTodasInscricoesController = janelaTodasInscricoesController;
-            janelaEditarEventoController.janelaEditarEventoController = janelaEditarEventoController;
-
-            tabelaLoader.setController(janelaTodasInscricoesController);
-
-            Parent janela = tabelaLoader.load();
-
-            Scene cenaTodasInscricoes = new Scene(janela);
-
-            stage.setScene(cenaTodasInscricoes);
-            stage.setFullScreen(true);
+            trocaTela("/fxml/janelaEvento/novo/janelaTodasInscricoes.fxml",eventoAberto);
         }
     }
 }

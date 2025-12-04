@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane minWidth="0.0" prefHeight="500.0" prefWidth="800.0" stylesheets="/fxml/estilos/menuPrincipal.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="conteudo" minWidth="0.0" prefHeight="500.0" prefWidth="800.0" stylesheets="/fxml/estilos/global.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.janelaEvento.novo.JanelaEditarEventoController">
    <center>
       <HBox fx:id="hboxPrincipal" minWidth="0.0" style="-fx-background-color: black;">
          <children>
@@ -66,7 +66,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <BorderPane fx:id="borderpaneConteudo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <BorderPane fx:id="borderpaneMenor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
