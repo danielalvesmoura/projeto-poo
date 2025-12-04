@@ -1,0 +1,46 @@
+package main.controller;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import main.JavaFX;
+
+public abstract class GlobalController<A, T, C> extends GlobalControllerComObjeto<A, T, C> {
+
+    public void trocaTela(String caminho) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
+
+        Parent pagina = loader.load();
+
+        conteudo.getChildren().clear();
+
+        conteudo.setCenter(pagina);
+    }
+
+    public void modal(String caminho) throws Exception {
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource(caminho));
+
+        Parent app = appLoader.load();
+
+        Stage modal = new Stage();
+        modal.setTitle("Portal X");
+        modal.setScene(new Scene(app));
+
+        // Modal bloqueia interação com a janela principal
+        modal.initModality(Modality.WINDOW_MODAL);
+
+        // Define que a janela principal é a "dona" do modal
+        modal.initOwner(JavaFX.getStage());
+
+        modal.setResizable(true);
+
+        // Abre o modal e bloqueia até fechar
+        modal.showAndWait();
+    }
+
+
+}
