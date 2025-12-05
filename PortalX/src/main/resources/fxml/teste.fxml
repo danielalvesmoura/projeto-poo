@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="719.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.TesteController">
+   <children>
+      <TextField fx:id="campoNome" layoutX="27.0" layoutY="178.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label fx:id="label" layoutX="27.0" layoutY="129.0" text="nome">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tabela" layoutX="370.0" layoutY="110.0" prefHeight="465.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="col1" prefWidth="131.0" text="C1" />
+            <TableColumn fx:id="col2" prefWidth="71.0" text="C1" />
+        </columns>
+      </TableView>
+      <Button layoutX="172.0" layoutY="343.0" mnemonicParsing="false" onAction="#enviar" text="enviar" />
+      <TextField fx:id="campoPreco" layoutX="27.0" layoutY="273.0" prefHeight="31.0" prefWidth="186.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label fx:id="label1" layoutX="27.0" layoutY="224.0" text="preco">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="filtroNome" layoutX="41.0" layoutY="515.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label fx:id="label2" layoutX="41.0" layoutY="466.0" text="nome">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="filtroPreco" layoutX="41.0" layoutY="610.0" prefHeight="31.0" prefWidth="186.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label fx:id="label11" layoutX="41.0" layoutY="561.0" text="preco">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

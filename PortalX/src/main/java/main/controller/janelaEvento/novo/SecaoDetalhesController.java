@@ -30,12 +30,9 @@ public class SecaoDetalhesController extends GlobalController {
 
 
     @Override
-    public void setConteudo(BorderPane conteudo) {
-        super.setConteudo(conteudo);
-    }
-    @Override
-    public void setBorderpaneMenor(BorderPane borderpaneMenor) {
-        super.setBorderpaneMenor(borderpaneMenor);
+    public void setPanes(BorderPane conteudo, BorderPane bp) {
+        super.setPanes(conteudo, bp);
+
     }
 
     public Evento eventoAberto;

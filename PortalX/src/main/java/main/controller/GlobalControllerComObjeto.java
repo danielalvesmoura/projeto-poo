@@ -15,10 +15,8 @@ public abstract class GlobalControllerComObjeto<A, T, C> {
     @FXML
     public BorderPane borderpaneMenor;
 
-    public void setConteudo(BorderPane conteudo) {
+    public void setPanes(BorderPane conteudo, BorderPane bp) {
         this.conteudo = conteudo;
-    }
-    public void setBorderpaneMenor(BorderPane bp) {
         this.borderpaneMenor = bp;
     }
 

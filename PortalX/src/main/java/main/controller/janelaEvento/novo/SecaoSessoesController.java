@@ -39,18 +39,14 @@ public class SecaoSessoesController extends GlobalController<Sessao, Evento, Jan
     @Override
     protected void defineBorderPane(Object controller) {
         if (controller instanceof SecaoCadastraSessaoController c) {
-            c.setConteudo(super.conteudo);
-            c.setBorderpaneMenor(super.borderpaneMenor);
+            c.setPanes(super.conteudo, super.borderpaneMenor);
         }
     };
 
     @Override
-    public void setConteudo(BorderPane conteudo) {
-        super.setConteudo(conteudo);
-    }
-    @Override
-    public void setBorderpaneMenor(BorderPane borderpaneMenor) {
-        super.setBorderpaneMenor(borderpaneMenor);
+    public void setPanes(BorderPane conteudo, BorderPane bp) {
+        super.setPanes(conteudo, bp);
+
     }
 
     public Evento eventoAberto;

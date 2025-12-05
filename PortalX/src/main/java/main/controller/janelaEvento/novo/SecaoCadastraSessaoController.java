@@ -35,8 +35,7 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
         if(controller instanceof SecaoSessoesController c) {
             c.eventoAberto = evento;
             c.posCarregamento();
-            c.setConteudo(super.conteudo);
-            c.setBorderpaneMenor(super.borderpaneMenor);
+            c.setPanes(super.conteudo, super.borderpaneMenor);
         }
     }
     @Override
@@ -45,13 +44,11 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
     protected void defineBorderPane(Object controller) {};
 
     @Override
-    public void setConteudo(BorderPane conteudo) {
-        super.setConteudo(conteudo);
+    public void setPanes(BorderPane conteudo, BorderPane bp) {
+        super.setPanes(conteudo, bp);
+
     }
-    @Override
-    public void setBorderpaneMenor(BorderPane borderpaneMenor) {
-        super.setBorderpaneMenor(borderpaneMenor);
-    }
+
 
     @FXML
     public Button botaoSala;

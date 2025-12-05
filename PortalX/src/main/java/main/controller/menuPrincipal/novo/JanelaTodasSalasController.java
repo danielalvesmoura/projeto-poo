@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import model.Exportavel;
 import model.Sala;
 import servico.ExportarServico;
@@ -23,38 +24,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaTodasSalasController {
+public class JanelaTodasSalasController extends GlobalController<Object,Sala,Object> {
 
-    public Stage stage;
-    public JanelaTodasSalasController janelaTodasSalasController;
+    @Override
+    protected void colocarT(Sala sala, Object controller) throws Exception {
+        if(controller instanceof CadastroSalaController c) {
+            c.salaAberto = sala;
+            c.posCarregamento();
 
+            c.confirmou.addListener((a, oldVal, newVal) -> {
+                atualizaTabela();
+            });
+        }
+    }
+    @Override
+    protected void colocarA(Object objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) {}
 
     @FXML
-    public void adicionar() throws IOException {
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroSala.fxml"));
-
-        CadastroSalaController cadastroSalaController = new CadastroSalaController();
-        cadastroSalaController.janelaTodasSalasController = janelaTodasSalasController;
-        appLoader.setController(cadastroSalaController);
-
-        Parent app = appLoader.load();
-
-        Stage modal = new Stage();
-        modal.setTitle("Cadastrar nova sala");
-        modal.setScene(new Scene(app));
-
-        // Modal bloqueia interação com a janela principal
-        modal.initModality(Modality.WINDOW_MODAL);
-
-        // Define que a janela principal é a "dona" do modal
-        modal.initOwner(stage);
-
-        modal.setResizable(true);
-
-        // Abre o modal e bloqueia até fechar
-        modal.showAndWait();
-
-
+    public void adicionar() throws Exception {
+        modal("/fxml/menuPrincipal/novo/modalCadastroSala.fxml");
     }
 
     @FXML
@@ -89,8 +79,11 @@ public class JanelaTodasSalasController {
 
     @FXML
     public void initialize() {
-        configuraTabela();
+        posCarregamento();
+    }
 
+    public void posCarregamento() {
+        configuraTabela();
         atualizaTabela();
     }
 
@@ -154,48 +147,35 @@ public class JanelaTodasSalasController {
         ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
             filteredList.setPredicate(sala -> {
 
-                // Strings
-                String nomeFiltro       = campoNome.getText().toLowerCase();
-                String localizacaoFiltro   = campoLocalizacao.getText().toLowerCase();
-
+                String nomeFiltro = campoNome.getText().toLowerCase();
+                String localizacaoFiltro = campoLocalizacao.getText().toLowerCase();
                 String capacidadeMinimaFiltro = campoCapacidadeMinima.getText().toLowerCase();
                 String capacidadeMaximaFiltro = campoCapacidadeMaxima.getText().toLowerCase();
 
-                // Se tudo estiver vazio → mostra tudo
-                if (nomeFiltro.isEmpty() &&
-                        localizacaoFiltro.isEmpty() &&
-                        capacidadeMinimaFiltro.isEmpty() &&
-                        capacidadeMaximaFiltro.isEmpty()
-                ) {
+                if (nomeFiltro.isEmpty() && localizacaoFiltro.isEmpty() && capacidadeMinimaFiltro.isEmpty() && capacidadeMaximaFiltro.isEmpty()) {
                     return true;
                 }
 
                 boolean match = true;
-
-                // -------------------------------------------------------------
-                // 1) FILTROS DE STRING SIMPLES
-                // -------------------------------------------------------------
                 if (!nomeFiltro.isEmpty()) {match &= sala.getNome().toLowerCase().contains(nomeFiltro);}
-
                 if (!localizacaoFiltro.isEmpty()) {match &= sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);}
 
-                // FILTRO DE CAPACIDADE MÍNIMA
                 if (!capacidadeMinimaFiltro.isEmpty()) {
                     try {
-                        int min = Integer.parseInt(capacidadeMinimaFiltro);
-                        match &= sala.getCapacidade() >= min;
+                        int minimo = Integer.parseInt(capacidadeMinimaFiltro);
+                        match &= sala.getCapacidade() >= minimo;
+
                     } catch (NumberFormatException e) {
-                        return false; // evita quebrar
+                        return false;
                     }
                 }
 
-                // FILTRO DE CAPACIDADE MAXIMA
                 if (!capacidadeMaximaFiltro.isEmpty()) {
                     try {
                         int max = Integer.parseInt(capacidadeMaximaFiltro);
                         match &= sala.getCapacidade() <= max;
                     } catch (NumberFormatException e) {
-                        return false; // evita quebrar
+                        return false;
                     }
                 }
 
@@ -203,7 +183,6 @@ public class JanelaTodasSalasController {
             });
         };
 
-        // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoLocalizacao.textProperty().addListener(filtroListener);
         campoCapacidadeMinima.textProperty().addListener(filtroListener);
@@ -269,30 +248,7 @@ public class JanelaTodasSalasController {
 
 
                     try {
-                        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/modalCadastroSala.fxml"));
-
-                        CadastroSalaController cadastroSalaController = new CadastroSalaController(sala);
-                        cadastroSalaController.janelaTodasSalasController = janelaTodasSalasController;
-                        appLoader.setController(cadastroSalaController);
-
-                        Parent app = appLoader.load();
-
-                        Stage modal = new Stage();
-                        modal.setTitle("Cadastrar nova sala");
-                        modal.setScene(new Scene(app));
-
-                        // Modal bloqueia interação com a janela principal
-                        modal.initModality(Modality.WINDOW_MODAL);
-
-                        // Define que a janela principal é a "dona" do modal
-                        modal.initOwner(stage);
-
-                        modal.setResizable(true);
-
-                        // Abre o modal e bloqueia até fechar
-                        modal.showAndWait();
-
-
+                        modal("/fxml/menuPrincipal/novo/modalCadastroSala.fxml",sala);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -328,4 +284,6 @@ public class JanelaTodasSalasController {
         tableView.setItems(sortedData);
 
     }
+
+
 }

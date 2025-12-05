@@ -1,24 +1,31 @@
 package main.controller.menuPrincipal.novo;
 
+import com.mysql.cj.conf.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import main.controller.GlobalController;
 import util.Global;
 import model.Sala;
 import servico.SalaServico;
 
 import java.io.IOException;
 
-public class CadastroSalaController {
+public class CadastroSalaController extends GlobalController {
+
+    @Override
+    protected void colocarT(Object objeto, Object controller) throws Exception {
+        if(controller instanceof JanelaTodasSalasController c) {
+            c.posCarregamento();
+        }
+    }
+    @Override
+    protected void colocarA(Object objetoA, Object controller) {}
+    @Override
+    protected void defineBorderPane(Object controller) { }
 
     public Sala salaAberto;
-    public JanelaTodasSalasController janelaTodasSalasController;
-
-    public CadastroSalaController(Sala salaAberto) {
-        this.salaAberto = salaAberto;
-    }
-
-    public CadastroSalaController() {}
 
     @FXML
     public TextField campoNome;
@@ -31,8 +38,7 @@ public class CadastroSalaController {
     public Label titulo;
 
 
-    @FXML
-    public void initialize() {
+    public void posCarregamento() {
         if(salaAberto != null) {
             titulo.setText(salaAberto.getNome());
 
@@ -40,18 +46,9 @@ public class CadastroSalaController {
             campoLocalizacao.setText(salaAberto.getLocalizacao());
             campoCapacidade.setText(Integer.toString(salaAberto.getCapacidade()));
 
-            /*
-            if(pessoaAberta instanceof Palestrante) {
-                campoTipo.setValue("Palestrante");
-            } else {
-                campoTipo.setValue("Participante");
-            }
-
-             */
         } else {
             titulo.setText("Cadastrar nova sala");
         }
-
     }
 
     SalaServico salaServico = new SalaServico();
@@ -69,9 +66,12 @@ public class CadastroSalaController {
         fechar();
     }
 
+
+    public SimpleBooleanProperty confirmou = new SimpleBooleanProperty(false);
+
+
     @FXML
     public void confirmar() throws IOException {
-
 
         try {
             if(campoNome.getText().isEmpty()) {
@@ -87,7 +87,8 @@ public class CadastroSalaController {
                     salaServico.alterar(salaAberto, campoNome.getText(), Integer.parseInt(campoCapacidade.getText()), campoLocalizacao.getText());
                 }
 
-                janelaTodasSalasController.atualizaTabela();
+                confirmou.set(true);
+
                 fechar();
             }
 
@@ -96,5 +97,6 @@ public class CadastroSalaController {
         }
 
     }
+
 
 }

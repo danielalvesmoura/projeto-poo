@@ -32,12 +32,10 @@ public class JanelaEditarEventoController extends GlobalController<Evento, Event
     @Override
     protected void defineBorderPane(Object controller) {
         if (controller instanceof SecaoDetalhesController c) {
-            c.setConteudo(super.conteudo);
-            c.setBorderpaneMenor(super.borderpaneMenor);
+            c.setPanes(super.conteudo, super.borderpaneMenor);
         }
         if (controller instanceof SecaoSessoesController c) {
-            c.setConteudo(super.conteudo);
-            c.setBorderpaneMenor(super.borderpaneMenor);
+            c.setPanes(super.conteudo, super.borderpaneMenor);
         }
     };
 
@@ -65,8 +63,7 @@ public class JanelaEditarEventoController extends GlobalController<Evento, Event
     private BorderPane borderpaneMenor;   // ← também do pai
 
     public void posCarregamento() throws Exception {
-        setConteudo(conteudo);
-        setBorderpaneMenor(borderpaneMenor);
+        setPanes(conteudo, borderpaneMenor);
         abreAbaDetalhes();
 
         if(eventoAberto == null) {
