@@ -9,7 +9,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.JavaFX;
 
-public abstract class GlobalController<A, T, C> extends GlobalControllerComObjeto<A, T, C> {
+public abstract class GlobalController<A, T> extends GlobalControllerComObjeto<A, T> {
 
     public void trocaTela(String caminho) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
@@ -25,6 +25,10 @@ public abstract class GlobalController<A, T, C> extends GlobalControllerComObjet
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource(caminho));
 
         Parent app = appLoader.load();
+
+        Object controller = appLoader.getController();
+
+        colocarT(null,controller);
 
         Stage modal = new Stage();
         modal.setTitle("Portal X");

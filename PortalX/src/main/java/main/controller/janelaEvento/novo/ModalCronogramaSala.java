@@ -20,12 +20,6 @@ import java.time.LocalTime;
 public class ModalCronogramaSala {
 
     public Sala salaAberta;
-    public BorderPane borderpaneConteudo;
-    JanelaEditarEventoController janelaEditarEventoController;
-
-    public ModalCronogramaSala(Sala salaAberta) {
-        this.salaAberta = salaAberta;
-    }
 
     @FXML
     public void fechar() {
@@ -53,8 +47,7 @@ public class ModalCronogramaSala {
     // LISTA FILTRADA
     FilteredList<Sessao> filteredList = new FilteredList<>(observableList, p -> true);
 
-    @FXML
-    public void initialize() {
+    public void posCarregamento() {
         atualizaTabela();
         tableView.setItems(observableList);
     }

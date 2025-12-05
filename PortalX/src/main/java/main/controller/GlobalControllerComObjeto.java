@@ -9,7 +9,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.JavaFX;
 
-public abstract class GlobalControllerComObjeto<A, T, C> {
+public abstract class GlobalControllerComObjeto<A, T> {
     @FXML
     public BorderPane conteudo;
     @FXML
@@ -39,8 +39,6 @@ public abstract class GlobalControllerComObjeto<A, T, C> {
 
     public void modal(String caminho, T objeto) throws Exception {
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource(caminho));
-
-        colocarT(objeto,appLoader.getController());
 
         Parent app = appLoader.load();
 

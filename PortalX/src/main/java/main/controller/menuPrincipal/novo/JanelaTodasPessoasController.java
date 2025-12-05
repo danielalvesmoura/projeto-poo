@@ -16,12 +16,17 @@ import servico.PessoaServico;
 
 import java.time.LocalDate;
 
-public class JanelaTodasPessoasController extends GlobalController<Pessoa, Pessoa, CadastroPessoaController> {
+public class JanelaTodasPessoasController extends GlobalController<Pessoa, Pessoa> {
 
     @Override
     protected void colocarT(Pessoa pessoa, Object controller) {
         if(controller instanceof CadastroPessoaController c) {
             c.pessoaAberta = pessoa;
+            c.posCarregamento();
+
+            c.confirmou.addListener((property,antigo,novo) -> {
+                atualizaTabela();
+            });
         }
     }
     @Override

@@ -14,7 +14,7 @@ import model.Evento;
 
 import java.io.IOException;
 
-public class JanelaEditarEventoController extends GlobalController<Evento, Evento, JanelaEditarEventoController> {
+public class JanelaEditarEventoController extends GlobalController<Evento, Evento> {
 
     @Override
     protected void colocarT(Evento evento, Object controller) throws Exception {

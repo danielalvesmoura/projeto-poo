@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaTodasSalasController extends GlobalController<Object,Sala,Object> {
+public class JanelaTodasSalasController extends GlobalController<Object,Sala> {
 
     @Override
     protected void colocarT(Sala sala, Object controller) throws Exception {

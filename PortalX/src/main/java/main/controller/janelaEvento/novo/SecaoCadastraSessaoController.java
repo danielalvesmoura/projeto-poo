@@ -23,14 +23,18 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class SecaoCadastraSessaoController extends GlobalController<Sessao, Evento, Object> {
+public class SecaoCadastraSessaoController extends GlobalController<Sessao, Evento> {
 
     @Override
     protected void colocarT(Evento evento, Object controller) {
         if(controller instanceof ModalSalasController c) {
             c.eventoAberto = evento;
             c.posCarregamento();
-            modalController = c;
+
+            c.salaPosValidacao.addListener((property,antigo,novo) -> {
+                this.salaSelecionada = c.getSalaPosValidacao();
+                this.botaoSala.setText(salaSelecionada.getNome());
+            });
         }
         if(controller instanceof SecaoSessoesController c) {
             c.eventoAberto = evento;
@@ -54,12 +58,12 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
     public Button botaoSala;
 
     public Sala salaSelecionada;
-    ModalSalasController modalController;
+
     @FXML
     public void trocarSala() throws Exception {
         modal("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml",eventoAberto);
-        salaSelecionada = modalController.retornaSalaSelecionada();
-        botaoSala.setText(salaSelecionada.getNome());
+
+
     }
 
 

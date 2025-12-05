@@ -1,5 +1,7 @@
 package main.controller.menuPrincipal.novo;
 
+import com.mysql.cj.conf.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -12,21 +14,7 @@ import java.time.LocalDate;
 
 public class CadastroPessoaController {
 
-    public Stage stage;
-    JanelaTodasPessoasController janelaTodasPessoasController;
     public Pessoa pessoaAberta;
-
-    public CadastroPessoaController(Stage stage, JanelaTodasPessoasController janelaTodasPessoasController, Pessoa pessoaAberta) {
-        this.stage = stage;
-        this.janelaTodasPessoasController = janelaTodasPessoasController;
-        this.pessoaAberta = pessoaAberta;
-    }
-
-    public CadastroPessoaController(Stage stage, JanelaTodasPessoasController janelaTodasPessoasController) {
-        this.stage = stage;
-        this.janelaTodasPessoasController = janelaTodasPessoasController;
-    }
-
 
     @FXML
     public TextField campoNome;
@@ -41,9 +29,7 @@ public class CadastroPessoaController {
     @FXML
     public Label titulo;
 
-
-    @FXML
-    public void initialize() {
+    public void posCarregamento() {
         if(pessoaAberta != null) {
             titulo.setText(pessoaAberta.getNome());
 
@@ -52,18 +38,9 @@ public class CadastroPessoaController {
             campoTelefone.setText(pessoaAberta.getTelefone());
             campoDataNascimento.setValue(pessoaAberta.getDataNascimento());
 
-            /*
-            if(pessoaAberta instanceof Palestrante) {
-                campoTipo.setValue("Palestrante");
-            } else {
-                campoTipo.setValue("Participante");
-            }
-
-             */
         } else {
             titulo.setText("Cadastrar nova pessoa");
         }
-
     }
 
     PessoaServico pessoaServico = new PessoaServico();
@@ -81,6 +58,8 @@ public class CadastroPessoaController {
         fechar();
     }
 
+    public SimpleBooleanProperty confirmou = new SimpleBooleanProperty(false);
+
     @FXML
     public void confirmar() throws IOException {
 
@@ -96,12 +75,16 @@ public class CadastroPessoaController {
                 LocalDate.parse(campoDataNascimento.getValue().toString());
 
                 if(pessoaAberta == null) {
+                    System.out.println("cadastrando " + campoNome.getText());
                     pessoaServico.cadastrar(campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
                 } else {
+                    System.out.println("alterando " + pessoaAberta.getNome() + " para " + campoNome.getText());
                     pessoaServico.alterar(pessoaAberta, campoNome.getText(), campoEmail.getText(), campoTelefone.getText(), campoDataNascimento.getValue());
                 }
 
-                janelaTodasPessoasController.atualizaTabela();
+                confirmou.set(true);
+                confirmou.set(false);
+
                 fechar();
 
             } catch (Exception e) {

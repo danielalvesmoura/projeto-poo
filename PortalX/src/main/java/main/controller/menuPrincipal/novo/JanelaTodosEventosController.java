@@ -28,7 +28,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaTodosEventosController extends GlobalController<Evento, Evento, JanelaEditarEventoController> {
+public class JanelaTodosEventosController extends GlobalController<Evento, Evento> {
 
     @Override
     protected void colocarT(Evento evento, Object controller) {

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class SecaoSessoesController extends GlobalController<Sessao, Evento, JanelaEditarEventoController> {
+public class SecaoSessoesController extends GlobalController<Sessao, Evento> {
 
     @Override
     protected void colocarT(Evento evento, Object controller) {

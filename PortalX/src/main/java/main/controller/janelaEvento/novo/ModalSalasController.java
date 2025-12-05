@@ -2,6 +2,8 @@ package main.controller.janelaEvento.novo;
 
 import dao.SalaDAO;
 import dao.SessaoDAO;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,10 +32,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModalSalasController extends GlobalController {
+public class ModalSalasController extends GlobalController<Object,Sala> {
 
     @Override
-    protected void colocarT(Object objeto, Object controller) throws Exception {}
+    protected void colocarT(Sala sala, Object controller) throws Exception {
+        if(controller instanceof ModalCronogramaSala c) {
+            c.salaAberta = sala;
+            c.posCarregamento();
+        }
+    }
     @Override
     protected void colocarA(Object objetoA, Object controller) {}
     @Override
@@ -87,10 +94,10 @@ public class ModalSalasController extends GlobalController {
         atualizaTabela();
     }
 
-    private Sala salaSelecionada;
+    ObjectProperty<Sala> salaPosValidacao = new SimpleObjectProperty<>();
 
-    public Sala retornaSalaSelecionada() {
-        return this.salaSelecionada;
+    public Sala getSalaPosValidacao() {
+        return this.salaPosValidacao.get();
     }
 
     SortedList<Sala> sortedData;
@@ -161,62 +168,50 @@ public class ModalSalasController extends GlobalController {
 
         // FILTRO
 
-        // Listener genérico para atualizar o filtro
         ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
             filteredList.setPredicate(sala -> {
 
-                // Strings
-                String nomeFiltro       = campoNome.getText().toLowerCase();
-                String localizacaoFiltro   = campoLocalizacao.getText().toLowerCase();
-
+                String nomeFiltro = campoNome.getText().toLowerCase();
+                String localizacaoFiltro = campoLocalizacao.getText().toLowerCase();
                 String capacidadeMinimaFiltro = campoCapacidadeMinima.getText().toLowerCase();
                 String capacidadeMaximaFiltro = campoCapacidadeMaxima.getText().toLowerCase();
 
-
-                // Se tudo estiver vazio → mostra tudo
-                if (nomeFiltro.isEmpty() &&
-                        localizacaoFiltro.isEmpty() &&
-                        capacidadeMinimaFiltro.isEmpty() &&
-                        capacidadeMaximaFiltro.isEmpty()
-                ) {
+                if (nomeFiltro.isEmpty() && localizacaoFiltro.isEmpty() && capacidadeMinimaFiltro.isEmpty() && capacidadeMaximaFiltro.isEmpty()) {
                     return true;
                 }
 
                 boolean match = true;
 
-                // -------------------------------------------------------------
-                // 1) FILTROS DE STRING SIMPLES
-                // -------------------------------------------------------------
-                if (!nomeFiltro.isEmpty()) {match &= sala.getNome().toLowerCase().contains(nomeFiltro);}
+                if (!nomeFiltro.isEmpty()) {
+                    match &= sala.getNome().toLowerCase().contains(nomeFiltro);
+                }
+                if (!localizacaoFiltro.isEmpty()) {
+                    match &= sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);
+                }
 
-                if (!localizacaoFiltro.isEmpty()) {match &= sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);}
-
-                // FILTRO DE CAPACIDADE MÍNIMA
                 if (!capacidadeMinimaFiltro.isEmpty()) {
                     try {
                         int min = Integer.parseInt(capacidadeMinimaFiltro);
                         match &= sala.getCapacidade() >= min;
                     } catch (NumberFormatException e) {
-                        return false; // evita quebrar
+                        return false;
                     }
                 }
 
-                // FILTRO DE CAPACIDADE MAXIMA
+                //  CAPACIDADE MAXIMA
                 if (!capacidadeMaximaFiltro.isEmpty()) {
                     try {
                         int max = Integer.parseInt(capacidadeMaximaFiltro);
                         match &= sala.getCapacidade() <= max;
                     } catch (NumberFormatException e) {
-                        return false; // evita quebrar
+                        return false;
                     }
                 }
-
 
                 return match;
             });
         };
 
-        // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoLocalizacao.textProperty().addListener(filtroListener);
         campoCapacidadeMinima.textProperty().addListener(filtroListener);
@@ -248,21 +243,21 @@ public class ModalSalasController extends GlobalController {
 
             {
                 botaoSelecionar.setOnAction(event -> {
-                    Sala salaAberta = getTableView().getItems().get(getIndex());
+                    Sala salaSelecionada = getTableView().getItems().get(getIndex());
 
                     InscricaoServico inscricaoServico = new InscricaoServico();
                     int vagasTotais = inscricaoServico.vagasTotais(eventoAberto);
 
                     int vagasDoEvento = Integer.parseInt(eventoAberto.getCapacidade());
 
-                    if(salaAberta.getCapacidade() + vagasTotais > vagasDoEvento) {
+                    if(salaSelecionada.getCapacidade() + vagasTotais > vagasDoEvento) {
                         Global.mostraErro("A capacidade desta sala ultrapassa o limite de vagas do evento.\nCapacidade do evento: "
-                        + vagasDoEvento + "\nVagas das salas já cadastradas: " + vagasTotais + "\nVagas da sala: " + salaAberta.getCapacidade());
+                        + vagasDoEvento + "\nVagas das salas já cadastradas: " + vagasTotais + "\nVagas da sala: " + salaSelecionada.getCapacidade());
                     } else {
 
-                        salaSelecionada = salaAberta;
+                        salaPosValidacao.setValue(salaSelecionada);
 
-                        System.out.println("Sala selecionada: " + salaAberta.getId());
+                        System.out.println("Sala selecionada: " + salaSelecionada.getId());
 
                         fechar();
                     }
@@ -289,8 +284,12 @@ public class ModalSalasController extends GlobalController {
 
             {
                 botaoCronograma.setOnAction(event -> {
+                    Sala salaAberta = getTableView().getItems().get(getIndex());
+
                     try {
-                        modal("/fxml/janelaEvento/novo/modalCronogramaSala.fxml");
+                        System.out.println("era pra abrir");
+                        modal("/fxml/janelaEvento/novo/modalCronogramaSala.fxml", salaAberta);
+
                     } catch (Exception e) {}
                 });
             }

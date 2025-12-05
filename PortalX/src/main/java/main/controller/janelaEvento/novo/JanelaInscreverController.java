@@ -31,7 +31,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaInscreverController extends GlobalController<Object,Evento,Object> {
+public class JanelaInscreverController extends GlobalController<Object,Evento> {
 
     @Override
     protected void colocarT(Evento evento, Object controller) {
