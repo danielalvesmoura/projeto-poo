@@ -37,6 +37,7 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
     protected void colocarT(Evento evento, Object controller) {
         if(controller instanceof JanelaTodasInscricoesController c) {
             c.eventoAberto = evento;
+            c.posCarregamento();
         }
     }
 
@@ -49,7 +50,6 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
 
     @FXML
     public void fechar() throws Exception {
-
         trocaTela("/fxml/janelaEvento/novo/janelaTodasInscricoes.fxml", eventoAberto);
     }
 
@@ -91,8 +91,7 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
     // LISTA FILTRADA
     FilteredList<Pessoa> filteredList = new FilteredList<>(observableList, p -> true);
 
-    @FXML
-    public void initialize() {
+    public void posCarregamento() {
         campoTipo.getItems().addAll("Participante","Palestrante");
         campoTipo.setValue("Participante");
 
@@ -120,7 +119,9 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
         List<Pessoa> pessoasSelecionadas = tableView.getItems().stream().filter(Pessoa::isSelecionado).toList();
 
         inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas,campoTipo.toString());
-        //tabelaInscricaoController.atualizaTabela();
+
+
+
         fechar();
     }
 

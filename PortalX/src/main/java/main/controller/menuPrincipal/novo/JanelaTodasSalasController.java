@@ -248,7 +248,7 @@ public class JanelaTodasSalasController extends GlobalController<Object,Sala> {
 
 
                     try {
-                        modal("/fxml/menuPrincipal/novo/modalCadastroSala.fxml",sala);
+                        modal("/fxml/menuPrincipal/novo/modalCadastroSala.fxml",sala, null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

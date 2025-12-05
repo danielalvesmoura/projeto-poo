@@ -61,7 +61,7 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
 
     @FXML
     public void trocarSala() throws Exception {
-        modal("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml",eventoAberto);
+        modal("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml",eventoAberto, null);
 
 
     }

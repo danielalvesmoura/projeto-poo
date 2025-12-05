@@ -155,6 +155,7 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
 
         colId.setStyle("-fx-alignment: CENTER;");
         col2.setStyle("-fx-alignment: CENTER;");
+        col2.setStyle("-fx-alignment: CENTER;");
         col3.setStyle("-fx-alignment: CENTER;");
         col4.setStyle("-fx-alignment: CENTER;");
         col5.setStyle("-fx-alignment: CENTER;");
@@ -165,7 +166,9 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
 
         // FILTRO
 
-        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {filteredList.setPredicate(evento -> {
+        ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
+
+            filteredList.setPredicate(evento -> {
 
                 String nomeFiltro = campoNome.getText().toLowerCase();
                 String enderecoFiltro = campoEndereco.getText().toLowerCase();
@@ -182,9 +185,15 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
 
                 boolean match = true;
 
-                if (!nomeFiltro.isEmpty()) {match &= evento.getNome().toLowerCase().contains(nomeFiltro);}
-                if (!enderecoFiltro.isEmpty()) {match &= evento.getEndereco().toLowerCase().contains(enderecoFiltro);}
-                if (!capacidadeFiltro.isEmpty()) { match &= (evento.getCapacidade().contains(capacidadeFiltro));}
+                if (!nomeFiltro.isEmpty()) {
+                    match &= evento.getNome().toLowerCase().contains(nomeFiltro);
+                }
+                if (!enderecoFiltro.isEmpty()) {
+                    match &= evento.getEndereco().toLowerCase().contains(enderecoFiltro);
+                }
+                if (!capacidadeFiltro.isEmpty()) {
+                    match &= (evento.getCapacidade().contains(capacidadeFiltro));
+                }
 
                 LocalDate dataInicioEvento = evento.getDataInicio();
                 LocalDate dataFimEvento    = evento.getDataFim();
@@ -197,7 +206,7 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
                 }
 
                 try {
-                    // Converte somente se o usuário digitou
+                    // Converte só se o usuário escreveu
                     if (!horaIniFiltroStr.isEmpty()) {
                         LocalTime horaIniFiltro = LocalTime.parse(horaIniFiltroStr);
                         match &= !evento.getHoraInicio().isBefore(horaIniFiltro);  // >=

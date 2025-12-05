@@ -28,12 +28,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JanelaTodasInscricoesController extends GlobalController {
+public class JanelaTodasInscricoesController extends GlobalController<Inscricao, Evento> {
 
     @Override
-    protected void colocarT(Object objeto, Object controller) {}
+    protected void colocarT(Evento evento, Object controller) {
+        if(controller instanceof JanelaInscreverController c) {
+            c.eventoAberto = evento;
+            c.posCarregamento();
+        }
+    }
     @Override
-    protected void colocarA(Object objetoA, Object controller) {}
+    protected void colocarA(Inscricao inscricao, Object controller) {
+        if(controller instanceof ModalInscricaoController c) {
+            c.inscricaoAberta = inscricao;
+            c.posCarregamento();
+
+            c.confirmou.addListener((property,antigo,novo) -> {
+                atualizaTabela();
+            });
+        }
+    }
     @Override
     protected void defineBorderPane(Object controller) {};
 
@@ -106,8 +120,7 @@ public class JanelaTodasInscricoesController extends GlobalController {
     // LISTA FILTRADA
     FilteredList<Inscricao> filteredList = new FilteredList<>(observableList, p -> true);
 
-    @FXML
-    public void initialize() {
+    public void posCarregamento() {
         campoTipoRelatorio.getItems().addAll("CSV","Excel");
         campoTipoRelatorio.setValue("Excel");
 
@@ -133,7 +146,9 @@ public class JanelaTodasInscricoesController extends GlobalController {
     ChangeListener<Object> filtroListener;
 
     public void defineListerners() {
-        filtroListener = (obs, oldValue, newValue) -> {filteredList.setPredicate(inscricao -> {
+        filtroListener = (obs, oldValue, newValue) -> {
+
+            filteredList.setPredicate(inscricao -> {
 
                 String nomeFiltro = campoNome.getText().toLowerCase();
                 String emailFiltro = campoEmail.getText().toLowerCase();
@@ -151,31 +166,34 @@ public class JanelaTodasInscricoesController extends GlobalController {
                 }
 
                 boolean match = true;
-                if (!nomeFiltro.isEmpty()) {match &= inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);}
-                if (!emailFiltro.isEmpty()) {match &= inscricao.getPessoa().getEmail().toLowerCase().contains(emailFiltro);}
-                if (!telefoneFiltro.isEmpty()) { match &= (inscricao.getPessoa().getTelefone().contains(telefoneFiltro));}
-
-
+                if (!nomeFiltro.isEmpty()) {
+                    match &= inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);
+                }
+                if (!emailFiltro.isEmpty()) {
+                    match &= inscricao.getPessoa().getEmail().toLowerCase().contains(emailFiltro);
+                }
+                if (!telefoneFiltro.isEmpty()) {
+                    match &= (inscricao.getPessoa().getTelefone().contains(telefoneFiltro));
+                }
                 if (tipoFiltro != null && !tipoFiltro.isEmpty()) {
                     match &= inscricao.getTipoIngresso().equalsIgnoreCase(tipoFiltro);
                 }
                 if (statusFiltro != null && !statusFiltro.isEmpty()) {
                     match &= inscricao.getStatus().equalsIgnoreCase(statusFiltro);
                 }
+
+
                 LocalDate dataNascimento = inscricao.getPessoa().getDataNascimento();
 
                 if (dataIniFiltro != null && dataNascimento != null) {
                     match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
                 }
-
                 if (dataFimFiltro != null && dataNascimento != null) {
                     match &= !dataNascimento.isAfter(dataFimFiltro);   // >=
                 }
-
                 if (dataInscricaoMaximaFiltro != null && inscricao.getDataCriacao() != null) {
                     match &= !inscricao.getDataCriacao().isBefore(dataInscricaoMaximaFiltro);       // <=
                 }
-
                 if (dataInscricaoMinimaFiltro != null && inscricao.getDataCriacao() != null) {
                     match &= !inscricao.getDataCriacao().isAfter(dataInscricaoMinimaFiltro);       // <=
                 }
@@ -245,7 +263,7 @@ public class JanelaTodasInscricoesController extends GlobalController {
                     Inscricao inscricaoAberta = getTableView().getItems().get(getIndex());
 
                     try {
-                        modal("/fxml/janelaEvento/novo/modalEditarInscricao.fxml",inscricaoAberta);
+                        modal("/fxml/janelaEvento/novo/modalEditarInscricao.fxml",null,inscricaoAberta);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -269,27 +287,13 @@ public class JanelaTodasInscricoesController extends GlobalController {
         });
 
 
-        /*
-        colId.setPrefWidth(50);
-        col2.setPrefWidth(100);
-        col3.setPrefWidth(100);
-        col4.setPrefWidth(70);
-        col5.setPrefWidth(100);
-        col6.setPrefWidth(80);
-        col7.setPrefWidth(50);// BOTÃO REMOVER
-        col8.setPrefWidth(50);// BOTÃO ABRIR
-        col5.setPrefWidth(0);
-        col6.setPrefWidth(0);
-
-         */
-
         colId.setText("ID");
         col2.setText("Nome");
         col3.setText("Email");
         col4.setText("Telefone");
         col5.setText("Data de Nascimento");
         col6.setText("Tipo de Ingresso");
-        col7.setText("");
+        col7.setText("Status");
         col8.setText("");
         col9.setText("");
         col10.setText("");
@@ -308,14 +312,12 @@ public class JanelaTodasInscricoesController extends GlobalController {
         col9.setMaxWidth(1f * Integer.MAX_VALUE * 3);
         col10.setMaxWidth(1f * Integer.MAX_VALUE * 0);
 
-
         colId.setStyle("-fx-alignment: CENTER;");
         col2.setStyle("-fx-alignment: CENTER;");
         col3.setStyle("-fx-alignment: CENTER;");
         col4.setStyle("-fx-alignment: CENTER;");
         col5.setStyle("-fx-alignment: CENTER;");
         col6.setStyle("-fx-alignment: CENTER;");
-        col7.setStyle("-fx-alignment: CENTER;");
         col8.setStyle("-fx-alignment: CENTER;");
 
         // Lista ordenável

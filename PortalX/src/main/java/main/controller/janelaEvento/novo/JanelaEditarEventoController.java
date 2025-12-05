@@ -26,6 +26,10 @@ public class JanelaEditarEventoController extends GlobalController<Evento, Event
             cS.eventoAberto = evento;
             cS.posCarregamento();
         }
+        if(controller instanceof JanelaTodasInscricoesController cI) {
+            cI.eventoAberto = evento;
+            cI.posCarregamento();
+        }
     }
     @Override
     protected void colocarA(Evento evento, Object controller) {}

@@ -19,8 +19,8 @@ public class JavaFX extends Application {
         this.stage = primaryStage;
         stage.setTitle("Portal X");
 
-        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
-        //FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/teste.fxml"));
+        //FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/menuPrincipal/novo/menuPrincipal.fxml"));
+        FXMLLoader appLoader = new FXMLLoader(getClass().getResource("/fxml/teste.fxml"));
 
         Parent app = appLoader.load();
 

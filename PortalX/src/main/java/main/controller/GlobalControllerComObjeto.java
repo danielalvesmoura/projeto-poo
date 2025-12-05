@@ -37,7 +37,7 @@ public abstract class GlobalControllerComObjeto<A, T> {
         borderpaneMenor.setCenter(app);
     }
 
-    public void modal(String caminho, T objeto) throws Exception {
+    public void modal(String caminho, T objeto, A objetoA) throws Exception {
         FXMLLoader appLoader = new FXMLLoader(getClass().getResource(caminho));
 
         Parent app = appLoader.load();
@@ -45,6 +45,7 @@ public abstract class GlobalControllerComObjeto<A, T> {
         Object controller = appLoader.getController();
 
         colocarT(objeto,controller);
+        colocarA(objetoA,controller);
         defineBorderPane(controller);
 
         Stage modal = new Stage();

@@ -288,7 +288,7 @@ public class ModalSalasController extends GlobalController<Object,Sala> {
 
                     try {
                         System.out.println("era pra abrir");
-                        modal("/fxml/janelaEvento/novo/modalCronogramaSala.fxml", salaAberta);
+                        modal("/fxml/janelaEvento/novo/modalCronogramaSala.fxml", salaAberta, null);
 
                     } catch (Exception e) {}
                 });

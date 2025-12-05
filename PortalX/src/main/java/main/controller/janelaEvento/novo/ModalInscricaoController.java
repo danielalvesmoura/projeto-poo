@@ -1,5 +1,6 @@
 package main.controller.janelaEvento.novo;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -12,35 +13,19 @@ import java.io.IOException;
 
 public class ModalInscricaoController {
 
-    public Stage stage;
-    JanelaTodasInscricoesController janelaTodasInscricoesController;
     public Inscricao inscricaoAberta;
-
-    public ModalInscricaoController(Stage stage, JanelaTodasInscricoesController janelaTodasInscricoesController, Inscricao inscricaoAberta) {
-        this.stage = stage;
-        this.janelaTodasInscricoesController = janelaTodasInscricoesController;
-        this.inscricaoAberta = inscricaoAberta;
-    }
-
-    public ModalInscricaoController(Stage stage, JanelaTodasInscricoesController janelaTodasInscricoesController) {
-        this.stage = stage;
-        this.janelaTodasInscricoesController = janelaTodasInscricoesController;
-    }
 
     @FXML
     public ChoiceBox campoTipo;
     @FXML
     public ChoiceBox campoStatus;
 
-
-    @FXML
-    public void initialize() {
+    public void posCarregamento() {
         campoTipo.getItems().addAll("Participante","Palestrante");
         campoStatus.getItems().addAll("Pendente","Confirmada","Cancelada");
 
         campoTipo.setValue(inscricaoAberta.getTipoIngresso());
         campoStatus.setValue(inscricaoAberta.getStatus());
-
     }
 
     InscricaoServico inscricaoServico = new InscricaoServico();
@@ -57,6 +42,8 @@ public class ModalInscricaoController {
     public void cancelar() {
         fechar();
     }
+
+    public SimpleBooleanProperty confirmou = new SimpleBooleanProperty(false);
 
     @FXML
     public void confirmar() throws IOException {
@@ -78,7 +65,8 @@ public class ModalInscricaoController {
 
         inscricaoServico.alterar(inscricaoAberta,statusInscricao,tipoIngresso);
 
-        janelaTodasInscricoesController.atualizaTabela();
+        confirmou.set(true);
+
         fechar();
     }
 

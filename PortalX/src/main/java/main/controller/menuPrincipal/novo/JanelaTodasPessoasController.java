@@ -214,7 +214,7 @@ public class JanelaTodasPessoasController extends GlobalController<Pessoa, Pesso
                     Pessoa pessoa = getTableView().getItems().get(getIndex());
 
                     try {
-                        modal("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml", pessoa);
+                        modal("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml", pessoa, null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

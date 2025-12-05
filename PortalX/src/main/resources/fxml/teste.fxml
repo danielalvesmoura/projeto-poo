@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="719.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.TesteController">
+<AnchorPane prefHeight="719.0" prefWidth="856.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controller.TesteController">
    <children>
       <TextField fx:id="campoNome" layoutX="27.0" layoutY="178.0">
          <font>
@@ -16,10 +16,11 @@
             <Font size="33.0" />
          </font>
       </Label>
-      <TableView fx:id="tabela" layoutX="370.0" layoutY="110.0" prefHeight="465.0" prefWidth="200.0">
+      <TableView fx:id="tabela" layoutX="275.0" layoutY="121.0" prefHeight="465.0" prefWidth="384.0">
         <columns>
           <TableColumn fx:id="col1" prefWidth="131.0" text="C1" />
             <TableColumn fx:id="col2" prefWidth="71.0" text="C1" />
+            <TableColumn fx:id="col3" prefWidth="71.0" text="C1" />
         </columns>
       </TableView>
       <Button layoutX="172.0" layoutY="343.0" mnemonicParsing="false" onAction="#enviar" text="enviar" />
@@ -53,5 +54,11 @@
             <Font size="33.0" />
          </font>
       </Label>
+      <Label fx:id="titulo" layoutX="400.0" layoutY="55.0" text="Label">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choiceAtributo" layoutX="675.0" layoutY="300.0" prefHeight="39.0" prefWidth="161.0" />
    </children>
 </AnchorPane>

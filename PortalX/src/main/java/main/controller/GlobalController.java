@@ -11,6 +11,13 @@ import main.JavaFX;
 
 public abstract class GlobalController<A, T> extends GlobalControllerComObjeto<A, T> {
 
+    public String cssCelulaVerde =
+            "-fx-background-color: rgba(0, 255, 8, 0.2); " +       // verde suave
+            "-fx-background-radius: 40; " +        // forma oval
+            "-fx-text-fill: rgba(107, 255, 111, 1); " +           // texto verde escuro
+            "-fx-font-weight: bold;" +
+            "-fx-alignment: CENTER;";
+
     public void trocaTela(String caminho) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
 

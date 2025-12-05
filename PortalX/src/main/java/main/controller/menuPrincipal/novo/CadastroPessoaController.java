@@ -83,7 +83,6 @@ public class CadastroPessoaController {
                 }
 
                 confirmou.set(true);
-                confirmou.set(false);
 
                 fechar();
 
