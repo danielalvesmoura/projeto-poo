@@ -15,11 +15,11 @@ public class Teste {
 
     public static void main(String[] args) {
 
-        GeraEventos.geraEventos(100);
+        GeraEventos.geraEventos(10000);
 
-        GeraPessoas.geraPessoas(1000);
+        //GeraPessoas.geraPessoas(1000);
 
-        GeraSalas.geraSalas(1000);
+        //GeraSalas.geraSalas(1000);
 
         //GeraSessoes.geraSessoes(1000);
 

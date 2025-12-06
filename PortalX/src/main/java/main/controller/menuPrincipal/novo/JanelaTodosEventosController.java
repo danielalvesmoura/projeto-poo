@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.controller.FiltroGenerico;
 import main.controller.GlobalController;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
 import main.controller.janelaEvento.novo.SecaoDetalhesController;
@@ -164,7 +165,51 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
         col8.setStyle("-fx-alignment: CENTER;");
 
 
+        /*
+        ChangeListener<Object> filtroListener = (obs, valorAntigo, valorNovo) -> {
+
+            filteredList.setPredicate(item -> {
+
+                String filtroNome = campoNome.getText().toLowerCase();
+                String filtroEndereco = campoEndereco.getText().toLowerCase();
+                String filtroCapacidade = campoCapacidade.getText().toLowerCase();
+
+                LocalDate filtroDataInicio = campoDataInicio.getValue();
+                LocalDate filtroDataFim = campoDataFim.getValue();
+
+                String filtroHoraInicio = campoHoraInicio.toString();
+                String filtroHoraFim = campoHoraFim.toString();
+
+
+                if (filtroNome.isEmpty() && filtroEndereco.isEmpty() && filtroCapacidade.isEmpty() && filtroDataInicio == null) {
+                    return true;
+                }
+
+                if(!item.getNome().toLowerCase().contains(filtroNome) ||
+                   !item.getEndereco().toLowerCase().contains(filtroEndereco) ||
+                   !item.getCapacidade().toLowerCase().contains(filtroCapacidade)) return false;
+
+
+
+
+
+
+
+                return true;
+            });
+        };
+
+
+
+        campoNome.textProperty().addListener(filtroListener);
+        campoEndereco.textProperty().addListener(filtroListener);
+        campoCapacidade.textProperty().addListener(filtroListener);
+
+         */
+
         // FILTRO
+
+
 
         ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
 
@@ -196,7 +241,7 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
                 }
 
                 LocalDate dataInicioEvento = evento.getDataInicio();
-                LocalDate dataFimEvento    = evento.getDataFim();
+                LocalDate dataFimEvento = evento.getDataFim();
 
                 if (dataIniFiltro != null && dataInicioEvento != null) {
                     match &= !dataInicioEvento.isBefore(dataIniFiltro);   // >=
@@ -232,6 +277,10 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
         campoHoraFim.textProperty().addListener(filtroListener);
         campoDataInicio.valueProperty().addListener(filtroListener);
         campoDataFim.valueProperty().addListener(filtroListener);
+
+         
+
+
     }
 
     public void atualizaTabela() {

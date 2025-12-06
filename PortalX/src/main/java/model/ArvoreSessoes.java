@@ -84,7 +84,7 @@ public class ArvoreSessoes {
         System.out.println("\nInicio da raiz: " + raiz.inicio);
         System.out.println("Fim da raiz: " + raiz.fim);
 
-        // Confere se a nova sessão termina antes da sessão atual
+        // checa se a nova sessao termina antes da sessão atual
         if (fim.isBefore(raiz.inicio) || fim.isEqual(raiz.inicio)) {
             raiz.esquerda = add(raiz.esquerda, sessao);
         }
