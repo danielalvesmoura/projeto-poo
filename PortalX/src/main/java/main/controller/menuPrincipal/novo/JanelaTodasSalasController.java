@@ -43,6 +43,11 @@ public class JanelaTodasSalasController extends GlobalController<Object,Sala> {
     protected void defineBorderPane(Object controller) {}
 
     @FXML
+    public void fechar() throws Exception {
+        trocaTela("/fxml/menuPrincipal/novo/menuPrincipal.fxml");
+    }
+
+    @FXML
     public void adicionar() throws Exception {
         modal("/fxml/menuPrincipal/novo/modalCadastroSala.fxml");
     }
@@ -110,16 +115,18 @@ public class JanelaTodasSalasController extends GlobalController<Object,Sala> {
         campoTipoRelatorio.setValue("Excel");
 
         colId.setText("ID");
-        col2.setText("Nota");
+        col2.setText("");
         col3.setText("Nome");
         col4.setText("Localização");
         col5.setText("Capacidade");
         col6.setText("");
         col7.setText("");
-
+        col8.setText("");
+        col9.setText("");
+        col9.setText("");
 
         colId.setPrefWidth(50);
-        col2.setPrefWidth(50);
+        col2.setPrefWidth(0);
         col3.setPrefWidth(200);
         col4.setPrefWidth(300);
         col5.setPrefWidth(150);
@@ -157,13 +164,17 @@ public class JanelaTodasSalasController extends GlobalController<Object,Sala> {
                 }
 
                 boolean match = true;
-                if (!nomeFiltro.isEmpty()) {match &= sala.getNome().toLowerCase().contains(nomeFiltro);}
-                if (!localizacaoFiltro.isEmpty()) {match &= sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);}
+                if (!nomeFiltro.isEmpty()) {
+                    match = match && sala.getNome().toLowerCase().contains(nomeFiltro);
+                }
+                if (!localizacaoFiltro.isEmpty()) {
+                    match = match && sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);
+                }
 
                 if (!capacidadeMinimaFiltro.isEmpty()) {
                     try {
                         int minimo = Integer.parseInt(capacidadeMinimaFiltro);
-                        match &= sala.getCapacidade() >= minimo;
+                        match = match && sala.getCapacidade() >= minimo;
 
                     } catch (NumberFormatException e) {
                         return false;
@@ -173,7 +184,7 @@ public class JanelaTodasSalasController extends GlobalController<Object,Sala> {
                 if (!capacidadeMaximaFiltro.isEmpty()) {
                     try {
                         int max = Integer.parseInt(capacidadeMaximaFiltro);
-                        match &= sala.getCapacidade() <= max;
+                        match = match && sala.getCapacidade() <= max;
                     } catch (NumberFormatException e) {
                         return false;
                     }
@@ -202,7 +213,6 @@ public class JanelaTodasSalasController extends GlobalController<Object,Sala> {
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("Nota"));
         col3.setCellValueFactory(new PropertyValueFactory<>("Nome"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Localizacao"));
         col5.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));

@@ -21,8 +21,8 @@ public class Evento implements Exportavel {
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Sessao> sessoes;
 
-    @Transient
-    private ListaEncadeadaInscricoes inscricoes = new ListaEncadeadaInscricoes();
+    //@Transient
+    //private ListaEncadeadaInscricoes inscricoes = new ListaEncadeadaInscricoes();
 
     @Column(length = 100)
     private LocalDate dataFim;
@@ -67,13 +67,13 @@ public class Evento implements Exportavel {
         return cabecalho;
     }
 
-    public ListaEncadeadaInscricoes getInscricoes() {
-        return inscricoes;
-    }
+    //public ListaEncadeadaInscricoes getInscricoes() {
+    //    return inscricoes;
+    //}
 
-    public void setInscricoes(ListaEncadeadaInscricoes inscricoes) {
-        this.inscricoes = inscricoes;
-    }
+    //public void setInscricoes(ListaEncadeadaInscricoes inscricoes) {
+    //    this.inscricoes = inscricoes;
+    //}
 
     public void setSessoes(List<Sessao> sessoes) {
         this.sessoes = sessoes;
@@ -154,6 +154,6 @@ public class Evento implements Exportavel {
     }
 
     public String getCapacidadeView() {
-        return inscricoes.getTamanho() + " / " + capacidade;
+        return sessoes.size() + " / " + capacidade;
     }
 }

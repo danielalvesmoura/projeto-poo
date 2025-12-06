@@ -43,6 +43,11 @@ public class JanelaEditarEventoController extends GlobalController<Evento, Event
         }
     };
 
+    @FXML
+    private BorderPane conteudo;          // INJETADO DO FXML DO PAI
+    @FXML
+    private BorderPane borderpaneMenor;   // também do pai
+
 
     public Evento eventoAberto;
 
@@ -60,11 +65,6 @@ public class JanelaEditarEventoController extends GlobalController<Evento, Event
     public Button botaoSessoes;
     @FXML
     public Button botaoInscricoes;
-
-    @FXML
-    private BorderPane conteudo;          // ← INJETADO DO FXML DO PAI
-    @FXML
-    private BorderPane borderpaneMenor;   // ← também do pai
 
     public void posCarregamento() throws Exception {
         setPanes(conteudo, borderpaneMenor);

@@ -183,16 +183,16 @@ public class ModalSalasController extends GlobalController<Object,Sala> {
                 boolean match = true;
 
                 if (!nomeFiltro.isEmpty()) {
-                    match &= sala.getNome().toLowerCase().contains(nomeFiltro);
+                    match = match && sala.getNome().toLowerCase().contains(nomeFiltro);
                 }
                 if (!localizacaoFiltro.isEmpty()) {
-                    match &= sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);
+                    match = match && sala.getLocalizacao().toLowerCase().contains(localizacaoFiltro);
                 }
 
                 if (!capacidadeMinimaFiltro.isEmpty()) {
                     try {
                         int min = Integer.parseInt(capacidadeMinimaFiltro);
-                        match &= sala.getCapacidade() >= min;
+                        match = match && sala.getCapacidade() >= min;
                     } catch (NumberFormatException e) {
                         return false;
                     }
@@ -202,7 +202,7 @@ public class ModalSalasController extends GlobalController<Object,Sala> {
                 if (!capacidadeMaximaFiltro.isEmpty()) {
                     try {
                         int max = Integer.parseInt(capacidadeMaximaFiltro);
-                        match &= sala.getCapacidade() <= max;
+                        match = match && sala.getCapacidade() <= max;
                     } catch (NumberFormatException e) {
                         return false;
                     }

@@ -140,18 +140,15 @@ public class ArvoreSessoes {
             return;
         }
 
-        // Percorre a subárvore esquerda
         adicionaItensNaLista(observableList, raiz.esquerda);
 
-        // Adiciona o nó atual
         observableList.add(raiz.sessao);
 
-        // Percorre a subárvore direita
         adicionaItensNaLista(observableList, raiz.direita);
     }
 
 
-    public boolean contains(Sessao s) {
+    public boolean buscaSessao(Sessao s) {
         return buscar(sessaoRaiz, s) != null;
     }
 
@@ -160,18 +157,14 @@ public class ArvoreSessoes {
             return null;
         }
 
-        if (raiz.sessao.getDataInicio().equals(s.getDataInicio()) &&
-                raiz.sessao.getHoraInicio().equals(s.getHoraInicio()) &&
-                raiz.sessao.getDataFim().equals(s.getDataFim()) &&
-                raiz.sessao.getHoraFim().equals(s.getHoraFim())) {
+        if (raiz.sessao.getDataInicio().equals(s.getDataInicio()) && raiz.sessao.getHoraInicio().equals(s.getHoraInicio()) && raiz.sessao.getDataFim().equals(s.getDataFim()) && raiz.sessao.getHoraFim().equals(s.getHoraFim())) {
             return raiz;
         }
 
         // Comparação: iniciar comparando data/hora de início
         LocalDateTime inicio = s.getDataInicio().atTime(s.getHoraInicio());
 
-        LocalDateTime inicioRaiz = raiz.sessao.getDataInicio()
-                .atTime(raiz.sessao.getHoraInicio());
+        LocalDateTime inicioRaiz = raiz.sessao.getDataInicio().atTime(raiz.sessao.getHoraInicio());
 
         if (inicio.isAfter(inicioRaiz)) {
             return buscar(raiz.direita, s);

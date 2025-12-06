@@ -31,8 +31,12 @@ import java.util.List;
 public class JanelaTodasInscricoesController extends GlobalController<Inscricao, Evento> {
 
     @Override
-    protected void colocarT(Evento evento, Object controller) {
+    protected void colocarT(Evento evento, Object controller) throws Exception {
         if(controller instanceof JanelaInscreverController c) {
+            c.eventoAberto = evento;
+            c.posCarregamento();
+        }
+        if(controller instanceof JanelaEditarEventoController c) {
             c.eventoAberto = evento;
             c.posCarregamento();
         }
@@ -167,35 +171,35 @@ public class JanelaTodasInscricoesController extends GlobalController<Inscricao,
 
                 boolean match = true;
                 if (!nomeFiltro.isEmpty()) {
-                    match &= inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);
+                    match = match && inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);
                 }
                 if (!emailFiltro.isEmpty()) {
-                    match &= inscricao.getPessoa().getEmail().toLowerCase().contains(emailFiltro);
+                    match = match && inscricao.getPessoa().getEmail().toLowerCase().contains(emailFiltro);
                 }
                 if (!telefoneFiltro.isEmpty()) {
-                    match &= (inscricao.getPessoa().getTelefone().contains(telefoneFiltro));
+                    match = match && (inscricao.getPessoa().getTelefone().contains(telefoneFiltro));
                 }
                 if (tipoFiltro != null && !tipoFiltro.isEmpty()) {
-                    match &= inscricao.getTipoIngresso().equalsIgnoreCase(tipoFiltro);
+                    match = match && inscricao.getTipoIngresso().equalsIgnoreCase(tipoFiltro);
                 }
                 if (statusFiltro != null && !statusFiltro.isEmpty()) {
-                    match &= inscricao.getStatus().equalsIgnoreCase(statusFiltro);
+                    match = match && inscricao.getStatus().equalsIgnoreCase(statusFiltro);
                 }
 
 
                 LocalDate dataNascimento = inscricao.getPessoa().getDataNascimento();
 
                 if (dataIniFiltro != null && dataNascimento != null) {
-                    match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
+                    match = match && !dataNascimento.isBefore(dataIniFiltro);   // >=
                 }
                 if (dataFimFiltro != null && dataNascimento != null) {
-                    match &= !dataNascimento.isAfter(dataFimFiltro);   // >=
+                    match = match && !dataNascimento.isAfter(dataFimFiltro);   // >=
                 }
                 if (dataInscricaoMaximaFiltro != null && inscricao.getDataCriacao() != null) {
-                    match &= !inscricao.getDataCriacao().isBefore(dataInscricaoMaximaFiltro);       // <=
+                    match = match && !inscricao.getDataCriacao().isBefore(dataInscricaoMaximaFiltro);       // <=
                 }
                 if (dataInscricaoMinimaFiltro != null && inscricao.getDataCriacao() != null) {
-                    match &= !inscricao.getDataCriacao().isAfter(dataInscricaoMinimaFiltro);       // <=
+                    match = match && !inscricao.getDataCriacao().isAfter(dataInscricaoMinimaFiltro);       // <=
                 }
 
                 return match;

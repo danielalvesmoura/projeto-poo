@@ -146,18 +146,18 @@ public class JanelaTodasPessoasController extends GlobalController<Pessoa, Pesso
                 }
                 boolean match = true;
 
-                if (!nomeFiltro.isEmpty()) {match &= pessoa.getNome().toLowerCase().contains(nomeFiltro);}
-                if (!emailFiltro.isEmpty()) {match &= pessoa.getEmail().toLowerCase().contains(emailFiltro);}
-                if (!telefoneFiltro.isEmpty()) { match &= (pessoa.getTelefone().contains(telefoneFiltro));}
+                if (!nomeFiltro.isEmpty()) {match = match && pessoa.getNome().toLowerCase().contains(nomeFiltro);}
+                if (!emailFiltro.isEmpty()) {match = match && pessoa.getEmail().toLowerCase().contains(emailFiltro);}
+                if (!telefoneFiltro.isEmpty()) { match = match && (pessoa.getTelefone().contains(telefoneFiltro));}
 
                 LocalDate dataNascimento = pessoa.getDataNascimento();
 
                 if (dataIniFiltro != null && dataNascimento != null) {
-                    match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
+                    match = match && !dataNascimento.isBefore(dataIniFiltro);   // >=
                 }
 
                 if (dataFimFiltro != null && dataNascimento != null) {
-                    match &= !dataNascimento.isAfter(dataFimFiltro);       // <=
+                    match = match && !dataNascimento.isAfter(dataFimFiltro);       // <=
                 }
 
                 return match;

@@ -186,22 +186,22 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
                 boolean match = true;
 
                 if (!nomeFiltro.isEmpty()) {
-                    match &= pessoa.getNome().toLowerCase().contains(nomeFiltro);
+                    match = match && pessoa.getNome().toLowerCase().contains(nomeFiltro);
                 }
                 if (!emailFiltro.isEmpty()) {
-                    match &= pessoa.getEmail().toLowerCase().contains(emailFiltro);
+                    match = match && pessoa.getEmail().toLowerCase().contains(emailFiltro);
                 }
                 if (!telefoneFiltro.isEmpty()) {
-                    match &= (pessoa.getTelefone().contains(telefoneFiltro));
+                    match = match && (pessoa.getTelefone().contains(telefoneFiltro));
                 }
 
                 LocalDate dataNascimento = pessoa.getDataNascimento();
 
                 if (dataIniFiltro != null && dataNascimento != null) {
-                    match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
+                    match = match && !dataNascimento.isBefore(dataIniFiltro);   // >=
                 }
                 if (dataFimFiltro != null && dataNascimento != null) {
-                    match &= !dataNascimento.isAfter(dataFimFiltro);       // <=
+                    match = match && !dataNascimento.isAfter(dataFimFiltro);       // <=
                 }
 
                 return match;

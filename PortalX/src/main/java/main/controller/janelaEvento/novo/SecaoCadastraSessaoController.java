@@ -63,11 +63,7 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
     public void trocarSala() throws Exception {
         modal("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml",eventoAberto, null);
 
-
     }
-
-
-    EventoServico eventoServico = new EventoServico();
 
     @FXML
     public TextField campoTitulo;
@@ -196,8 +192,5 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
         }
 
     }
-
-    JanelaEditarEventoController janelaEditarEventoController;
-
 
 }

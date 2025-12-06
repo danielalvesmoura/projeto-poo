@@ -231,35 +231,35 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
                 boolean match = true;
 
                 if (!nomeFiltro.isEmpty()) {
-                    match &= evento.getNome().toLowerCase().contains(nomeFiltro);
+                    match = match && evento.getNome().toLowerCase().contains(nomeFiltro);
                 }
                 if (!enderecoFiltro.isEmpty()) {
-                    match &= evento.getEndereco().toLowerCase().contains(enderecoFiltro);
+                    match = match && evento.getEndereco().toLowerCase().contains(enderecoFiltro);
                 }
                 if (!capacidadeFiltro.isEmpty()) {
-                    match &= (evento.getCapacidade().contains(capacidadeFiltro));
+                    match = match && (evento.getCapacidade().contains(capacidadeFiltro));
                 }
 
                 LocalDate dataInicioEvento = evento.getDataInicio();
                 LocalDate dataFimEvento = evento.getDataFim();
 
                 if (dataIniFiltro != null && dataInicioEvento != null) {
-                    match &= !dataInicioEvento.isBefore(dataIniFiltro);   // >=
+                    match = match && !dataInicioEvento.isBefore(dataIniFiltro);   // >=
                 }
                 if (dataFimFiltro != null && dataFimEvento != null) {
-                    match &= !dataFimEvento.isAfter(dataFimFiltro);       // <=
+                    match = match && !dataFimEvento.isAfter(dataFimFiltro);       // <=
                 }
 
                 try {
                     // Converte só se o usuário escreveu
                     if (!horaIniFiltroStr.isEmpty()) {
                         LocalTime horaIniFiltro = LocalTime.parse(horaIniFiltroStr);
-                        match &= !evento.getHoraInicio().isBefore(horaIniFiltro);  // >=
+                        match = match && !evento.getHoraInicio().isBefore(horaIniFiltro);  // >=
                     }
 
                     if (!horaFimFiltroStr.isEmpty()) {
                         LocalTime horaFimFiltro = LocalTime.parse(horaFimFiltroStr);
-                        match &= !evento.getHoraFim().isAfter(horaFimFiltro);      // <=
+                        match = match && !evento.getHoraFim().isAfter(horaFimFiltro);      // <=
                     }
 
                 } catch (Exception e) {
@@ -290,7 +290,7 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
 
         // CARREGA LISTAS DE INSCRICOES DOS EVENTOS
         for (Evento e : eventos) {
-            eventoServico.carregaListaInscricoes(e);
+            //eventoServico.carregaListaInscricoes(e);
 
             observableList.add(e);
         }

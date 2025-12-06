@@ -60,7 +60,7 @@ public class InscricaoServico {
 
             vagasDisponiveis--;
 
-            evento.getInscricoes().adicionar(inscricao.getId());
+            //evento.getInscricoes().adicionar(inscricao.getId());
         }
 
         System.out.println("Vagas disponiveis depois da inscrição: " + vagasDisponiveis);

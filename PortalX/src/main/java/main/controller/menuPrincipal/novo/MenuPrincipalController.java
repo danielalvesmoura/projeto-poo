@@ -13,6 +13,10 @@ import main.controller.GlobalController;
 
 public class MenuPrincipalController extends GlobalController {
 
+    public void passarStage(Stage stage) {
+        super.stage = stage;
+    }
+
     @Override
     protected void colocarT(Object objeto, Object controller) {}
     @Override

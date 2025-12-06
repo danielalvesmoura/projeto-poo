@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class JavaFX extends Application {
 
-    private static Stage stage;
+    private Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -24,6 +24,9 @@ public class JavaFX extends Application {
 
         Parent app = appLoader.load();
 
+        MenuPrincipalController c = appLoader.getController();
+        c.passarStage(stage);
+
         Scene scene = new Scene(app);
 
         stage.setScene(scene);
@@ -32,7 +35,10 @@ public class JavaFX extends Application {
         stage.show();
     }
 
+    /*
     public static Stage getStage() {
         return stage;
     }
+
+     */
 }

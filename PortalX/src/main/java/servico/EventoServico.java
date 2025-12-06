@@ -24,6 +24,8 @@ public class EventoServico {
     private InscricaoDAO inscricaoDAO = new InscricaoDAO();
     private List<Inscricao> inscricoes = inscricaoDAO.buscarTodos(Inscricao.class);
 
+
+    /*
     public void carregaListaInscricoes(Evento evento) {
         for(Inscricao i : inscricoes) {
             if(evento.getId() == i.getEventoId()) {
@@ -31,6 +33,10 @@ public class EventoServico {
             }
         }
     }
+
+     */
+
+
 
     public void cadastrar(String nome, String descricao, String endereco, LocalDate dataInicio, String horaInicio, LocalDate dataFim, String horaFim, int capacidade) {
         Evento evento = new Evento(nome, descricao, endereco, dataInicio, horaInicio, dataFim, horaFim, capacidade);

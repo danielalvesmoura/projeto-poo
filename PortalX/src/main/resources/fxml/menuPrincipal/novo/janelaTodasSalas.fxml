@@ -12,6 +12,10 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
+             <Button alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#fechar" styleClass="botaoFechar" text="X">
+                 <font>
+                     <Font size="15.0" />
+                 </font></Button>
             <HBox alignment="CENTER" minWidth="0.0">
                <children>
                   <Label minWidth="0.0" text="Todos as salas" HBox.hgrow="ALWAYS">

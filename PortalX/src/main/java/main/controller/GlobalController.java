@@ -57,7 +57,7 @@ public abstract class GlobalController<A, T> extends GlobalControllerComObjeto<A
         modal.initModality(Modality.WINDOW_MODAL);
 
         // Define que a janela principal é a "dona" do modal
-        modal.initOwner(JavaFX.getStage());
+        modal.initOwner(stage);
 
         modal.setResizable(true);
 

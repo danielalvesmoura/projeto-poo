@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import main.JavaFX;
 
 public abstract class GlobalControllerComObjeto<A, T> {
+    protected Stage stage;
+
     @FXML
     public BorderPane conteudo;
     @FXML
@@ -56,7 +58,7 @@ public abstract class GlobalControllerComObjeto<A, T> {
         modal.initModality(Modality.WINDOW_MODAL);
 
         // Define que a janela principal é a "dona" do modal
-        modal.initOwner(JavaFX.getStage());
+        modal.initOwner(stage);
 
         modal.setResizable(true);
 
