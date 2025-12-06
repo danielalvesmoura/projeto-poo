@@ -170,48 +170,36 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
         col8.setStyle("-fx-alignment: CENTER;");
 
         ChangeListener<Object> filtroListener = (obs, oldValue, newValue) -> {
+
             filteredList.setPredicate(pessoa -> {
 
-                // Strings
-                String nomeFiltro       = campoNome.getText().toLowerCase();
-                String emailFiltro   = campoEmail.getText().toLowerCase();
+                String nomeFiltro = campoNome.getText().toLowerCase();
+                String emailFiltro = campoEmail.getText().toLowerCase();
                 String telefoneFiltro = campoTelefone.getText().toLowerCase();
-
-                // Datas (LocalDate)
                 LocalDate dataIniFiltro = campoDataNascimentoMinimo.getValue();
                 LocalDate dataFimFiltro = campoDataNascimentoMaximo.getValue();
 
-                // Se tudo estiver vazio → mostra tudo
-                if (nomeFiltro.isEmpty() &&
-                        emailFiltro.isEmpty() &&
-                        telefoneFiltro.isEmpty() &&
-                        dataIniFiltro == null &&
-                        dataFimFiltro == null) {
-
+                if (nomeFiltro.isEmpty() && emailFiltro.isEmpty() && telefoneFiltro.isEmpty() && dataIniFiltro == null && dataFimFiltro == null) {
                     return true;
                 }
 
                 boolean match = true;
 
-                // -------------------------------------------------------------
-                // 1) FILTROS DE STRING SIMPLES
-                // -------------------------------------------------------------
-                if (!nomeFiltro.isEmpty()) {match &= pessoa.getNome().toLowerCase().contains(nomeFiltro);}
-                if (!emailFiltro.isEmpty()) {match &= pessoa.getEmail().toLowerCase().contains(emailFiltro);}
-                if (!telefoneFiltro.isEmpty()) { match &= (pessoa.getTelefone().contains(telefoneFiltro));}
+                if (!nomeFiltro.isEmpty()) {
+                    match &= pessoa.getNome().toLowerCase().contains(nomeFiltro);
+                }
+                if (!emailFiltro.isEmpty()) {
+                    match &= pessoa.getEmail().toLowerCase().contains(emailFiltro);
+                }
+                if (!telefoneFiltro.isEmpty()) {
+                    match &= (pessoa.getTelefone().contains(telefoneFiltro));
+                }
 
-
-                // -------------------------------------------------------------
-                // 2) FILTROS DE DATA COM >= e <=
-                // -------------------------------------------------------------
                 LocalDate dataNascimento = pessoa.getDataNascimento();
 
-                // data início → deve ser >= campo
                 if (dataIniFiltro != null && dataNascimento != null) {
                     match &= !dataNascimento.isBefore(dataIniFiltro);   // >=
                 }
-
-                // data fim → deve ser <= campo
                 if (dataFimFiltro != null && dataNascimento != null) {
                     match &= !dataNascimento.isAfter(dataFimFiltro);       // <=
                 }
@@ -220,12 +208,9 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
             });
         };
 
-        // Strings
         campoNome.textProperty().addListener(filtroListener);
         campoEmail.textProperty().addListener(filtroListener);
         campoTelefone.textProperty().addListener(filtroListener);
-
-        // Datas
         campoDataNascimentoMaximo.valueProperty().addListener(filtroListener);
         campoDataNascimentoMinimo.valueProperty().addListener(filtroListener);
     }
@@ -256,13 +241,8 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
         col6.setCellValueFactory(param -> param.getValue().selecionadoProperty());
         col6.setCellFactory(CheckBoxTableCell.forTableColumn(col6));
 
-        // Lista ordenável
         SortedList<Pessoa> sortedData = new SortedList<>(filteredList);
-
-        // Liga a ordenação da tabela com a lista ordenada
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-
-        // Adiciona os dados filtrados e ordenados à tabela
         tableView.setItems(sortedData);
 
 
