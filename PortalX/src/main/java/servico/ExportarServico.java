@@ -24,7 +24,6 @@ public class ExportarServico<T> {
             File arquivo = fc.showSaveDialog(null);
 
             if (arquivo != null) {
-
                 gerarCSV(lista, arquivo);
                 Global.mostraMensagem("Portal X","Relatório CSV exportado com sucesso!");
             }
@@ -64,7 +63,6 @@ public class ExportarServico<T> {
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet(lista.get(0).getClass().toString());
 
-        // Cabeçalho
         Row header = sheet.createRow(0);
         String[] colunas = lista.get(0).getCabecalhoVetor();
 
@@ -72,7 +70,6 @@ public class ExportarServico<T> {
             header.createCell(i).setCellValue(colunas[i]);
         }
 
-        // Conteúdo
         int rowIndex = 1;
         for (Exportavel objeto : lista) {
             Row row = sheet.createRow(rowIndex++);
@@ -85,12 +82,10 @@ public class ExportarServico<T> {
 
         }
 
-        // Auto ajustar
         for (int i = 0; i < colunas.length; i++) {
             sheet.autoSizeColumn(i);
         }
 
-        // Salvar arquivo
         try (FileOutputStream fileOut = new FileOutputStream(destino)) {
             wb.write(fileOut);
         } catch (Exception e) {

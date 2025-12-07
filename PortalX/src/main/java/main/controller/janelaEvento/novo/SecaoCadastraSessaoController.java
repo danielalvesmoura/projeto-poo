@@ -189,8 +189,8 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
                 sessaoServico.alterar(salaSelecionada,eventoAberto, sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
             }
 
-            trocaTela("/fxml/janelaEvento/novo/janelaEditarEvento.fxml",eventoAberto);
-            //trocaBorderPane("/fxml/janelaEvento/novo/secaoSessoes.fxml", eventoAberto, null);
+            //trocaTela("/fxml/janelaEvento/novo/janelaEditarEvento.fxml",eventoAberto);
+            trocaBorderPane("/fxml/janelaEvento/novo/secaoSessoes.fxml", eventoAberto, null);
         }
 
     }
