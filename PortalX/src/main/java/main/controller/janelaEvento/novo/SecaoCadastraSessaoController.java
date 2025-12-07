@@ -26,7 +26,7 @@ import java.util.Objects;
 public class SecaoCadastraSessaoController extends GlobalController<Sessao, Evento> {
 
     @Override
-    protected void colocarT(Evento evento, Object controller) {
+    protected void colocarT(Evento evento, Object controller) throws Exception {
         if(controller instanceof ModalSalasController c) {
             c.eventoAberto = evento;
             c.posCarregamento();
@@ -41,16 +41,18 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
             c.posCarregamento();
             c.setPanes(super.conteudo, super.borderpaneMenor);
         }
+        if(controller instanceof JanelaEditarEventoController c) {
+            c.eventoAberto = evento;
+            c.posCarregamento();
+        }
     }
     @Override
     protected void colocarA(Sessao objetoA, Object controller) {}
     @Override
     protected void defineBorderPane(Object controller) {};
-
     @Override
     public void setPanes(BorderPane conteudo, BorderPane bp) {
         super.setPanes(conteudo, bp);
-
     }
 
 
@@ -62,7 +64,6 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
     @FXML
     public void trocarSala() throws Exception {
         modal("/fxml/janelaEvento/novo/modalSalasDisponiveis.fxml",eventoAberto, null);
-
     }
 
     @FXML
@@ -188,7 +189,8 @@ public class SecaoCadastraSessaoController extends GlobalController<Sessao, Even
                 sessaoServico.alterar(salaSelecionada,eventoAberto, sessaoAberta, campoTitulo.getText(), campoDescricao.getText(), tipoSessao, campoDataInicio.getValue(), LocalTime.parse(campoHoraInicio.getText()), campoDataFim.getValue(), LocalTime.parse(campoHoraFim.getText()), statusSessao);
             }
 
-            trocaBorderPane("/fxml/janelaEvento/novo/secaoSessoes.fxml", eventoAberto, null);
+            trocaTela("/fxml/janelaEvento/novo/janelaEditarEvento.fxml",eventoAberto);
+            //trocaBorderPane("/fxml/janelaEvento/novo/secaoSessoes.fxml", eventoAberto, null);
         }
 
     }

@@ -47,19 +47,19 @@ public class ModalCronogramaSala {
     // LISTA FILTRADA
     FilteredList<Sessao> filteredList = new FilteredList<>(observableList, p -> true);
 
-    public void posCarregamento() {
+    public void posCarregamento() throws Exception {
         atualizaTabela();
         tableView.setItems(observableList);
     }
 
     SessaoServico sessaoServico = new SessaoServico();
 
-    public void atualizaTabela() {
+    public void atualizaTabela() throws Exception {
         observableList.clear();
 
         //List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
-        ArvoreSessoes sessoes = sessaoServico.carregaArvoreSala(salaAberta);
+        ArvoreSessoes sessoes = sessaoServico.carregaArvore(salaAberta);
 
         sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
 

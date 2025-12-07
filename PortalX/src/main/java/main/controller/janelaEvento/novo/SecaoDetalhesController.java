@@ -140,7 +140,7 @@ public class SecaoDetalhesController extends GlobalController {
             eventoServico.cadastrar(campoNome.getText(), campoDescricao.getText(), campoEndereco.getText(), campoDataInicio.getValue(), campoHoraInicio.getText(),campoDataFim.getValue(), campoHoraFim.getText(), Integer.parseInt(campoCapacidade.getText()));
 
             try {
-                trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml");
+                trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml",null);
             } catch (Exception e) {
                 e.printStackTrace();
             }

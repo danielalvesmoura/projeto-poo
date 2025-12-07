@@ -43,6 +43,30 @@
                         <ChoiceBox fx:id="campoTipo" prefHeight="31.0" prefWidth="170.0" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label text="Marcar todos">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Button minWidth="0.0" mnemonicParsing="false" onAction="#marcarTodos" styleClass="botaoConfirmar" text="✓">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
+                              <Button minWidth="0.0" mnemonicParsing="false" onAction="#desmarcarTodos" prefHeight="39.0" prefWidth="41.0" styleClass="botaoFechar" text="X">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Region layoutX="164.0" layoutY="10.0" minWidth="0.0" HBox.hgrow="ALWAYS" />
                   <Button minWidth="0.0" mnemonicParsing="false" onAction="#confirmar" styleClass="botaoAdicionar" text="Confirmar" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />

@@ -25,22 +25,17 @@ public class MenuPrincipalController extends GlobalController {
     protected void defineBorderPane(Object controller) {};
 
     @FXML
-    public void initialize() {
-        super.conteudo.setStyle("/fxml/estilos/a.css");
-    }
-
-    @FXML
     public void abreTabelaEventos() throws Exception {
-        trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml");
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml",null);
     }
 
     public void abreJanelaPessoas() throws Exception {
-        trocaTela("/fxml/menuPrincipal/novo/janelaTodasPessoas.fxml");
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodasPessoas.fxml",null);
     }
 
     @FXML
     public void abreJanelaSalas() throws Exception {
-        trocaTela("/fxml/menuPrincipal/novo/janelaTodasSalas.fxml");
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodasSalas.fxml",null);
     }
 
 }

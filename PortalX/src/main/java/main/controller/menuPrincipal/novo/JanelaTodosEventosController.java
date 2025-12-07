@@ -7,23 +7,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import main.controller.FiltroGenerico;
 import main.controller.GlobalController;
 import main.controller.janelaEvento.novo.JanelaEditarEventoController;
-import main.controller.janelaEvento.novo.SecaoDetalhesController;
 import model.Evento;
 import model.Exportavel;
 import servico.EventoServico;
 import servico.ExportarServico;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -32,16 +24,10 @@ import java.util.List;
 public class JanelaTodosEventosController extends GlobalController<Evento, Evento> {
 
     @Override
-    protected void colocarT(Evento evento, Object controller) {
+    protected void colocarT(Evento evento, Object controller) throws Exception {
         if(controller instanceof JanelaEditarEventoController c) {
             c.eventoAberto = evento;
-
-            try {
-                c.posCarregamento();
-            } catch (Exception e) {
-                System.out.println("Erro ao tentar carregar JanelaEditarEventoController");
-            }
-
+            c.posCarregamento();
         }
     }
     @Override
@@ -51,7 +37,7 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
 
     @FXML
     public void fechar() throws Exception {
-        trocaTela("/fxml/menuPrincipal/novo/menuPrincipal.fxml");
+        trocaTela("/fxml/menuPrincipal/novo/menuPrincipal.fxml",null);
     }
 
     @FXML
@@ -297,7 +283,7 @@ public class JanelaTodosEventosController extends GlobalController<Evento, Event
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("Nome"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("CapacidadeView"));
+        col3.setCellValueFactory(new PropertyValueFactory<>("Capacidade"));
         col4.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
         col5.setCellValueFactory(new PropertyValueFactory<>("DataInicio"));
         col6.setCellValueFactory(new PropertyValueFactory<>("HoraInicio"));

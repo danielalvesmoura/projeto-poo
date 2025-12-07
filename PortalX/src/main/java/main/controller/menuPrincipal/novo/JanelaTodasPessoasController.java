@@ -36,13 +36,13 @@ public class JanelaTodasPessoasController extends GlobalController<Pessoa, Pesso
 
     @FXML
     public void fechar() throws Exception {
-        trocaTela("/fxml/menuPrincipal/novo/menuPrincipal.fxml");
+        trocaTela("/fxml/menuPrincipal/novo/menuPrincipal.fxml",null);
     }
 
 
     @FXML
     public void adicionar() throws Exception {
-        modal("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml");
+        modal("/fxml/menuPrincipal/novo/modalCadastroPessoa.fxml",null,null);
     }
 
     @FXML

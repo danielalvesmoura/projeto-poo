@@ -1,23 +1,15 @@
 package main;
 
-import dao.EventoDAO;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import model.Evento;
-import servico.EventoServico;
 import util.geradorDados.*;
 
 public class Teste {
-    EventoServico eventoServico = new EventoServico();
-    EventoDAO eventoDAO = new EventoDAO();
-
 
 
     public static void main(String[] args) {
 
-        GeraEventos.geraEventos(10000);
+        //GeraEventos.geraEventos(1000);
 
-        //GeraPessoas.geraPessoas(1000);
+        GeraPessoas.geraPessoas(1000);
 
         //GeraSalas.geraSalas(1000);
 

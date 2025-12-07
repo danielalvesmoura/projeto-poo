@@ -8,25 +8,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import main.controller.GlobalController;
-import main.controller.menuPrincipal.novo.CadastroPessoaController;
-import main.controller.menuPrincipal.novo.MenuPrincipalController;
 import model.Evento;
 import model.Inscricao;
 import model.Pessoa;
 import servico.InscricaoServico;
 import servico.PessoaServico;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,11 +107,9 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
 
     @FXML
     public void confirmar() throws Exception {
-        List<Pessoa> pessoasSelecionadas = tableView.getItems().stream().filter(Pessoa::isSelecionado).toList();
+        List<Pessoa> pessoasSelecionadas = tableView.getItems().stream().filter(Pessoa::getSelecionado).toList();
 
         inscricaoServico.cadastrar(eventoAberto,pessoasSelecionadas,campoTipo.toString());
-
-
 
         fechar();
     }
@@ -238,7 +227,7 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
             }
         }
 
-        col6.setCellValueFactory(param -> param.getValue().selecionadoProperty());
+        col6.setCellValueFactory(param -> param.getValue().getSelecionadoProperty());
         col6.setCellFactory(CheckBoxTableCell.forTableColumn(col6));
 
         SortedList<Pessoa> sortedData = new SortedList<>(filteredList);
@@ -248,6 +237,20 @@ public class JanelaInscreverController extends GlobalController<Object,Evento> {
 
         labelVagasDisponiveis.setText(inscricaoServico.vagasDisponiveis(eventoAberto) + " / " +
                 inscricaoServico.vagasTotais(eventoAberto) + " vagas disponíveis");
+    }
+
+    @FXML
+    public void marcarTodos() {
+        for (Pessoa pessoa : tableView.getItems()) {
+            pessoa.getSelecionadoProperty().set(true);
+        }
+    }
+
+    @FXML
+    private void desmarcarTodos() {
+        for (Pessoa pessoa : tableView.getItems()) {
+            pessoa.getSelecionadoProperty().set(false);
+        }
     }
 
 

@@ -2,7 +2,6 @@ package model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 
 import javax.persistence.*;
 
@@ -31,9 +30,13 @@ public class Pessoa {
 
     @Transient
     private BooleanProperty selecionado = new SimpleBooleanProperty(false);
-    public boolean isSelecionado() { return selecionado.get(); }
-    public void setSelecionado(boolean valor) { selecionado.set(valor); }
-    public BooleanProperty selecionadoProperty() { return selecionado; }
+
+    public boolean getSelecionado() {
+        return selecionado.get();
+    }
+    public BooleanProperty getSelecionadoProperty() {
+        return selecionado;
+    }
 
     //
 

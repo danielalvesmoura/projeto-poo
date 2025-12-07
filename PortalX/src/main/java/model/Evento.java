@@ -153,7 +153,16 @@ public class Evento implements Exportavel {
         this.endereco = endereco;
     }
 
+    /*
     public String getCapacidadeView() {
-        return sessoes.size() + " / " + capacidade;
+
+        InscricaoServico inscricaoServico = new InscricaoServico();
+        return inscricaoServico.vagasPreenchidas(this) + " / " + capacidade;
+
+
+        return null;
     }
+
+     */
+
 }

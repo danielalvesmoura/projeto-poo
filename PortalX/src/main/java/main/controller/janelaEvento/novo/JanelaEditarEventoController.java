@@ -58,7 +58,7 @@ public class JanelaEditarEventoController extends GlobalController<Evento, Event
 
     @FXML
     public void fechar() throws Exception {
-        trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml");
+        trocaTela("/fxml/menuPrincipal/novo/janelaTodosEventos.fxml",null);
     }
 
     @FXML

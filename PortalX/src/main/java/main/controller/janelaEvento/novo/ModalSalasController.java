@@ -141,12 +141,15 @@ public class ModalSalasController extends GlobalController<Object,Sala> {
         col5.setText("");
         col6.setText("");
         col7.setText("");
+        col8.setText("");
+        col9.setText("");
+        col10.setText("");
 
 
         colId.setPrefWidth(50);
         col2.setPrefWidth(50);
         col3.setPrefWidth(200);
-        col4.setPrefWidth(300);
+        col4.setPrefWidth(80);
         col5.setPrefWidth(0);
         col6.setPrefWidth(100); // BOTÃO SELECIONAR
         col7.setPrefWidth(100); // BOTÃO CRONOGRAMA

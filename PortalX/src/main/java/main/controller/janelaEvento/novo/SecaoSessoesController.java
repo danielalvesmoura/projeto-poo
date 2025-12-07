@@ -20,6 +20,7 @@ import servico.SessaoServico;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 public class SecaoSessoesController extends GlobalController<Sessao, Evento> {
 
@@ -51,7 +52,7 @@ public class SecaoSessoesController extends GlobalController<Sessao, Evento> {
 
     public Evento eventoAberto;
 
-    public void posCarregamento() {
+    public void posCarregamento() throws Exception {
         atualizaTabela();
         tableView.setItems(observableList);
     }
@@ -87,23 +88,25 @@ public class SecaoSessoesController extends GlobalController<Sessao, Evento> {
     SessaoDAO sessaoDAO = new SessaoDAO();
     SessaoServico sessaoServico = new SessaoServico();
 
-    public void atualizaTabela() {
+    public void atualizaTabela() throws Exception {
         observableList.clear();
 
-        //List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
+        List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
 
-        ArvoreSessoes sessoes = sessaoServico.carregaArvoreEvento(eventoAberto);
-
-        sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
-
-        /*
         for(Sessao s : sessoes) {
             if(s.getEvento().getId() == eventoAberto.getId()) {
                 observableList.add(s);
             }
         }
 
-         */
+        //ArvoreSessoes sessoes = sessaoServico.carregaArvore(eventoAberto);
+
+        //sessoes.adicionaItensNaLista(observableList, sessoes.getSessaoRaiz());
+
+
+
+
+
 
         colId.setCellValueFactory(new PropertyValueFactory<>("Id"));
         col2.setCellValueFactory(new PropertyValueFactory<>("SalaNome"));
@@ -127,7 +130,9 @@ public class SecaoSessoesController extends GlobalController<Sessao, Evento> {
                     Sessao sessao = getTableView().getItems().get(getIndex());
                     sessaoServico.remover(sessao, eventoAberto);
 
-                    atualizaTabela();
+                    try {
+                        atualizaTabela();
+                    } catch (Exception e) {}
                 });
             }
 

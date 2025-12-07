@@ -19,6 +19,8 @@ public class SessaoServico {
 
     ArvoreSessoes arvore = new ArvoreSessoes();
 
+    /*
+
     public ArvoreSessoes carregaArvoreEvento(Evento eventoAberto) {
         List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
         arvore = new ArvoreSessoes();
@@ -48,12 +50,35 @@ public class SessaoServico {
         return this.arvore;
     }
 
-    public void cadastrar(Sala salaSelecionada, Evento eventoAberto, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) {
+     */
+
+    public ArvoreSessoes carregaArvore(Object objetoAberto) throws Exception {
+        List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
+        arvore = new ArvoreSessoes();
+
+        for(Sessao s : sessoes) {
+            if(objetoAberto instanceof Sala salaAberta) {
+                if(s.getSala().getId() == salaAberta.getId()) {
+                    arvore.add(s);
+                }
+            }
+
+            if(objetoAberto instanceof Evento eventoAberto) {
+                if(s.getEvento().getId() == eventoAberto.getId()) {
+                    arvore.add(s);
+                }
+            }
+        }
+
+        return this.arvore;
+    }
+
+    public void cadastrar(Sala salaSelecionada, Evento eventoAberto, String titulo, String descricao, TipoSessao tipo, LocalDate dataInicio, LocalTime horaInicio, LocalDate dataFim, LocalTime horaFim) throws Exception {
         Sessao sessao = new Sessao(salaSelecionada,eventoAberto, titulo, descricao, tipo, dataInicio, horaInicio, dataFim, horaFim, StatusSessao.PENDENTE);
 
-        if(!temSobreposicaoSalaInserir(salaSelecionada, sessao)) {
+        if(!temSobreposicaoInserir(salaSelecionada, sessao)) {
 
-            if(!temSobreposicaoEventoInserir(eventoAberto, sessao)) {
+            if(!temSobreposicaoInserir(eventoAberto, sessao)) {
                 sessaoDAO.inserirSessao(salaSelecionada,eventoAberto,sessao);
             } else {
                 Global.mostraErro("Sobreposição de horários com outros sessões do evento ou da sala!");
@@ -69,21 +94,24 @@ public class SessaoServico {
         sessaoDAO.removerSessao(eventoAberto.getId(),sessao.getId());
     }
 
-    public void alterar(Sala salaSelecionada, Evento eventoAberto, Sessao sessaoAntiga,String titulo, String descricao, TipoSessao tipo,LocalDate dataInicio, LocalTime horaInicio,LocalDate dataFim, LocalTime horaFim, StatusSessao status) {
+    public void alterar(Sala salaSelecionada, Evento eventoAberto, Sessao sessaoAntiga,String titulo, String descricao, TipoSessao tipo,LocalDate dataInicio, LocalTime horaInicio,LocalDate dataFim, LocalTime horaFim, StatusSessao status) throws Exception {
 
         // Criar sessão temporária apenas para teste
         Sessao sessaoNova = new Sessao(salaSelecionada,eventoAberto,titulo,descricao,tipo,dataInicio,horaInicio,dataFim,horaFim,status);
 
         // Testar sobreposição sem modificar a sessão antiga ainda
-        if (temSobreposicaoEventoAlterar(eventoAberto, sessaoAntiga, sessaoNova)) {
+        if (temSobreposicaoAlterar(eventoAberto, sessaoAntiga, sessaoNova)) {
             Global.mostraErro("Sobreposição com os outros horários do evento!");
             return;
         }
 
+        /*
         if (temSobreposicaoSalaAlterar(salaSelecionada, sessaoAntiga, sessaoNova)) {
             Global.mostraErro("Sobreposição com os outros horários da sala!");
             return;
         }
+
+         */
 
         // altera os campos da sessão original
         sessaoAntiga.setTitulo(titulo);
@@ -113,23 +141,24 @@ public class SessaoServico {
         }
     }
 
-    public boolean temSobreposicaoEventoAlterar(Evento eventoAberto, Sessao sessaoAntiga, Sessao sessaoNova) {
-        return temSobreposicao(carregaArvoreEvento(eventoAberto), sessaoAntiga, sessaoNova);
+    public boolean temSobreposicaoAlterar(Object objetoAberto, Sessao sessaoAntiga, Sessao sessaoNova) throws Exception {
+        return temSobreposicao(carregaArvore(objetoAberto), sessaoAntiga, sessaoNova);
     }
 
-    public boolean temSobreposicaoEventoInserir(Evento eventoAberto, Sessao sessaoNova) {
-        return temSobreposicao(carregaArvoreEvento(eventoAberto), null, sessaoNova);
+    public boolean temSobreposicaoInserir(Object objetoAberto, Sessao sessaoNova) throws Exception {
+        return temSobreposicao(carregaArvore(objetoAberto), null, sessaoNova);
     }
 
-    public boolean temSobreposicaoSalaAlterar(Sala salaSelecionada, Sessao sessaoAntiga, Sessao sessaoNova) {
-        return temSobreposicao(carregaArvoreSala(salaSelecionada), sessaoAntiga, sessaoNova);
+    /*
+    public boolean temSobreposicaoSalaAlterar(Sala salaSelecionada, Sessao sessaoAntiga, Sessao sessaoNova) throws Exception {
+        return temSobreposicao(carregaArvore(salaSelecionada), sessaoAntiga, sessaoNova);
     }
 
-    public boolean temSobreposicaoSalaInserir(Sala salaSelecionada, Sessao sessaoNova) {
-
-
-        return temSobreposicao(carregaArvoreSala(salaSelecionada), null, sessaoNova);
+    public boolean temSobreposicaoSalaInserir(Sala salaSelecionada, Sessao sessaoNova) throws Exception {
+        return temSobreposicao(carregaArvore(salaSelecionada), null, sessaoNova);
     }
+
+     */
 
 
 }

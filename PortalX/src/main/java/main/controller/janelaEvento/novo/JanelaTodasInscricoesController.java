@@ -170,6 +170,7 @@ public class JanelaTodasInscricoesController extends GlobalController<Inscricao,
                 }
 
                 boolean match = true;
+
                 if (!nomeFiltro.isEmpty()) {
                     match = match && inscricao.getPessoa().getNome().toLowerCase().contains(nomeFiltro);
                 }
