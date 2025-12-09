@@ -1,6 +1,7 @@
 package main.controller.janelaEvento.novo;
 
 import dao.InscricaoDAO;
+import dao.SessaoDAO;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,7 @@ import main.controller.menuPrincipal.novo.MenuPrincipalController;
 import model.Evento;
 import model.Exportavel;
 import model.Inscricao;
+import model.Sessao;
 import servico.ExportarServico;
 import servico.InscricaoServico;
 
@@ -142,6 +144,13 @@ public class JanelaTodasInscricoesController extends GlobalController<Inscricao,
         defineListerners();
 
         atualizaTabela();
+
+        SessaoDAO sessaoDAO = new SessaoDAO();
+        List<Sessao> sessoes = sessaoDAO.buscarTodos(Sessao.class);
+
+        for(Sessao s : sessoes) {
+            System.out.println("Sessao: " + s.getTitulo() + ", Sala: " + s.getSala().getNome() );
+        }
     }
 
     InscricaoDAO inscricaoDAO = new InscricaoDAO();
@@ -237,8 +246,10 @@ public class JanelaTodasInscricoesController extends GlobalController<Inscricao,
 
             {
                 botaoRemover.setOnAction(event -> {
-                    Inscricao e = getTableView().getItems().get(getIndex());
-                    inscricaoServico.remover(e);
+                    Inscricao inscricao = getTableView().getItems().get(getIndex());
+                    Inscricao i = inscricaoDAO.find(Inscricao.class,inscricao.getId());
+
+                    inscricaoServico.remover(i);
                     atualizaTabela();
                 });
             }

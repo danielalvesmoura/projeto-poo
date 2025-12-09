@@ -21,6 +21,7 @@ public class Evento implements Exportavel {
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Sessao> sessoes;
 
+
     //@Transient
     //private ListaEncadeadaInscricoes inscricoes = new ListaEncadeadaInscricoes();
 

@@ -80,6 +80,7 @@ public class SessaoServico {
 
             if(!temSobreposicaoInserir(eventoAberto, sessao)) {
                 sessaoDAO.inserirSessao(salaSelecionada,eventoAberto,sessao);
+                eventoAberto.getSessoes().add(sessao);
             } else {
                 Global.mostraErro("Sobreposição de horários com outros sessões do evento ou da sala!");
             }
@@ -113,6 +114,8 @@ public class SessaoServico {
 
          */
 
+        eventoAberto.getSessoes().remove(sessaoAntiga);
+
         // altera os campos da sessão original
         sessaoAntiga.setTitulo(titulo);
         sessaoAntiga.setDescricao(descricao);
@@ -126,6 +129,9 @@ public class SessaoServico {
 
         //  atualizar a sessão ORIGINAL no banco
         sessaoDAO.alterar(sessaoAntiga);
+        eventoAberto.getSessoes().add(sessaoAntiga);
+
+
     }
 
     private boolean temSobreposicao(ArvoreSessoes arvore, Sessao sessaoAntiga, Sessao sessaoNova) {
